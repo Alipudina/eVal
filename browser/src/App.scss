@@ -1,25 +1,34 @@
 
-div.start-page {
-  width: 90%;
-  max-height: 100vh;
-  margin: 0 auto;
-  border: 1px solid red;
+.login{
+    h1{
+        text-align: center;
+    }
+}
+.loginForm,.createAccountForm{
+    display: flex;
+    flex-direction: column;
+    width: 15em;
+    margin: 0 auto;
+}
 
-  div.header {
+.header{
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin: 2vw 0;
+}
+.landingPage{
+height: 30em;
+background:lightgray;
+h1{
+    text-align: center;
+}
+}
+.footer{
+    display: flex;
+    justify-content: space-around;
+}
 
-    div.login-container {
-      display: flex;
-      flex-direction: column;
 
-      button {
-        margin: 1vw auto;
-      }
-    }
-  }
+
 
   div.info-container {
     width: 60%;
@@ -34,14 +43,68 @@ div.start-page {
     }
   }
 
-  div.footer {
-    display: flex;
-    justify-content: space-around;
-    border: 2px solid black;
-    margin-bottom: 0;
 
-    button {
-      margin: 2vw auto;
-    }
-  }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// div.start-page {
+//   width: 90%;
+//   max-height: 100vh;
+//   margin: 0 auto;
+//   border: 1px solid red;
+
+//   div.header {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     margin: 2vw 0;
+
+//     div.login-container {
+//       display: flex;
+//       flex-direction: column;
+
+//       button {
+//         margin: 1vw auto;
+//       }
+//     }
+//   }
+
+//   div.info-container {
+//     width: 60%;
+//     margin: 2vw auto;
+//     height: 35vw;
+
+//     p {
+//       width: 60%;
+//       margin: auto;
+//       line-height: 1.6;
+//       letter-spacing: .1vw;
+//     }
+//   }
+
+//   div.footer {
+//     display: flex;
+//     justify-content: space-around;
+//     border: 2px solid black;
+//     margin-bottom: 0;
+
+//     button {
+//       margin: 2vw auto;
+//     }
+//   }
+// }
