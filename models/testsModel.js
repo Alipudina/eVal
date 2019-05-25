@@ -8,7 +8,7 @@ const testSchema = new mongoose.Schema({
     questionNumber:{type:Number, required:true},
     questionText:{type:String, required:true},
     questionType:{type:String, required:true},
-    questionCorrectAnswer{type:String, required:true},
+    questionCorrectAnswer:{type:String, required:true},
     questionWrongAnswers:[{type:String}],
     answerValue:{type:Number, required:true, default:1}
   }]
