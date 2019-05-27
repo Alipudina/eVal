@@ -1,0 +1,39 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv').config();
+const cookieParser = require('cookie-parser');
+const path = require('path');
+const errorHandler = require('./middleware/errorHandler');
+const makersRouter = require('./routes/makersRouter');
+
+
+const app = express();
+const PORT = process.env.PORT || 4000;
+
+mongoose.set('useNewUrlParser', true);
+
+app.listen(PORT, async () => {
+  try {
+    console.log('Server is listening');
+    await mongoose.connect('mongodb://localhost:27017/eval', {useNewUrlParser: true});
+    console.log('Connected to Local DB');
+  } catch (error) {
+    console.log(error);
+  }
+})
+
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+app.use(cookieParser());
+app.use('/maker', makersRouter);
+
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('browser/build'));
+
+  app.get('*', (req, res, next) => {
+    res.sendFile(path.resolve('browser', 'build', 'index.html'));
+  })
+}
+
+app.use(errorHandler);
