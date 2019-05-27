@@ -13,9 +13,9 @@ export default class CreationPage extends Component {
                         <input placeholder="testName" />
 
                         <div classname="creationBtns">
-                            <butto>Test</butto>
-                            <butto>Save</butto>
-                            <butto>Delete</butto>
+                            <button>Test</button>
+                            <button>Save</button>
+                            <button>Delete</button>
                         </div>
                     </form>
                 </div>
