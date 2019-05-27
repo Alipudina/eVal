@@ -1,10 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 const dotenv = require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const errorHandler = require('./middleware/errorHandler');
 const makersRouter = require('./routes/makersRouter');
+const testsRouter = require('./routes/testsRouter');
 
 
 const app = express();
@@ -26,6 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use('/maker', makersRouter);
+app.use('/protected', testsRouter);
 
 
 if (process.env.NODE_ENV === 'production') {
@@ -36,4 +39,4 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-app.use(errorHandler);
+// app.use(errorHandler);
