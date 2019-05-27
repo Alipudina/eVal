@@ -28,7 +28,7 @@ class App extends Component {
         <div className="footer">
           <button>About US</button>
           <button>Info</button>
-          <button>another buuton</button>
+          <button>another button</button>
         </div>
       </div>
     );
