@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
+const morgan = require('morgan');
 const dotenv = require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const path = require('path');
@@ -27,6 +28,7 @@ app.listen(PORT, async () => {
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
+app.use(morgan('combined'));
 app.use('/eval', makersRouter);
 app.use('/eval/protected', testsRouter);
 
