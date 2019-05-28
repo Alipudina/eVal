@@ -27,8 +27,8 @@ app.listen(PORT, async () => {
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use('/maker', makersRouter);
-app.use('/protected', testsRouter);
+app.use('/eval', makersRouter);
+app.use('/eval/protected', testsRouter);
 
 
 if (process.env.NODE_ENV === 'production') {
@@ -39,4 +39,4 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-// app.use(errorHandler);
+app.use(errorHandler);

@@ -57,10 +57,9 @@ const loginMakers = async (req, res, next) => {
       return res.status(400).json({msg: 'Password is incorrect'});
     }
 
-    const initialToken = await jwt.sign({userName: findMaker.userName}, SECRET);
-    const token = initialToken;
+    const token = await jwt.sign({userName: findMaker.userName}, SECRET);
     res.cookie('authToken', token, {httpOnly: true});
-    res.status(200).json({userName: findMaker.userName});
+    res.status(200).json({userName: findMaker.userName, token:token});
 
   }catch (error) {
     next(error);
