@@ -72,7 +72,7 @@ const sendTests = async (req, res, next)=>{
                     from:process.env.EMAIL_USER,
                     to:req.body.email,
                     subject:'Invitation to a Test in eVal',
-                    html:`<a href="http://localhost:4000/eval/${fullTest.id}+${req.body.email}">Click to go to eVal Test</a>`
+                    html:`<a href="http://localhost:4000/eval/${fullTest.id}/${req.body.email}">Click to go to eVal Test</a>`
                   };
           emailTransporter.sendMail(emailOptions, function(err,info){
             if (err){
