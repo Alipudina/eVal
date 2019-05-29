@@ -1,9 +1,11 @@
 import React, { Component} from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import './App.scss';
-import Footer from './components/footer'
-import Header from './components/header'
-import Body from './components/body'
+import Footer from './components/footer';
+import Header from './components/header';
+import {LoginPageContainer} from './components/login';
+import Protected from './components/creationPage';
+import LandingPage from './components/landingPage';
 
 class App extends Component {
 
@@ -12,7 +14,9 @@ class App extends Component {
 
         <BrowserRouter>
           <Header />
-          <Body />
+          <Route exact path="/" component={LandingPage} />
+          <Route path="/login" component={LoginPageContainer} />
+          <Route path="/creationPage" component={Protected} />
           <Footer />
         </BrowserRouter>
     );

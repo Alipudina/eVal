@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
-// import { NavLink, Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
+import Auth from '../auth';
 
 
-export default class CreationPage extends Component {
+// protected class #########################
+export default class Protected  extends Component {
+  render () {
+    if (Auth.isAuthenticated()) {
+      return <Route component={CreationPage} />
+    } else {
+      return <Redirect to="/login" />
+    }
+  }
+}
+
+// creationPage class #########################
+class CreationPage extends Component {
     render() {
         return (
             <>
@@ -12,7 +25,7 @@ export default class CreationPage extends Component {
                         <label>testName</label>
                         <input placeholder="testName" />
 
-                        <div classname="creationBtns">
+                        <div className="creationBtns">
                             <button>Test</button>
                             <button>Save</button>
                             <button>Delete</button>
