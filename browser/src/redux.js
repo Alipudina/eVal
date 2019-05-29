@@ -7,7 +7,10 @@ const initialState = {
   loginRedirecion: false,
   hasFailed: false,
   userNameInput: '',
-  passwordInput: ''
+  passwordInput: '',
+  addAccount: [],
+  accountConfirm: false,
+  signupRedirect: false
 }
 
 
@@ -29,6 +32,11 @@ const reducer = (state = initialState, action) => {
           return updatedState;
         }
 
+        case 'ADD_ACCOUNT':
+          updatedState.accountConfirm=true;
+          console.log(updatedState.accountConfirm);
+          return updatedState;
+
       case 'REDIRECT_LOGIN':
         if (state.userNameInput===state.userName && state.passwordInput===state.password) {
           updatedState.loginRedirecion=true;
@@ -43,6 +51,11 @@ const reducer = (state = initialState, action) => {
         }
         return updatedState;
 
+      case 'SIGNUP_REDIRECT':
+        updatedState.signupRedirect=true;
+        Auth.login();
+        return updatedState;
+
       default:
         return updatedState;
     }
@@ -55,9 +68,25 @@ export const loginInputHandler= ev => {
   }
 }
 
+export const addAccountHandler= ev => {
+  return {
+    type: 'ADD_ACCOUNT',
+    ev: ev
+  }
+}
+
 export const redirectToLogin= () => {
   return {type: 'REDIRECT_LOGIN'}
 }
+
+export const confirmHandler= ev => {
+  return {
+    type: 'SIGNUP_REDIRECT',
+    ev: ev
+  }
+}
+
+
 
 
 

@@ -1,18 +1,37 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import Auth from '../auth';
 import { connect } from 'react-redux';
-import { redirectToLogin, loginInputHandler } from '../redux';
+import { redirectToLogin, loginInputHandler, addAccountHandler, confirmHandler } from '../redux';
+import { Card, Button } from 'react-bootstrap';
 
 
 // loginPage ######################
 class LoginPage extends Component {
 
+  state={
+    name: '',
+    email: '',
+    userName: '',
+    password: ''
+  }
+
   // signup part ++++++++++++++++++++++++
   signupHandler= ev => {
     ev.preventDefault();
-    Auth.login();
-    console.log(Auth.isAuthenticated());
+    // console.log(this.refs.email.value);
+    this.setState({
+      name: this.refs.name.value,
+      email: this.refs.email.value,
+      userName: this.refs.userName.value,
+      password: this.refs.password.value,
+    });
+
+    setTimeout(() => {
+      this.props.addAccount.push(this.state);
+      this.props.addAccountHandler();
+    }, 10)
+
+
   }
 
   // login part +++++++++++++++++++++++
@@ -40,17 +59,33 @@ class LoginPage extends Component {
           <form className="createAccountForm" onSubmit={this.signupHandler}>
             <h1>Not a user ? Create account</h1>
             <label>Name</label>
-            <input placeholder="Name" />
+            <input required placeholder="Name" ref="name" />
             <label>Email</label>
-            <input placeholder="Email" />
+            <input required placeholder="Email" ref="email" />
             <label>userName</label>
-            <input placeholder="userName" />
+            <input required placeholder="userName" ref="userName" />
             <label>Password</label>
-            <input placeholder="password" />
+            <input required placeholder="password" type="password" ref="password" />
             <button>Signup</button>
           </form>
-          {this.props.loginRedirecion && <Redirect to="/creationPage"/>}
+          <div className="account-container">
+            {this.props.accountConfirm && this.props.addAccount.map(((elem, index) => {
+              return (
+                <Card style={{ width: '18rem' }} className="card-account" key={index}>
+                  <Card.Body>
+                    <Card.Title>Your Account</Card.Title>
+                    <Card.Text>Name: {elem.name}</Card.Text>
+                    <Card.Text>Email: {elem.email}</Card.Text>
+                    <Card.Text>UserName: {elem.userName}</Card.Text>
+                    <Card.Text>Password: {elem.password}</Card.Text>
+                    <Button variant="primary" size="lg" onClick={this.props.confirmHandler}>Confirm</Button>
+                  </Card.Body>
+                </Card>
+              )
+            }))}
+          </div>
 
+          {this.props.signupRedirect && <Redirect to="/creationPage"/>}
         </div>
     )
   }
@@ -59,14 +94,19 @@ class LoginPage extends Component {
 const mapStateToProps = state => {
   return {
     loginRedirecion: state.loginRedirecion,
-    hasFailed: state.hasFailed
+    hasFailed: state.hasFailed,
+    addAccount: state.addAccount,
+    accountConfirm: state.accountConfirm,
+    signupRedirect: state.signupRedirect
   }
 }
 
 const mapDispatchToProps= dispatch => {
   return {
     redirectToLogin: ev => dispatch(redirectToLogin(ev)),
-    loginInputHandler: ev => dispatch(loginInputHandler(ev))
+    loginInputHandler: ev => dispatch(loginInputHandler(ev)),
+    addAccountHandler: ev => dispatch(addAccountHandler(ev)),
+    confirmHandler: ev => dispatch(confirmHandler(ev))
   }
 }
 

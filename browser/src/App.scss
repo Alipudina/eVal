@@ -30,15 +30,24 @@ h1{
 
 
 
-  div.info-container {
-    width: 60%;
-    margin: 2vw auto;
-    height: 28vw;
+div.info-container {
+  width: 60%;
+  margin: 2vw auto;
+  height: 28vw;
 
-    p {
-      width: 60%;
-      margin: auto;
-      line-height: 1.6;
-      letter-spacing: .1vw;
-    }
+  p {
+    width: 60%;
+    margin: auto;
+    line-height: 1.6;
+    letter-spacing: .1vw;
   }
+}
+
+// login component
+div.account-container {
+
+  .card-account {
+    margin: 10vw auto;
+    background: #E9E9E9;
+  }
+}
