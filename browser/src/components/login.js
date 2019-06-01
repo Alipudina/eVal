@@ -63,9 +63,9 @@ class LoginPage extends Component {
             <label>Email</label>
             <input required placeholder="Email" ref="email" />
             <label>userName</label>
-            <input required placeholder="userName" ref="userName" />
+            <input required placeholder="userName" ref="userName" minLength={6} />
             <label>Password</label>
-            <input required placeholder="password" type="password" ref="password" />
+            <input required placeholder="password" type="password" ref="password" minLength={6} />
             <button>Signup</button>
           </form>
           <div className="account-container">
