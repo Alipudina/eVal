@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, NavLink } from 'react-router-dom';
 import Auth from '../auth';
+import {LogoutContainer} from './logout';
 
 
 // protected class #########################
@@ -19,6 +20,7 @@ class CreationPage extends Component {
     render() {
         return (
             <>
+              <LogoutContainer />
                 <div className="body">
                     <h1>Create a test</h1>
                     <form>

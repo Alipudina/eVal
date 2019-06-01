@@ -56,6 +56,13 @@ const reducer = (state = initialState, action) => {
         Auth.login();
         return updatedState;
 
+      case 'LOGOUT':
+        updatedState.signupRedirect=false;
+        updatedState.accountConfirm=false;
+        updatedState.loginRedirecion=false;
+        Auth.logout();
+        return updatedState;
+
       default:
         return updatedState;
     }
@@ -82,6 +89,13 @@ export const redirectToLogin= () => {
 export const confirmHandler= ev => {
   return {
     type: 'SIGNUP_REDIRECT',
+    ev: ev
+  }
+}
+
+export const logoutChanges= ev => {
+  return {
+    type: 'LOGOUT',
     ev: ev
   }
 }

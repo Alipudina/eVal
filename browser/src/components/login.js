@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { redirectToLogin, loginInputHandler, addAccountHandler, confirmHandler } from '../redux';
 import { Card, Button } from 'react-bootstrap';
@@ -44,6 +44,7 @@ class LoginPage extends Component {
   render() {
     return (
         <div className="login">
+          <NavLink to="/" className="btn btn-primary login-out">Home</NavLink>
 
           <h1>login page</h1>
           <form className="loginForm" onSubmit={this.loginHandler}>
