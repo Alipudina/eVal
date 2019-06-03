@@ -1,18 +1,33 @@
 import React, { Component } from 'react';
-// import { NavLink, Route } from 'react-router-dom';
+import { Route, Redirect, NavLink } from 'react-router-dom';
+import Auth from '../auth';
+import {LogoutContainer} from './logout';
 
 
-export default class CreationPage extends Component {
+// protected class #########################
+export default class Protected  extends Component {
+  render () {
+    if (Auth.isAuthenticated()) {
+      return <Route component={CreationPage} />
+    } else {
+      return <Redirect to="/login" />
+    }
+  }
+}
+
+// creationPage class #########################
+class CreationPage extends Component {
     render() {
         return (
             <>
+              <LogoutContainer />
                 <div className="body">
                     <h1>Create a test</h1>
                     <form>
                         <label>testName</label>
                         <input placeholder="testName" />
 
-                        <div classname="creationBtns">
+                        <div className="creationBtns">
                             <button>Test</button>
                             <button>Save</button>
                             <button>Delete</button>

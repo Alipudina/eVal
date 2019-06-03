@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 
 export default class LandingPage extends Component {
     render() {
         return (
             <>
+              <NavLink to="/login" className="btn btn-primary login-out">LogIn/SignUp</NavLink>
                 <div className="landingPage">
-
                     <h1> LandingPage</h1>
                     <div className="info-container">
                         <p>
