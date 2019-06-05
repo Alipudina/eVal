@@ -22,7 +22,7 @@ class CreationPage extends Component {
           value={this.props.questionText}
           onChange={this.props.questionTextChange} />
           <br></br>
-          <select className="selectQuestionType" defaultValue="" name="questionType" className="questionType" onChange={this.props.questionTypeChange}>
+          <select className="selectQuestionType" defaultValue="" name="questionType" id="questionType" onChange={this.props.questionTypeChange}>
               <option value="" disabled>Select your option</option>
               <option value='YesNo'>Yes/No</option>
               <option value='MultipleChoice'>Multiple choice</option>
@@ -33,6 +33,28 @@ class CreationPage extends Component {
           {this.props.questionType==='Scrambled'&&<ScrambledContainer />}
           <br></br>
           <button type="button" onClick={this.props.addFullQuestion} className="questionType">Add Another Question</button>
+          {
+            this.props.allFullQuestions&&this.props.allFullQuestions.map((each, index)=>{
+              return(
+                <div key={index} className="fullQuestion questionType">
+                  <span><b>{index+1})</b></span>
+                  <span><b>Type:</b>{each.questionType}</span>
+                  <span><b>Question:</b>{each.questionText}</span>
+                  <span><b>Right answer:</b>{each.rightAnswer}</span>
+                  {each.allWrongAnswers.length>0&&<span><b>Wrong answer(s):</b></span>}
+                  {each.allWrongAnswers&&each.allWrongAnswers.map((wrongAnswer, index)=>{
+                    return(
+                        <span key={index}>{wrongAnswer}</span>
+                    )
+
+                  })}
+                  <span>
+                    <button type="button" className="deleteButton" onClick={this.props.deleteFullQuestion} value={index}>Delete</button>
+                  </span>
+                </div>
+              )
+            })
+          }
           </form>
 
           <div className="creationBtns questionType">

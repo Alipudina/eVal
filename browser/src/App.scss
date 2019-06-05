@@ -52,7 +52,7 @@ h1{
 
 .selectQuestionType,.testName, .questionText, .questionType{
   width: 12em;
-  margin: 0 auto;
+  margin: .3vw auto;
 }
 
 .multiDiv{
@@ -62,7 +62,20 @@ flex-direction: column;
 width: 20em;
 }
 
+.fullQuestion{
+  width: 100%;
+  margin: 1vw auto;
+  font-size: 1vw;
+  text-align: center;
+  span{
+    margin-right: .6vw;
+  }
+}
 
+.deleteButton{
+  font-size: 1vw;
+  background: red;
+}
 
 
 

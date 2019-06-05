@@ -54,16 +54,14 @@ const reducer =(state=initialState, action)=>{
         }]
 
        copyOfState.questionText=''
-       document.querySelector('.questionType').selectedIndex = 0;
+       document.querySelector('#questionType').selectedIndex = 0;
        copyOfState.questionType=''
        copyOfState.rightAnswer=''
        copyOfState.allWrongAnswers=[]
-       console.log(copyOfState.allFullQuestions)
        return copyOfState;
 
     case 'deleteFullQuestion':
       copyOfState.allFullQuestions=copyOfState.allFullQuestions.filter((each,index)=>index!=action.event.target.value)
-      console.log(copyOfState.allFullQuestions)
       return copyOfState;
 
     default:

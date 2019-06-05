@@ -17,9 +17,11 @@ class MultipleChoice extends Component{
           this.props.allWrongAnswers&&this.props.allWrongAnswers.map((each, index)=>{
             return(
               <div key={index} className="allWrongAnswers questionType">
-                <br></br>
-                <div>{each}</div>
-                <button type="button" onClick={this.props.deleteWrongAnswer} value={index}>Delete</button>
+                {each}
+                <span>
+                  <button type="button" onClick={this.props.deleteWrongAnswer}
+                  className="deleteButton" value={index}>Delete</button>
+                </span>
               </div>
             )
           })
