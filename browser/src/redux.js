@@ -46,8 +46,15 @@ const reducer =(state=initialState, action)=>{
       return copyOfState;
 
     case 'addFullQuestion':
-      copyOfState.allFullQuestions = [...state.allFullQuestions, {questionText:state.questionText, questionType:state.questionType, rightAnswer:state.rightAnswer, allWrongAnswers:[...state.allWrongAnswers]}]
+       copyOfState.allFullQuestions = [...state.allFullQuestions,
+         {questionText:state.questionText,
+          questionType:state.questionType,
+          rightAnswer:state.rightAnswer,
+          allWrongAnswers:[...state.allWrongAnswers]
+        }]
+
        copyOfState.questionText=''
+       document.querySelector('.questionType').selectedIndex = 0;
        copyOfState.questionType=''
        copyOfState.rightAnswer=''
        copyOfState.allWrongAnswers=[]

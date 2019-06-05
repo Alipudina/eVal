@@ -22,7 +22,7 @@ class CreationPage extends Component {
           value={this.props.questionText}
           onChange={this.props.questionTextChange} />
           <br></br>
-          <select className="selectQuestionType" defaultValue="" name="questionType" onChange={this.props.questionTypeChange}>
+          <select className="selectQuestionType" defaultValue="" name="questionType" className="questionType" onChange={this.props.questionTypeChange}>
               <option value="" disabled>Select your option</option>
               <option value='YesNo'>Yes/No</option>
               <option value='MultipleChoice'>Multiple choice</option>
