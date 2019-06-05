@@ -26,7 +26,7 @@ export default class LoginPgae extends Component {
             <input placeholder="password" />
             <button>Submit</button>
           </form>
-          <NavLink to="/creation" className="logbtn">CreationTempLink</NavLink>
+          <NavLink to="/create" className="logbtn">CreationTempLink</NavLink>
         </div>
       </>
     )
