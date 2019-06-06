@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {rightQuestionTextChange} from '../../redux';
+import {rightAnswerTextChange} from '../../redux';
 
 
 // import { makeStyles } from '@material-ui/core/styles';
@@ -24,7 +24,7 @@ class YesNoAnswer extends Component{
               type="radio"
               name="yesno"
               value="yes"
-              onChange={this.props.rightQuestionTextChange}
+              onChange={this.props.rightAnswerTextChange}
             />
             Yes
           </label>
@@ -33,7 +33,7 @@ class YesNoAnswer extends Component{
               type="radio"
               name="yesno"
               value="no"
-              onChange={this.props.rightQuestionTextChange}
+              onChange={this.props.rightAnswerTextChange}
             />
             No
           </label>
@@ -94,7 +94,7 @@ const mapStateToProps = state =>{
 
 const mapDispatchToProps = dispatch=>{
   return{
-    rightQuestionTextChange: ev=>dispatch(rightQuestionTextChange(ev)),
+    rightAnswerTextChange: ev=>dispatch(rightAnswerTextChange(ev)),
   }
 }
 export const YesNoAnswerContainer = connect(mapStateToProps, mapDispatchToProps)(YesNoAnswer);

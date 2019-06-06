@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {wrongQuestionTextChange, addWrongAnswer, deleteWrongAnswer, rightQuestionTextChange} from '../../redux';
+import {rightAnswerTextChange} from '../../redux';
 
 class Scrambled extends Component{
   render(){
@@ -8,7 +8,7 @@ class Scrambled extends Component{
       <>
         <br></br>
         <label className="questionType">Text to scramble:</label>
-        <textarea rows="4" cols="4" className="questionType" value={this.props.rightAnswer} onChange={this.props.rightQuestionTextChange}></textarea>
+        <textarea rows="4" cols="4" className="questionType" value={this.props.rightAnswer} onChange={this.props.rightAnswerTextChange}></textarea>
         <br></br>
       </>
     )
@@ -24,7 +24,7 @@ const mapStateToProps = state =>{
 
 const mapDispatchToProps = dispatch=>{
   return{
-    rightQuestionTextChange: ev=>dispatch(rightQuestionTextChange(ev)),
+    rightAnswerTextChange: ev=>dispatch(rightAnswerTextChange(ev)),
   }
 }
 export const ScrambledContainer = connect(mapStateToProps, mapDispatchToProps)(Scrambled);

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {questionTypeChange, testNameChange, questionTextChange, questionAddAnswer, addFullQuestion, deleteFullQuestion} from '../redux';
+import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire} from '../redux';
 import {YesNoAnswerContainer} from './materialui/yesno';
 import {MultipleChoiceContainer} from './materialui/multiplechoice';
 import {ScrambledContainer} from './materialui/scrambled';
+
 
 class CreationPage extends Component {
   render() {
@@ -12,8 +13,8 @@ class CreationPage extends Component {
         <div className="body">
           <h1>Create a test</h1>
           <form className="creatorForm">
-          <label className="testName">Name of Test: </label>
-          <input className="testName" placeholder="Test Name"
+          <label className="questionText">Name of the Test: </label>
+          <input className="questionText" placeholder="How do you want to call it"
           value={this.props.testName}
           onChange={this.props.testNameChange} />
           <br></br>
@@ -44,7 +45,7 @@ class CreationPage extends Component {
                   {each.allWrongAnswers.length>0&&<span><b>Wrong answer(s):</b></span>}
                   {each.allWrongAnswers&&each.allWrongAnswers.map((wrongAnswer, index)=>{
                     return(
-                        <span key={index}>{wrongAnswer}</span>
+                        <span key={index}><b>{index+1})</b> {wrongAnswer}</span>
                     )
 
                   })}
@@ -58,9 +59,9 @@ class CreationPage extends Component {
           </form>
 
           <div className="creationBtns questionType">
-              <button>Test</button>
-              <button>Save</button>
-              <button>Delete</button>
+              <button type="button">Show Test</button>
+              <button type="button" onClick={this.props.saveFullQuestionnaire}>Save</button>
+              <button type="button" onClick={this.props.deleteQuestionnaire}>Delete Everything!</button>
           </div>
         </div>
       </>
@@ -83,6 +84,8 @@ const mapDispatchToProps = dispatch => {
         questionTextChange: ev=> dispatch(questionTextChange(ev)),
         addFullQuestion: ev=> dispatch(addFullQuestion(ev)),
         deleteFullQuestion: ev=> dispatch(deleteFullQuestion(ev)),
+        saveFullQuestionnaire: ev=> dispatch(saveFullQuestionnaire(ev)),
+        deleteQuestionnaire: ev=> dispatch(deleteQuestionnaire(ev)),
     }
 }
 

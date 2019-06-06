@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {BrowserRouter} from 'react-router-dom';
-import {connect} from 'react-redux';
 import './App.scss';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Footer from './components/footer'

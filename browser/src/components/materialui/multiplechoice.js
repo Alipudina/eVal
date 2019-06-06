@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {wrongQuestionTextChange, addWrongAnswer, deleteWrongAnswer, rightQuestionTextChange} from '../../redux';
+import {wrongAnswerTextChange, addWrongAnswer, deleteWrongAnswer, rightAnswerTextChange} from '../../redux';
 
 class MultipleChoice extends Component{
   render(){
@@ -8,10 +8,10 @@ class MultipleChoice extends Component{
       <>
         <br></br>
         <label className="questionType">Right Answer:</label>
-        <input value={this.props.rightAnswer} onChange={this.props.rightQuestionTextChange} className="questionType"/>
+        <input value={this.props.rightAnswer} onChange={this.props.rightAnswerTextChange} className="questionType"/>
         <br></br>
         <label className="questionType">Wrong Answer(s):</label>
-        <input className="questionType" onChange={this.props.wrongQuestionTextChange} value={this.props.wrongAnswer}/>
+        <input className="questionType" onChange={this.props.wrongAnswerTextChange} value={this.props.wrongAnswer}/>
         <button type="button" className="questionType" onClick={this.props.addWrongAnswer}>Add Wrong Answer</button>
         {
           this.props.allWrongAnswers&&this.props.allWrongAnswers.map((each, index)=>{
@@ -43,8 +43,8 @@ const mapStateToProps = state =>{
 const mapDispatchToProps = dispatch=>{
   return{
     addWrongAnswer: ev=>dispatch(addWrongAnswer(ev)),
-    wrongQuestionTextChange: ev=>dispatch(wrongQuestionTextChange(ev)),
-    rightQuestionTextChange: ev=>dispatch(rightQuestionTextChange(ev)),
+    wrongAnswerTextChange: ev=>dispatch(wrongAnswerTextChange(ev)),
+    rightAnswerTextChange: ev=>dispatch(rightAnswerTextChange(ev)),
     deleteWrongAnswer: ev=> dispatch(deleteWrongAnswer(ev))
   }
 }
