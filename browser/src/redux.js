@@ -1,5 +1,6 @@
 import { createStore } from 'redux';
 import Auth from './auth';
+import ContactEmailChanged from './defaultEmail';
 
 const initialState = {
   userName: 'ali',
@@ -10,7 +11,8 @@ const initialState = {
   passwordInput: '',
   addAccount: [],
   accountConfirm: false,
-  signupRedirect: false
+  signupRedirect: false,
+  isManipulated: false
 }
 
 
@@ -63,6 +65,14 @@ const reducer = (state = initialState, action) => {
         Auth.logout();
         return updatedState;
 
+        case 'TOUCHED':
+        if (action.ev.target.action!=="https://formspree.io/alipudina55@gmail.com") {
+            action.ev.preventDefault();
+            ContactEmailChanged.touched();
+            updatedState.isManipulated=true;
+          }
+          return updatedState;
+
       default:
         return updatedState;
     }
@@ -96,6 +106,13 @@ export const confirmHandler= ev => {
 export const logoutChanges= ev => {
   return {
     type: 'LOGOUT',
+    ev: ev
+  }
+}
+
+export const emailHandler= ev => {
+  return {
+    type: 'TOUCHED',
     ev: ev
   }
 }

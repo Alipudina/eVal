@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import ContactEmailChanged from '../defaultEmail';
+import {connect} from 'react-redux';
+import {emailHandler} from '../redux';
 
-export default class Conatct extends Component {
+class Contact extends Component {
 
   render() {
     return(
@@ -15,8 +18,9 @@ export default class Conatct extends Component {
                   Our team will come back to you within a matter of hours to help you.
                 </p>
 
-                <form
-                  className="contact-form d-flex flex-column align-items-center"
+                <form onSubmit={this.props.emailHandler}
+                  ref="contactForm"
+                  className="contactForm d-flex flex-column align-items-center"
                   action="https://formspree.io/alipudina55@gmail.com"
                   method="POST"
                 >
@@ -54,7 +58,22 @@ export default class Conatct extends Component {
                 </form>
               </div>
             </section>
+            {ContactEmailChanged.isTouched() && this.props.isManipulated && <div className="alert alert-danger my-4">Please Do not touch the Code!</div>}
       </>
     )
   }
 }
+
+const mapStateToProps= state => {
+  return {
+    isManipulated: state.isManipulated
+  }
+}
+
+const mapDispatchToProps= dispatch => {
+  return {
+    emailHandler: ev => dispatch(emailHandler(ev))
+  }
+}
+
+export const ContactCotainer=connect(mapStateToProps, mapDispatchToProps)(Contact);
