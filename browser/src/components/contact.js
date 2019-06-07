@@ -58,7 +58,7 @@ class Contact extends Component {
                 </form>
               </div>
             </section>
-            {ContactEmailChanged.isTouched() && this.props.isManipulated && <div className="alert alert-danger my-4">Please do not touch HTML!</div>}
+            {ContactEmailChanged.isTouched() && this.props.isManipulated && <div className="alert alert-danger my-4">Please Do not touch the Code!</div>}
       </>
     )
   }
