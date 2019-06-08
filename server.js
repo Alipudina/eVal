@@ -37,7 +37,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('browser/build'));
 
   app.get('*', (req, res, next) => {
-    res.sendFile(path.resolve(_dirname, 'browser', 'build', 'index.html'));
+    res.sendFile(path.resolve('browser', 'public', 'index.html'));
   })
 }
 
