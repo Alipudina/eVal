@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire} from '../redux';
+import {NavLink} from 'react-router-dom';
+import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire, showTest} from '../redux';
 import {YesNoAnswerContainer} from './materialui/yesno';
 import {MultipleChoiceContainer} from './materialui/multiplechoice';
 import {ScrambledContainer} from './materialui/scrambled';
@@ -59,7 +60,9 @@ class CreationPage extends Component {
           </form>
 
           <div className="creationBtns questionType">
-              <button type="button">Show Test</button>
+              <button type="button" onClick={this.props.showTest}>
+                    <NavLink  className="removeLink" to="/showtest">Show Test</NavLink>
+              </button>
               <button type="button" onClick={this.props.saveFullQuestionnaire}>Save</button>
               <button type="button" onClick={this.props.deleteQuestionnaire}>Delete Everything!</button>
           </div>
@@ -69,12 +72,53 @@ class CreationPage extends Component {
   }
 }
 
+
+class ShowTest extends Component {
+  render() {
+    return (
+      <>
+        <div className="body fullQuestion">
+          <h1>{this.props.testName}</h1>
+          <div>
+          {
+            this.props.allFullQuestions&&this.props.allFullQuestions.map((each, index)=>{
+              return(
+                <div key={index} className="fullQuestion questionType">
+                  <span><b>{index+1})</b></span>
+                  <span><b>Type:</b>{each.questionType}</span>
+                  <span><b>Question:</b>{each.questionText}</span>
+                  <span><b>Right answer:</b>{each.rightAnswer}</span>
+                  {each.allWrongAnswers.length>0&&<span><b>Wrong answer(s):</b></span>}
+                  {each.allWrongAnswers&&each.allWrongAnswers.map((wrongAnswer, index)=>{
+                    return(
+                        <span key={index}><b>{index+1})</b> {wrongAnswer}</span>
+                    )
+
+                  })}
+                  <span>
+                    <button type="button" className="deleteButton" onClick={this.props.deleteFullQuestion} value={index}>Delete</button>
+                  </span>
+                </div>
+              )
+            })
+          }
+          </div>
+        </div>
+        <button type="button"><NavLink  className="removeLink" to="/create">Go Back</NavLink></button>
+      </>
+    )
+  }
+}
+
+
+
 const mapStateToProps = state => {
     return {
         testName: state.testName,
         questionText: state.questionText,
         questionType: state.questionType,
         allFullQuestions: state.allFullQuestions,
+        showTest:state.showTest,
     }
 }
 const mapDispatchToProps = dispatch => {
@@ -86,7 +130,9 @@ const mapDispatchToProps = dispatch => {
         deleteFullQuestion: ev=> dispatch(deleteFullQuestion(ev)),
         saveFullQuestionnaire: ev=> dispatch(saveFullQuestionnaire(ev)),
         deleteQuestionnaire: ev=> dispatch(deleteQuestionnaire(ev)),
+        showTest: ev => dispatch(showTest(ev)),
     }
 }
 
 export const CreationPageContainer = connect(mapStateToProps, mapDispatchToProps)(CreationPage)
+export const ShowTestContainer = connect(mapStateToProps, mapDispatchToProps)(ShowTest)

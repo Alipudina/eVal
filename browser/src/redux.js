@@ -1,4 +1,5 @@
-import {createStore} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
+import thunk  from 'redux-thunk';
 
 const initialState={
   testName:'',
@@ -8,7 +9,8 @@ const initialState={
   rightAnswer:'',
   allWrongAnswers:[],
   allFullQuestions:[],
-  questionnaire:[]
+  questionnaire:[],
+  showTest:false,
 };
 
 const reducer =(state=initialState, action)=>{
@@ -79,13 +81,20 @@ const reducer =(state=initialState, action)=>{
       return copyOfState;
 
     case 'DELETE_QUESTIONNAIRE':
-      copyOfState.testName=''
-      copyOfState.questionText=''
-      document.querySelector('#questionType').selectedIndex = 0;
-      copyOfState.questionType=''
-      copyOfState.rightAnswer=''
-      copyOfState.allWrongAnswers=[]
-      copyOfState.allFullQuestions=[]
+    copyOfState.testName=''
+    copyOfState.questionText=''
+    document.querySelector('#questionType').selectedIndex = 0;
+    copyOfState.questionType=''
+    copyOfState.rightAnswer=''
+    copyOfState.allWrongAnswers=[]
+    copyOfState.allFullQuestions=[]
+      return copyOfState;
+
+    case 'SHOW_TEST':
+      return copyOfState;
+
+    case 'FETCH_TEST':
+      copyOfState.testName=action.testName
       return copyOfState;
 
     default:
@@ -128,4 +137,39 @@ export const saveFullQuestionnaire = ev =>{
 export const deleteQuestionnaire = ev =>{
   return {type:'DELETE_QUESTIONNAIRE', event:ev}
 }
-export const store = createStore(reducer);
+export const showTest = ev =>{
+  return {type:'SHOW_TEST', event:ev}
+}
+
+export const saveTest = testName =>{
+  return {type:'FETCH_TEST', testName:testName}
+}
+
+export const fetchTest = testName => {
+  return function(dispatch) {
+    fetch('/create', {
+      method: 'post',
+      mode: 'cors',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify(testName)
+    })
+    .then(res => {
+      if (res.status === 400 || res.status === 404) {
+        throw new Error('Fetching failed');
+      }
+
+      return res.json();
+    })
+    .then(testName => {
+      console.log(testName);
+      dispatch(saveTest(testName));
+    })
+    .catch(err => {
+      console.warn(err);
+      // dispatch(hasFailedAction());
+    })
+  }
+}
+
+
+export const store = createStore(reducer, applyMiddleware(thunk));
