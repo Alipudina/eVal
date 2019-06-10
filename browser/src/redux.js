@@ -1,5 +1,6 @@
 import {createStore, applyMiddleware} from 'redux';
 import thunk  from 'redux-thunk';
+import axios from 'axios';
 
 const initialState={
   testName:'',
@@ -44,7 +45,7 @@ const reducer =(state=initialState, action)=>{
       return copyOfState;
 
     case 'DELETE_WRONG_ANSWER':
-      copyOfState.allWrongAnswers=state.allWrongAnswers.filter((each,index)=>index!=action.event.target.value)
+      copyOfState.allWrongAnswers=state.allWrongAnswers.filter((each,index)=>parseInt(index)!==parseInt(action.event.target.value))
       return copyOfState;
 
     case 'ADD_FULL_QUESTION':
@@ -63,7 +64,7 @@ const reducer =(state=initialState, action)=>{
        return copyOfState;
 
     case 'DELETE_FULL_QUESTION':
-      copyOfState.allFullQuestions=state.allFullQuestions.filter((each,index)=>index!=action.event.target.value)
+      copyOfState.allFullQuestions=state.allFullQuestions.filter((each,index)=>parseInt(index)!==parseInt(action.event.target.value))
       return copyOfState;
 
     case 'SAVE_FULL_QUESTIONNAIRE':
@@ -145,31 +146,18 @@ export const saveTest = testName =>{
   return {type:'FETCH_TEST', testName:testName}
 }
 
-export const fetchTest = testName => {
-  return function(dispatch) {
-    fetch('/create', {
-      method: 'post',
-      mode: 'cors',
-      headers: { 'Content-Type': 'application/json'},
-      body: JSON.stringify(testName)
-    })
-    .then(res => {
-      if (res.status === 400 || res.status === 404) {
-        throw new Error('Fetching failed');
-      }
-
-      return res.json();
-    })
-    .then(testName => {
-      console.log(testName);
-      dispatch(saveTest(testName));
-    })
+export const addTest=(test)=>dispatch=>{
+  axios
+    .post('eval/tests', test)
+    .then (res =>
+      dispatch({
+        type:saveFullQuestionnaire,
+        payload:res.data
+      })
+    )
     .catch(err => {
       console.warn(err);
-      // dispatch(hasFailedAction());
     })
-  }
 }
-
 
 export const store = createStore(reducer, applyMiddleware(thunk));

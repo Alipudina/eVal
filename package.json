@@ -4,9 +4,13 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "client-install": "npm install --prefix browser",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false npm install --prefix browser && npm run build --prefix browser"
+    "server": "nodemon server.js",
+    "client": "npm start --prefix browser",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix browser && npm run build --prefix browser"
   },
   "repository": {
     "type": "git",
@@ -23,6 +27,7 @@
     "@material-ui/icons": "^4.0.1",
     "bcrypt": "^3.0.6",
     "cli": "^1.0.1",
+    "concurrently": "^4.1.0",
     "cookie-parser": "^1.4.4",
     "dotenv": "^8.0.0",
     "express": "^4.17.0",
