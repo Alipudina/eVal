@@ -1,10 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {NavLink} from 'react-router-dom';
+import {NavLink, Route, Redirect} from 'react-router-dom';
 import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire, showTest} from '../redux';
 import {YesNoAnswerContainer} from './materialui/yesno';
 import {MultipleChoiceContainer} from './materialui/multiplechoice';
 import {ScrambledContainer} from './materialui/scrambled';
+import Auth from '../auth';
+import {LogoutContainer} from './logout';
+
+
+// protected class #########################
+export default class Protected  extends Component {
+  render () {
+    if (Auth.isAuthenticated()) {
+      return <Route component={CreationPage} />
+    } else {
+      return <Redirect to="/login" />
+    }
+  }
+}
 
 
 class CreationPage extends Component {
