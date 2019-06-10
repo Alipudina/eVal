@@ -82,25 +82,22 @@ const reducer =(state=initialState, action)=>{
       return copyOfState;
 
     case 'DELETE_QUESTIONNAIRE':
-    copyOfState.testName=''
-    copyOfState.questionText=''
-    document.querySelector('#questionType').selectedIndex = 0;
-    copyOfState.questionType=''
-    copyOfState.rightAnswer=''
-    copyOfState.allWrongAnswers=[]
-    copyOfState.allFullQuestions=[]
+      copyOfState.testName=''
+      copyOfState.questionText=''
+      document.querySelector('#questionType').selectedIndex = 0;
+      copyOfState.questionType=''
+      copyOfState.rightAnswer=''
+      copyOfState.allWrongAnswers=[]
+      copyOfState.allFullQuestions=[]
       return copyOfState;
 
     case 'SHOW_TEST':
-      return copyOfState;
-
-    case 'FETCH_TEST':
-      copyOfState.testName=action.testName
+      copyOfState.questionnaire=action.payload
       return copyOfState;
 
     default:
       return copyOfState;
-}
+ }
 
 }
 
@@ -138,26 +135,21 @@ export const saveFullQuestionnaire = ev =>{
 export const deleteQuestionnaire = ev =>{
   return {type:'DELETE_QUESTIONNAIRE', event:ev}
 }
+
 export const showTest = ev =>{
   return {type:'SHOW_TEST', event:ev}
 }
 
-export const saveTest = testName =>{
-  return {type:'FETCH_TEST', testName:testName}
-}
-
-export const addTest=(test)=>dispatch=>{
+export const showAllTest = () =>dispatch=>{
   axios
-    .post('eval/tests', test)
-    .then (res =>
+    .get('/eval/tests')
+    .then(res =>
       dispatch({
-        type:saveFullQuestionnaire,
+        type:showTest,
         payload:res.data
       })
     )
-    .catch(err => {
-      console.warn(err);
-    })
 }
+
 
 export const store = createStore(reducer, applyMiddleware(thunk));

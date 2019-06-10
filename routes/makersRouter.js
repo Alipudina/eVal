@@ -4,9 +4,13 @@ const {  loginMakers, handleValidationErrors, authorization, createMakers, logou
 const { userCreateValidator } = require('../helpers/userCreateValidator');
 
 
-makersRouter.post('/signin', userCreateValidator, handleValidationErrors, createMakers);
-makersRouter.post('/login', handleValidationErrors, loginMakers);
+makersRouter.post('/signin', createMakers);
+makersRouter.post('/login', loginMakers);
 makersRouter.get('/logout', logoutMakers);
 
+
+// makersRouter.post('/signin', userCreateValidator, handleValidationErrors, createMakers);
+// makersRouter.post('/login', handleValidationErrors, loginMakers);
+// makersRouter.get('/logout', logoutMakers);
 
 module.exports = makersRouter;

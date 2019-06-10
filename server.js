@@ -13,13 +13,14 @@ const testsRouter = require('./routes/testsRouter');
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+
 mongoose.set('useNewUrlParser', true);
 
 app.listen(PORT, async () => {
   try {
     console.log('Server is listening');
-    await mongoose.connect('mongodb://localhost:27017/eval', {useNewUrlParser: true});
-    console.log('Connected to Local DB');
+    await mongoose.connect(process.env.DB_URL, {useNewUrlParser: true});
+    console.log(`Connected to PORT ${PORT}`);
   } catch (error) {
     console.log(error);
   }
