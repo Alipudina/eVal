@@ -6,11 +6,11 @@ import {YesNoAnswerContainer} from './materialui/yesno';
 import {MultipleChoiceContainer} from './materialui/multiplechoice';
 import {ScrambledContainer} from './materialui/scrambled';
 import Auth from '../auth';
-import {LogoutContainer} from './logout';
+// import {LogoutContainer} from './logout';
 
 
 // protected class #########################
-export default class Protected  extends Component {
+export class Protected  extends Component {
   render () {
     if (Auth.isAuthenticated()) {
       return <Route component={CreationPage} />

@@ -10,7 +10,7 @@ export default class Body extends Component {
       <>
         <div className="body">
           <Route path="/" exact component={LandingPage} />
-          <Route path="/login" component={LoginPage} />
+
           <Route path="/create" exact component={CreationPageContainer} />
           <Route path="/showtest" component={ShowTestContainer} />
         </div>

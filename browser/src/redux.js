@@ -32,8 +32,62 @@ const reducer =(state=initialState, action)=>{
 
   switch (action.type) {
 
+    case 'LOGIN_INPUT':
+      switch(action.ev.target.type) {
+        case 'text':
+          copyOfState.userNameInput=action.ev.target.value;
+          return copyOfState;
+
+        case 'password':
+          copyOfState.passwordInput=action.ev.target.value;
+          return copyOfState;
+      default:
+        return copyOfState;
+      }
+
+      case 'ADD_ACCOUNT':
+        copyOfState.accountConfirm=true;
+        console.log(copyOfState.accountConfirm);
+        return copyOfState;
+
+    case 'REDIRECT_LOGIN':
+      if (state.userNameInput===state.userName && state.passwordInput===state.password) {
+        copyOfState.loginRedirecion=true;
+        Auth.login();
+      } else {
+        copyOfState.hasFailed=true;
+        setTimeout(() => {
+          copyOfState.loginRedirecion=false;
+          copyOfState.hasFailed=false;
+        }, 50)
+
+      }
+      return copyOfState;
+
+    case 'SIGNUP_REDIRECT':
+      copyOfState.signupRedirect=true;
+      Auth.login();
+      return copyOfState;
+
+    case 'LOGOUT':
+      copyOfState.signupRedirect=false;
+      copyOfState.accountConfirm=false;
+      copyOfState.loginRedirecion=false;
+      Auth.logout();
+      return copyOfState;
+
+      case 'TOUCHED':
+      if (action.ev.target.action!=="https://formspree.io/alipudina55@gmail.com") {
+          action.ev.preventDefault();
+          ContactEmailChanged.touched();
+          copyOfState.isManipulated=true;
+        }
+        return copyOfState;
+
+
     case 'QUESTION_TYPE_CHANGE':
       copyOfState.questionType = action.event.target.value
+      console.log(action.event.target.value)
       return copyOfState;
 
     case 'TEST_NAME_CHANGE':
@@ -114,6 +168,44 @@ const reducer =(state=initialState, action)=>{
 
 }
 
+export const loginInputHandler= ev => {
+  return {
+    type: 'LOGIN_INPUT',
+    ev: ev
+  }
+}
+
+export const addAccountHandler= ev => {
+  return {
+    type: 'ADD_ACCOUNT',
+    ev: ev
+  }
+}
+
+export const redirectToLogin= () => {
+  return {type: 'REDIRECT_LOGIN'}
+}
+
+export const confirmHandler= ev => {
+  return {
+    type: 'SIGNUP_REDIRECT',
+    ev: ev
+  }
+}
+
+export const logoutChanges= ev => {
+  return {
+    type: 'LOGOUT',
+    ev: ev
+  }
+}
+
+export const emailHandler= ev => {
+  return {
+    type: 'TOUCHED',
+    ev: ev
+  }
+}
 
 export const questionTypeChange = ev=>{
   return {type:'QUESTION_TYPE_CHANGE', event:ev}
@@ -166,107 +258,3 @@ export const showAllTest = () =>dispatch=>{
 
 
 export const store = createStore(reducer, applyMiddleware(thunk));
-
-
-
-
-const reducer = (state = initialState, action) => {
-    const updatedState = { ...state };
-
-    switch(action.type) {
-
-      case 'LOGIN_INPUT':
-        switch(action.ev.target.type) {
-          case 'text':
-            updatedState.userNameInput=action.ev.target.value;
-            return updatedState;
-
-          case 'password':
-            updatedState.passwordInput=action.ev.target.value;
-            return updatedState;
-        default:
-          return updatedState;
-        }
-
-        case 'ADD_ACCOUNT':
-          updatedState.accountConfirm=true;
-          console.log(updatedState.accountConfirm);
-          return updatedState;
-
-      case 'REDIRECT_LOGIN':
-        if (state.userNameInput===state.userName && state.passwordInput===state.password) {
-          updatedState.loginRedirecion=true;
-          Auth.login();
-        } else {
-          updatedState.hasFailed=true;
-          setTimeout(() => {
-            updatedState.loginRedirecion=false;
-            updatedState.hasFailed=false;
-          }, 50)
-
-        }
-        return updatedState;
-
-      case 'SIGNUP_REDIRECT':
-        updatedState.signupRedirect=true;
-        Auth.login();
-        return updatedState;
-
-      case 'LOGOUT':
-        updatedState.signupRedirect=false;
-        updatedState.accountConfirm=false;
-        updatedState.loginRedirecion=false;
-        Auth.logout();
-        return updatedState;
-
-        case 'TOUCHED':
-        if (action.ev.target.action!=="https://formspree.io/alipudina55@gmail.com") {
-            action.ev.preventDefault();
-            ContactEmailChanged.touched();
-            updatedState.isManipulated=true;
-          }
-          return updatedState;
-
-      default:
-        return updatedState;
-    }
-}
-
-export const loginInputHandler= ev => {
-  return {
-    type: 'LOGIN_INPUT',
-    ev: ev
-  }
-}
-
-export const addAccountHandler= ev => {
-  return {
-    type: 'ADD_ACCOUNT',
-    ev: ev
-  }
-}
-
-export const redirectToLogin= () => {
-  return {type: 'REDIRECT_LOGIN'}
-}
-
-export const confirmHandler= ev => {
-  return {
-    type: 'SIGNUP_REDIRECT',
-    ev: ev
-  }
-}
-
-export const logoutChanges= ev => {
-  return {
-    type: 'LOGOUT',
-    ev: ev
-  }
-}
-
-export const emailHandler= ev => {
-  return {
-    type: 'TOUCHED',
-    ev: ev
-  }
-}

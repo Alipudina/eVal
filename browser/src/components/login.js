@@ -55,7 +55,7 @@ class LoginPage extends Component {
             <button>Login</button>
           </form>
           {this.props.hasFailed && <div className="alert alert-danger my-4">Either username or password was incorrect. Try again!</div>}
-          {this.props.loginRedirecion && <Redirect to="/creationPage"/>}
+          {this.props.loginRedirecion && <Redirect to="/create"/>}
 
           <form className="createAccountForm" onSubmit={this.signupHandler}>
             <h1>Not a user ? Create account</h1>
@@ -86,7 +86,7 @@ class LoginPage extends Component {
             }))}
           </div>
 
-          {this.props.signupRedirect && <Redirect to="/creationPage"/>}
+          {this.props.signupRedirect && <Redirect to="/create"/>}
         </div>
     )
   }
