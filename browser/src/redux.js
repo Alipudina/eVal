@@ -48,7 +48,7 @@ const reducer =(state=initialState, action)=>{
       case 'ADD_ACCOUNT':
         copyOfState.accountConfirm=true;
         console.log(copyOfState.accountConfirm);
-        return copyOfState;
+          return copyOfState;
 
     case 'REDIRECT_LOGIN':
       if (state.userNameInput===state.userName && state.passwordInput===state.password) {
@@ -87,7 +87,6 @@ const reducer =(state=initialState, action)=>{
 
     case 'QUESTION_TYPE_CHANGE':
       copyOfState.questionType = action.event.target.value
-      console.log(action.event.target.value)
       return copyOfState;
 
     case 'TEST_NAME_CHANGE':

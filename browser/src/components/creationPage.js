@@ -6,7 +6,7 @@ import {YesNoAnswerContainer} from './materialui/yesno';
 import {MultipleChoiceContainer} from './materialui/multiplechoice';
 import {ScrambledContainer} from './materialui/scrambled';
 import Auth from '../auth';
-// import {LogoutContainer} from './logout';
+import {LogoutContainer} from './logout';
 
 
 // protected class #########################
@@ -25,6 +25,7 @@ class CreationPage extends Component {
   render() {
     return (
       <>
+        <LogoutContainer />
         <div className="body">
           <h1>Create a test</h1>
           <form className="creatorForm">
