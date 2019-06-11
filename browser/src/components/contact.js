@@ -76,4 +76,4 @@ const mapDispatchToProps= dispatch => {
   }
 }
 
-export const ContactCotainer=connect(mapStateToProps, mapDispatchToProps)(Contact);
+export const ContactContainer=connect(mapStateToProps, mapDispatchToProps)(Contact);
