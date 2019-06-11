@@ -17,7 +17,7 @@ class App extends Component {
           <Header />
           <Route exact path="/" component={LandingPage} />
           <Route path="/login" component={LoginPageContainer} />
-          <Route path="/create" component={CreationPageContainer} />
+          <Route path="/create" component={Protected} />
           <Route path="/contact" component={ContactContainer} />
           <Footer />
         </BrowserRouter>

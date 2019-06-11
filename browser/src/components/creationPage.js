@@ -13,7 +13,7 @@ import {LogoutContainer} from './logout';
 export class Protected  extends Component {
   render () {
     if (Auth.isAuthenticated()) {
-      return <Route component={CreationPage} />
+      return <Route component={CreationPageContainer} />
     } else {
       return <Redirect to="/login" />
     }
