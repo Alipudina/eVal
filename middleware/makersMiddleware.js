@@ -2,7 +2,9 @@ const makersModel = require('../models/makersModel');
 const {validationResult } = require('express-validator/check');
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv').config();
+const jwt = require('jsonwebtoken');
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
+const SECRET= process.env.SECRET;
 
 const handleValidationErrors = (req, res, next) => {
   const validationErrors = validationResult(req);
@@ -10,6 +12,18 @@ const handleValidationErrors = (req, res, next) => {
     return res.status(400).json({errors: validationErrors.array()});
   }
   next();
+}
+
+const authorization = async (req, res, next) => {
+  try {
+    const tokenCookie = req.cookies.authToken.split(' ')[1];
+    await jwt.verify(tokenCookie, SECRET);
+    req.token = tokenCookie;
+
+    next();
+  }catch (error) {
+    next(error);
+  }
 }
 
 const createMakers = async (req, res, next)=>{
@@ -43,12 +57,25 @@ const loginMakers = async (req, res, next) => {
       return res.status(400).json({msg: 'Password is incorrect'});
     }
 
-    res.status(200).json({userName: findMaker.userName});
+    const token = await jwt.sign({userName: findMaker.userName}, SECRET);
+    res.cookie('authToken', token, {httpOnly: true});
+    res.status(200).json({userName: findMaker.userName, token:token});
 
   }catch (error) {
     next(error);
   }
 }
 
+const logoutMakers = async (req, res, next)=>{
+  try{
+    const inputToken = req.cookies.authToken;
+    await jwt.verify(inputToken, SECRET);
+    res.clearCookie('authToken')
+    res.status(200).json('The user has succesfully logged out')
 
-module.exports = {loginMakers, handleValidationErrors, createMakers};
+  }catch(error){
+    next(error);
+  }
+}
+
+module.exports = {loginMakers, handleValidationErrors, authorization, createMakers, logoutMakers};
