@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const testSchema = new mongoose.Schema({
-  testId: {type: String, required: true},
   testName: {type: String, required: true},
   questionInOrder: {type: Boolean},
   questionnaire:[{
