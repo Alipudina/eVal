@@ -30,6 +30,7 @@ h1{
 }
 }
 .footer{
+    margin-top: 2em;
     display: flex;
     justify-content: space-around;
 }
@@ -50,6 +51,32 @@ div.info-container {
   }
 }
 
+
+.creatorForm{
+  display: flex;
+  flex-direction: column;
+
+}
+
+.selectQuestionType,.testName, .questionText, .questionType{
+  width: 12em;
+  margin: .3vw auto;
+}
+
+.multiDiv{
+margin: 0 auto;
+display: flex;
+flex-direction: column;
+width: 20em;
+}
+
+.fullQuestion{
+  width: 100%;
+  margin: 1vw auto;
+  font-size: 1vw;
+  text-align: center;
+  span{
+    margin-right: .6vw;
 // login component ###################
 div.account-container {
 
@@ -58,3 +85,71 @@ div.account-container {
     background: #E9E9E9;
   }
 }
+
+.deleteButton{
+  font-size: 1vw;
+  background: red;
+}
+
+.removeLink{
+  text-decoration: none;
+  color:black;
+  &:hover {
+  text-decoration: none;
+}
+}}}
+
+
+
+
+
+
+
+
+
+// div.start-page {
+//   width: 90%;
+//   max-height: 100vh;
+//   margin: 0 auto;
+//   border: 1px solid red;
+
+//   div.header {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     margin: 2vw 0;
+
+//     div.login-container {
+//       display: flex;
+//       flex-direction: column;
+
+//       button {
+//         margin: 1vw auto;
+//       }
+//     }
+//   }
+
+//   div.info-container {
+//     width: 60%;
+//     margin: 2vw auto;
+//     height: 35vw;
+
+//     p {
+//       width: 60%;
+//       margin: auto;
+//       line-height: 1.6;
+//       letter-spacing: .1vw;
+//     }
+//   }
+
+//   div.footer {
+//     display: flex;
+//     justify-content: space-around;
+//     border: 2px solid black;
+//     margin-bottom: 0;
+
+//     button {
+//       margin: 2vw auto;
+//     }
+//   }
+// }

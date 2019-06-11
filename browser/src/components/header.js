@@ -7,7 +7,7 @@ export default class Header extends Component{
             <>
               <div className="header">
               <NavLink to="/" className="logobtn">eVal Logo</NavLink>
-              
+
               </div>
             </>
             )
