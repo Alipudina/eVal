@@ -16,23 +16,23 @@ class LoginPage extends Component {
   }
 
   // signup part ++++++++++++++++++++++++
-  signupHandler= ev => {
-    ev.preventDefault();
-    // console.log(this.refs.email.value);
-    this.setState({
-      name: this.refs.name.value,
-      email: this.refs.email.value,
-      userName: this.refs.userName.value,
-      password: this.refs.password.value,
-    });
-
-    setTimeout(() => {
-      this.props.addAccount.push(this.state);
-      this.props.addAccountHandler();
-    }, 10)
-
-
-  }
+  // signupHandler= ev => {
+  //   ev.preventDefault();
+  //   // console.log(this.refs.email.value);
+  //   this.setState({
+  //     name: this.refs.name.value,
+  //     email: this.refs.email.value,
+  //     userName: this.refs.userName.value,
+  //     password: this.refs.password.value,
+  //   });
+  //
+  //   setTimeout(() => {
+  //     this.props.addAccount.push(this.state);
+  //     this.props.addAccountHandler();
+  //   }, 10)
+  //
+  //
+  // }
 
   // login part +++++++++++++++++++++++
   loginHandler= ev => {
@@ -57,12 +57,12 @@ class LoginPage extends Component {
           {this.props.hasFailed && <div className="alert alert-danger my-4">Either username or password was incorrect. Try again!</div>}
           {this.props.loginRedirecion && <Redirect to="/create"/>}
 
-          <form className="createAccountForm" onSubmit={this.signupHandler}>
+          <form className="createAccountForm" onSubmit={this.props.signupHandler}>
             <h1>Not a user ? Create account</h1>
             <label>Name</label>
-            <input required placeholder="Name" ref="name" />
+            <input placeholder="Name" ref="name" />
             <label>Email</label>
-            <input required placeholder="Email" ref="email" />
+            <input placeholder="Email" ref="email" />
             <label>userName</label>
             <input required placeholder="userName" ref="userName" minLength={6} />
             <label>Password</label>
@@ -107,7 +107,7 @@ const mapDispatchToProps= dispatch => {
     redirectToLogin: ev => dispatch(redirectToLogin(ev)),
     loginInputHandler: ev => dispatch(loginInputHandler(ev)),
     addAccountHandler: ev => dispatch(addAccountHandler(ev)),
-    confirmHandler: ev => dispatch(confirmHandler(ev))
+    confirmHandler: ev => dispatch(confirmHandler(ev)),
   }
 }
 

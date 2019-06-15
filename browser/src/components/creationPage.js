@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {NavLink, Route, Redirect} from 'react-router-dom';
-import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire, showTest} from '../redux';
+import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire, showTest, makeFetch} from '../redux';
 import {YesNoAnswerContainer} from './materialui/yesno';
 import {MultipleChoiceContainer} from './materialui/multiplechoice';
 import {ScrambledContainer} from './materialui/scrambled';
@@ -22,6 +22,9 @@ export class Protected  extends Component {
 
 
 class CreationPage extends Component {
+  componentDidMount(){
+    this.props.makeFetch();
+  }
   render() {
     return (
       <>
@@ -146,6 +149,7 @@ const mapDispatchToProps = dispatch => {
         saveFullQuestionnaire: ev=> dispatch(saveFullQuestionnaire(ev)),
         deleteQuestionnaire: ev=> dispatch(deleteQuestionnaire(ev)),
         showTest: ev => dispatch(showTest(ev)),
+        makeFetch: ev=>dispatch(makeFetch(ev))
     }
 }
 
