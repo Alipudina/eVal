@@ -7,7 +7,8 @@ import {LoginPageContainer} from './components/login';
 import {Protected} from './components/creationPage';
 import LandingPage from './components/landingPage';
 import {ContactContainer} from './components/contact';
-import {CreationPageContainer} from'./components/creationPage';
+import {CreationPageContainer} from './components/creationPage';
+import {TestsPageContainer} from './components/testsPage';
 
 class App extends Component {
   render(){
@@ -19,6 +20,7 @@ class App extends Component {
           <Route path="/login" component={LoginPageContainer} />
           <Route path="/create" component={Protected} />
           <Route path="/contact" component={ContactContainer} />
+          <Route path="/testsPage" component={TestsPageContainer}/>
           <Footer />
         </BrowserRouter>
       </React.Fragment>

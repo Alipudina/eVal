@@ -26,6 +26,7 @@ class CreationPage extends Component {
     return (
       <>
         <LogoutContainer />
+        <NavLink to="testsPage" className="btn btn-primary login-out tests">My Tests</NavLink>
         <div className="body">
           <h1>Create a test</h1>
           <form className="creatorForm">
