@@ -23,7 +23,8 @@ const initialState={
   addAccount: [],
   accountConfirm: false,
   signupRedirect: false,
-  isManipulated: false
+  isManipulated: false,
+  userInfo:null,
 };
 
 const reducer =(state=initialState, action)=>{
@@ -49,7 +50,12 @@ const reducer =(state=initialState, action)=>{
         console.log(copyOfState.accountConfirm);
           return copyOfState;
 
-    case 'REDIRECT_LOGIN':
+
+          case 'REDIRECT_LOGIN':
+            return {...copyOfState, loginRedirecion: true};
+
+
+    case 'REDIRECT_LOGINs':
       if (state.userNameInput===state.userName && state.passwordInput===state.password) {
         copyOfState.loginRedirecion=true;
         Auth.login();
@@ -160,6 +166,13 @@ const reducer =(state=initialState, action)=>{
       copyOfState.questionnaire=[...state.questionnaire, action.testName]
       return copyOfState;
 
+      case 'FETCH_DATA':
+        return {...copyOfState, userInfo: action.userData};
+
+
+
+
+
     default:
       return copyOfState;
  }
@@ -243,6 +256,13 @@ export const showTest = testName =>{
 }
 
 
+export const requestAction = userData => {
+  return { type: 'FETCH_DATA', userData: userData }
+}
+
+
+
+
 
 export const makeFetch=()=>{
   return function(dispatch){
@@ -252,6 +272,32 @@ export const makeFetch=()=>{
     .catch(error=>console.log(error))
   }
 }
+export const loginFetch = credentials => {
+  return function(dispatch) {
+    fetch('/eval/login', {
+      method: 'post',
+      mode: 'cors',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify(credentials)
+    })
+    .then(res => {
+      if (res.status === 400 || res.status === 404) {
+        throw new Error('Authentication failed');
+      }
 
+      return res.json();
+    })
+    .then(userData => {
+      console.log(userData);
+      Auth.login();
+      dispatch(requestAction(userData));
+      dispatch(redirectToLogin());
+    })
+    .catch(err => {
+      console.warn(err);
+      // dispatch(hasFailedAction());
+    })
+  }
+}
 
 export const store = createStore(reducer, applyMiddleware(thunk));

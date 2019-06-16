@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {NavLink, Route, Redirect} from 'react-router-dom';
-import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire, showTest, makeFetch} from '../redux';
+import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire, showTest, makeFetch, loginFetch} from '../redux';
 import {YesNoAnswerContainer} from './materialui/yesno';
 import {MultipleChoiceContainer} from './materialui/multiplechoice';
 import {ScrambledContainer} from './materialui/scrambled';
@@ -149,7 +149,8 @@ const mapDispatchToProps = dispatch => {
         saveFullQuestionnaire: ev=> dispatch(saveFullQuestionnaire(ev)),
         deleteQuestionnaire: ev=> dispatch(deleteQuestionnaire(ev)),
         showTest: ev => dispatch(showTest(ev)),
-        makeFetch: ev=>dispatch(makeFetch(ev))
+        makeFetch: ev=>dispatch(makeFetch(ev)),
+          makeRequest: credentials => dispatch(loginFetch(credentials))
     }
 }
 
