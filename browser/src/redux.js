@@ -24,7 +24,10 @@ const initialState={
   addAccount: [],
   accountConfirm: false,
   signupRedirect: false,
-  isManipulated: false
+  isManipulated: false,
+  testArray: ['Math', 'Physics', 'Chemistry', 'Biology'],
+  addEmailArray: [],
+  testLink: 'http://test-link'
 };
 
 const reducer =(state=initialState, action)=>{
@@ -184,6 +187,29 @@ export const addAccountHandler= ev => {
 export const redirectToLogin= () => {
   return {type: 'REDIRECT_LOGIN'}
 }
+
+// export const redirectToLogin= ev => {
+//   return function(dispatch) {
+//     fetch('/eval/signin')
+//     .then(res => {
+//       if (res.status >= 400 && res.status < 500) {
+//         throw new Error('You sack already!');
+//       }else {
+//         return res.json();
+//       }
+//     })
+//     .then(messageObject => {
+//       console.log(messageObject);
+//       // dispatch(putTheMessageThere(messageObject));
+//     })
+//     .catch(err => {
+//       // dispatch(badRequest(err))
+//       console.log(err);
+//     })
+//   }
+// }
+
+
 
 export const confirmHandler= ev => {
   return {

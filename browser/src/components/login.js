@@ -30,8 +30,6 @@ class LoginPage extends Component {
       this.props.addAccount.push(this.state);
       this.props.addAccountHandler();
     }, 10)
-
-
   }
 
   // login part +++++++++++++++++++++++
