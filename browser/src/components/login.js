@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { redirectToLogin, loginInputHandler, addAccountHandler, confirmHandler } from '../redux';
+import { redirectToLogin, loginInputHandler, addAccountHandler, confirmHandler, loginFetch } from '../redux';
 import { Card, Button } from 'react-bootstrap';
 
 
@@ -35,8 +35,8 @@ class LoginPage extends Component {
   // login part +++++++++++++++++++++++
   loginHandler= ev => {
     ev.preventDefault();
-    this.props.redirectToLogin();
-  }
+    // this.props.redirectToLogin();
+      this.props.makeRequest({userName: this.props.userNameInput, password: this.props.passwordInput});}
 
 
   render() {
@@ -47,20 +47,22 @@ class LoginPage extends Component {
           <h1>login page</h1>
           <form className="loginForm" onSubmit={this.loginHandler}>
             <label>userName</label>
-            <input type="text" placeholder="userName" required onChange={this.props.loginInputHandler} />
+            <input type="text" placeholder="userName" required onChange={this.props.loginInputHandler} value={
+              this.props.userNameInput}/>
             <label>Password</label>
-            <input type="password" placeholder="password" required onChange={this.props.loginInputHandler} />
+            <input type="password" placeholder="password" required onChange={this.props.loginInputHandler} value={
+              this.props.passwordInput}/>
             <button>Login</button>
           </form>
           {this.props.hasFailed && <div className="alert alert-danger my-4">Either username or password was incorrect. Try again!</div>}
           {this.props.loginRedirecion && <Redirect to="/create"/>}
 
-          <form className="createAccountForm" onSubmit={this.signupHandler}>
+          <form className="createAccountForm" onSubmit={this.props.signupHandler}>
             <h1>Not a user ? Create account</h1>
             <label>Name</label>
-            <input required placeholder="Name" ref="name" />
+            <input placeholder="Name" ref="name" />
             <label>Email</label>
-            <input required placeholder="Email" ref="email" />
+            <input placeholder="Email" ref="email" />
             <label>userName</label>
             <input required placeholder="userName" ref="userName" minLength={6} />
             <label>Password</label>
@@ -96,7 +98,9 @@ const mapStateToProps = state => {
     hasFailed: state.hasFailed,
     addAccount: state.addAccount,
     accountConfirm: state.accountConfirm,
-    signupRedirect: state.signupRedirect
+    signupRedirect: state.signupRedirect,
+    userNameInput:state.userNameInput,
+    passwordInput:state.passwordInput
   }
 }
 
@@ -105,7 +109,8 @@ const mapDispatchToProps= dispatch => {
     redirectToLogin: ev => dispatch(redirectToLogin(ev)),
     loginInputHandler: ev => dispatch(loginInputHandler(ev)),
     addAccountHandler: ev => dispatch(addAccountHandler(ev)),
-    confirmHandler: ev => dispatch(confirmHandler(ev))
+    confirmHandler: ev => dispatch(confirmHandler(ev)),
+      makeRequest: credentials => dispatch(loginFetch(credentials))
   }
 }
 

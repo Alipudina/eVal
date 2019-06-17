@@ -7,7 +7,7 @@ import {LoginPageContainer} from './components/login';
 import {Protected} from './components/creationPage';
 import LandingPage from './components/landingPage';
 import {ContactContainer} from './components/contact';
-import {CreationPageContainer} from './components/creationPage';
+// import {CreationPageContainer} from './components/creationPage';
 import {TestsPageContainer} from './components/testsPage';
 
 class App extends Component {
