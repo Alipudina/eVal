@@ -27,7 +27,7 @@ const initialState={
 
   testArray: ['Math', 'Physics', 'Chemistry', 'Biology'],
   addEmailArray: [],
-  testLink: 'http://test-link'
+  testLink: 'http://test-link',
 
   userInfo:null,
 
@@ -301,6 +301,7 @@ export const makeFetch=()=>{
     .catch(error=>console.log(error))
   }
 }
+
 export const loginFetch = credentials => {
   return function(dispatch) {
     fetch('/eval/login', {
