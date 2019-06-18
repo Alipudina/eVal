@@ -9,7 +9,7 @@ import { Alert } from 'react-bootstrap';
 class LoginPage extends Component {
 
   // signup part ++++++++++++++++++++++++
-  signupHandler= ev => {
+  signupHandler = ev => {
     ev.preventDefault();
 
     this.props.addAccountHandler({
@@ -20,10 +20,11 @@ class LoginPage extends Component {
   }
 
   // login part +++++++++++++++++++++++
-  loginHandler= ev => {
+  loginHandler = ev => {
     ev.preventDefault();
     // this.props.redirectToLogin();
-      this.props.makeRequest({userName: this.props.userNameInput, password: this.props.passwordInput});}
+    this.props.makeRequest({ userName: this.props.userNameInput, password: this.props.passwordInput });
+  }
 
 
   render() {
@@ -60,6 +61,8 @@ class LoginPage extends Component {
 
           {this.props.signupRedirect && <Redirect to="/create"/>}
         </div>
+
+    
     )
   }
 }
@@ -81,7 +84,7 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps= dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     redirectToLogin: ev => dispatch(redirectToLogin(ev)),
     loginInputHandler: ev => dispatch(loginInputHandler(ev)),
@@ -91,4 +94,4 @@ const mapDispatchToProps= dispatch => {
   }
 }
 
-export const LoginPageContainer=connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export const LoginPageContainer = connect(mapStateToProps, mapDispatchToProps)(LoginPage);
