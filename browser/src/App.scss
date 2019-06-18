@@ -4,12 +4,6 @@
         text-align: center;
     }
 }
-.loginForm,.createAccountForm{
-    display: flex;
-    flex-direction: column;
-    width: 15em;
-    margin: 0 auto;
-}
 
 .login-out {
   position: relative;
@@ -28,8 +22,8 @@
     justify-content: space-between;
 }
 .landingPage{
+background-image: linear-gradient(white,rgb(12, 123, 192));
 height: 30em;
-background:lightgray;
 h1{
     text-align: center;
 }
@@ -40,7 +34,9 @@ h1{
     justify-content: space-around;
 }
 
-
+.logo{
+  width: 5em;
+}
 
 
 div.info-container {

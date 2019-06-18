@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+// import { Container } from 'react-bootstrap';
 
 export default class LandingPage extends Component {
     render() {
         return (
             <>
-              <NavLink to="/login" className="btn btn-primary login-out">LogIn/SignUp</NavLink>
-                <div className="landingPage">
+                <NavLink to="/login" className="  btn btn-primary float-right">LogIn/SignUp</NavLink>
+                <div className="landingPage Container mt-5">
                     <h1> LandingPage</h1>
-                    <div className="info-container">
-                        <p>
+                    <div className="p-5 p-lg-5">
+                        <p className="Card">
                             eVAL is an easy, convenient and intuitive tool to create your own evaluation test.
                             With eVAL you can create your own questions and choose the type of answer that best fits
                             your needs: Yes/No, Multiple Choice or Scrambled Text.             Store different set of tests to apply whenever you need.
@@ -17,6 +18,7 @@ export default class LandingPage extends Component {
                         </p>
                     </div>
                 </div>
+
 
             </>
         )

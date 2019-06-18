@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Button, ButtonToolbar} from 'react-bootstrap';
+import { Modal, Button, ButtonToolbar } from 'react-bootstrap';
 
 
 class MyVerticallyCenteredModal extends Component {
@@ -27,7 +27,7 @@ class MyVerticallyCenteredModal extends Component {
             making this the first true generator on the Internet. It uses a dictionary of over 200 Latin
             words, combined with a handful of model sentence structures, to generate Lorem Ipsum which
             looks reasonable. The generated Lorem Ipsum is therefore always free from repetition,
-            injected humour, or non-characteristic words etc.  
+            injected humour, or non-characteristic words etc.
           </p>
         </Modal.Body>
         <Modal.Footer>
