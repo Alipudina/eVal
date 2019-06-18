@@ -29,41 +29,44 @@ class LoginPage extends Component {
 
   render() {
     return (
-        <div className="login">
-          <NavLink to="/" className="btn btn-primary login-out">Home</NavLink>
+<>
+      <NavLink to="/" className="btn btn-primary float-right">Home</NavLink>
+      <div className="login">
+     
 
-          <h1>login page</h1>
-          <form className="loginForm" onSubmit={this.loginHandler}>
-            <label>userName</label>
-            <input type="text" placeholder="userName" required onChange={this.props.loginInputHandler} value={
-              this.props.userNameInput}/>
-            <label>Password</label>
-            <input type="password" placeholder="password" required onChange={this.props.loginInputHandler} value={
-              this.props.passwordInput}/>
-            <button>Login</button>
-          </form>
-          {this.props.hasFailed && <div className="alert alert-danger my-4">Either username or password was incorrect. Try again!</div>}
-          {this.props.loginRedirecion && <Redirect to="/create"/>}
+        <h1>login page</h1>
+        <form className=" d-flex flex-column w-25 mx-auto mt-3" onSubmit={this.loginHandler}>
+          <label>userName</label>
+          <input type="text" placeholder="userName" required onChange={this.props.loginInputHandler} value={
+            this.props.userNameInput} />
+          <label>Password</label>
+          <input type="password" placeholder="password" required onChange={this.props.loginInputHandler} value={
+            this.props.passwordInput} />
+          <button className="btn btn-primary">Login</button>
+        </form>
+        {this.props.hasFailed && <div className="alert alert-danger my-4">Either username or password was incorrect. Try again!</div>}
+        {this.props.loginRedirecion && <Redirect to="/create" />}
+        <h1>Not a user ? Create account</h1>
+        <form className=" d-flex flex-column w-25 mx-auto mt-3" onSubmit={this.signupHandler}>
 
-          <form className="createAccountForm" onSubmit={this.signupHandler}>
-            <h1>Not a user ? Create account</h1>
-            <label>Email</label>
-            <input onChange={this.props.signinInputHandler} ident="email" type="email" placeholder="Email" required />
-            <label>userName</label>
-            <input onChange={this.props.signinInputHandler} ident="username" placeholder="userName" required minLength={6} />
-            <label>Password</label>
-            <input onChange={this.props.signinInputHandler} ident="password" type="password" required placeholder="password" minLength={6} />
-            <button>Signup</button>
-          </form>
+          <label>Email</label>
+          <input onChange={this.props.signinInputHandler} ident="email" type="email" placeholder="Email" required />
+          <label>userName</label>
+          <input onChange={this.props.signinInputHandler} ident="username" placeholder="userName" required minLength={6} />
+          <label>Password</label>
+          <input onChange={this.props.signinInputHandler} ident="password" type="password" required placeholder="password" minLength={6} />
+          <button className="btn btn-primary" >Signup</button>
+        </form>
 
-          {this.props.signinSuccess && <Alert variant='success'>{this.props.signinMsg}</Alert>}
-          {this.props.signinFaild && <Alert variant='danger'>Signin faild</Alert>}
+        {this.props.signinSuccess && <Alert variant='success'>{this.props.signinMsg}</Alert>}
+        {this.props.signinFaild && <Alert variant='danger'>Signin faild</Alert>}
 
-          {this.props.signupRedirect && <Redirect to="/create"/>}
-        </div>
+        {this.props.signupRedirect && <Redirect to="/create" />}
+      </div>
 
-    
+      </>
     )
+
   }
 }
 
@@ -73,8 +76,8 @@ const mapStateToProps = state => {
     hasFailed: state.hasFailed,
     accountConfirm: state.accountConfirm,
     signupRedirect: state.signupRedirect,
-    userNameInput:state.userNameInput,
-    passwordInput:state.passwordInput,
+    userNameInput: state.userNameInput,
+    passwordInput: state.passwordInput,
     signinEmail: state.signinEmail,
     signinUserName: state.signinUserName,
     signinPassword: state.signinPassword,
