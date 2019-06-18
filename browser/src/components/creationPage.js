@@ -31,6 +31,7 @@ class CreationPage extends Component {
         <LogoutContainer />
         <NavLink to="testsPage" className="btn btn-primary login-out tests">My Tests</NavLink>
         <div className="body">
+          <h1>Hello {this.props.signinUserName} {this.props.userNameInput}</h1>
           <h1>Create a test</h1>
           <form className="creatorForm">
           <label className="questionText">Name of the Test: </label>
@@ -138,6 +139,8 @@ const mapStateToProps = state => {
         questionType: state.questionType,
         allFullQuestions: state.allFullQuestions,
         showTest:state.showTest,
+        signinUserName: state.signinUserName,
+        userNameInput: state.userNameInput
     }
 }
 const mapDispatchToProps = dispatch => {

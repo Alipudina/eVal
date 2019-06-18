@@ -1,35 +1,22 @@
 import React, { Component } from 'react';
 import { Redirect, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { redirectToLogin, loginInputHandler, addAccountHandler, confirmHandler, loginFetch } from '../redux';
-import { Card, Button } from 'react-bootstrap';
+import { redirectToLogin, loginInputHandler, signinFetch, loginFetch, signinInputHandler } from '../redux';
+import { Alert } from 'react-bootstrap';
 
 
 // loginPage ######################
 class LoginPage extends Component {
 
-  state={
-    name: '',
-    email: '',
-    userName: '',
-    password: ''
-  }
-
   // signup part ++++++++++++++++++++++++
   signupHandler= ev => {
     ev.preventDefault();
-    // console.log(this.refs.email.value);
-    this.setState({
-      name: this.refs.name.value,
-      email: this.refs.email.value,
-      userName: this.refs.userName.value,
-      password: this.refs.password.value,
-    });
 
-    setTimeout(() => {
-      this.props.addAccount.push(this.state);
-      this.props.addAccountHandler();
-    }, 10)
+    this.props.addAccountHandler({
+      userEmail: this.props.signinEmail,
+      userName: this.props.signinUserName,
+      password: this.props.signinPassword
+    });
   }
 
   // login part +++++++++++++++++++++++
@@ -57,34 +44,19 @@ class LoginPage extends Component {
           {this.props.hasFailed && <div className="alert alert-danger my-4">Either username or password was incorrect. Try again!</div>}
           {this.props.loginRedirecion && <Redirect to="/create"/>}
 
-          <form className="createAccountForm" onSubmit={this.props.signupHandler}>
+          <form className="createAccountForm" onSubmit={this.signupHandler}>
             <h1>Not a user ? Create account</h1>
-            <label>Name</label>
-            <input placeholder="Name" ref="name" />
             <label>Email</label>
-            <input placeholder="Email" ref="email" />
+            <input onChange={this.props.signinInputHandler} ident="email" type="email" placeholder="Email" required />
             <label>userName</label>
-            <input required placeholder="userName" ref="userName" minLength={6} />
+            <input onChange={this.props.signinInputHandler} ident="username" placeholder="userName" required minLength={6} />
             <label>Password</label>
-            <input required placeholder="password" type="password" ref="password" minLength={6} />
+            <input onChange={this.props.signinInputHandler} ident="password" type="password" required placeholder="password" minLength={6} />
             <button>Signup</button>
           </form>
-          <div className="account-container">
-            {this.props.accountConfirm && this.props.addAccount.map(((elem, index) => {
-              return (
-                <Card style={{ width: '18rem' }} className="card-account" key={index}>
-                  <Card.Body>
-                    <Card.Title>Your Account</Card.Title>
-                    <Card.Text>Name: {elem.name}</Card.Text>
-                    <Card.Text>Email: {elem.email}</Card.Text>
-                    <Card.Text>UserName: {elem.userName}</Card.Text>
-                    <Card.Text>Password: {elem.password}</Card.Text>
-                    <Button variant="primary" size="lg" onClick={this.props.confirmHandler}>Confirm</Button>
-                  </Card.Body>
-                </Card>
-              )
-            }))}
-          </div>
+
+          {this.props.signinSuccess && <Alert variant='success'>{this.props.signinMsg}</Alert>}
+          {this.props.signinFaild && <Alert variant='danger'>Signin faild</Alert>}
 
           {this.props.signupRedirect && <Redirect to="/create"/>}
         </div>
@@ -96,11 +68,16 @@ const mapStateToProps = state => {
   return {
     loginRedirecion: state.loginRedirecion,
     hasFailed: state.hasFailed,
-    addAccount: state.addAccount,
     accountConfirm: state.accountConfirm,
     signupRedirect: state.signupRedirect,
     userNameInput:state.userNameInput,
-    passwordInput:state.passwordInput
+    passwordInput:state.passwordInput,
+    signinEmail: state.signinEmail,
+    signinUserName: state.signinUserName,
+    signinPassword: state.signinPassword,
+    signinMsg: state.signinMsg,
+    signinSuccess: state.signinSuccess,
+    signinFaild: state.signinFaild
   }
 }
 
@@ -108,9 +85,9 @@ const mapDispatchToProps= dispatch => {
   return {
     redirectToLogin: ev => dispatch(redirectToLogin(ev)),
     loginInputHandler: ev => dispatch(loginInputHandler(ev)),
-    addAccountHandler: ev => dispatch(addAccountHandler(ev)),
-    confirmHandler: ev => dispatch(confirmHandler(ev)),
-      makeRequest: credentials => dispatch(loginFetch(credentials))
+    addAccountHandler: credentials => dispatch(signinFetch(credentials)),
+    makeRequest: credentials => dispatch(loginFetch(credentials)),
+    signinInputHandler: ev => dispatch(signinInputHandler(ev))
   }
 }
 

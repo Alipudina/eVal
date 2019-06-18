@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 mongoose.set('useCreateIndex', true);
 
 const makerSchema = new mongoose.Schema({
-  userName: {type: String, required: true, unique:true},
+  userEmail: {type: String, required: true},
+  userName: {type: String, required: true},
   password: {type: String, required: true}
 }, {versionKey: false})
 

@@ -14,13 +14,12 @@ const initialState={
   questionnaire:[],
   showTest:false,
 
-  userName: 'ali',
-  password: '123',
+  userName: '',
+  password: '',
   loginRedirecion: false,
   hasFailed: false,
   userNameInput: '',
   passwordInput: '',
-  addAccount: [],
   accountConfirm: false,
   signupRedirect: false,
   isManipulated: false,
@@ -30,13 +29,36 @@ const initialState={
   testLink: 'http://test-link',
 
   userInfo:null,
-
+  signinName: '',
+  signinEmail: 'alijkkdkjd',
+  signinUserName: '',
+  signinPassword: '',
+  signinMsg: '',
+  signinSuccess: false,
+  signinFaild: false
 };
 
 const reducer =(state=initialState, action)=>{
   const copyOfState={...state};
 
   switch (action.type) {
+
+    case 'SIGNIN_INPUT':
+      switch(action.ev.target.getAttribute('ident')) {
+        case 'email':
+          copyOfState.signinEmail= action.ev.target.value;
+          return copyOfState;
+
+        case 'username':
+          copyOfState.signinUserName= action.ev.target.value;
+          return copyOfState;
+
+        case 'password':
+          copyOfState.signinPassword=action.ev.target.value;
+          return copyOfState;
+        default:
+        return copyOfState;
+      }
 
     case 'LOGIN_INPUT':
       switch(action.ev.target.type) {
@@ -76,9 +98,25 @@ const reducer =(state=initialState, action)=>{
       return copyOfState;
 
     case 'SIGNUP_REDIRECT':
+      copyOfState.signinMsg=action.payload.msg;
+      copyOfState.signinSuccess=true;
+
+      setTimeout(() => {
+        copyOfState.signupRedirect=false;
+        copyOfState.signinSuccess=false;
+        Auth.login();
+        return copyOfState;
+      }, 3000)
+      return copyOfState;
+
+    case 'SIGNIN_TRUE':
       copyOfState.signupRedirect=true;
       Auth.login();
       return copyOfState;
+
+      case 'SIGNIN_ERROR':
+        copyOfState.signinFaild=true;
+        return copyOfState;
 
     case 'LOGOUT':
       copyOfState.signupRedirect=false;
@@ -192,12 +230,19 @@ export const loginInputHandler= ev => {
   }
 }
 
-export const addAccountHandler= ev => {
+export const signinInputHandler= ev => {
   return {
-    type: 'ADD_ACCOUNT',
+    type: 'SIGNIN_INPUT',
     ev: ev
   }
 }
+
+// const addAccountHandler= ev => {
+//   return {
+//     type: 'ADD_ACCOUNT',
+//     ev: ev
+//   }
+// }
 
 export const redirectToLogin= () => {
   return {type: 'REDIRECT_LOGIN'}
@@ -226,12 +271,14 @@ export const redirectToLogin= () => {
 
 
 
-export const confirmHandler= ev => {
-  return {
-    type: 'SIGNUP_REDIRECT',
-    ev: ev
-  }
-}
+// export const confirmHandler= ev => {
+//   return {
+//     type: 'SIGNUP_REDIRECT',
+//     ev: ev
+//   }
+// }
+
+
 
 export const logoutChanges= ev => {
   return {
@@ -326,6 +373,56 @@ export const loginFetch = credentials => {
     .catch(err => {
       console.warn(err);
       // dispatch(hasFailedAction());
+    })
+  }
+}
+
+
+const signinDispatch= data => {
+  return {
+    type: 'SIGNUP_REDIRECT',
+    payload: data
+  }
+}
+
+const makeSigninTrue= () => {
+  return {
+    type: 'SIGNIN_TRUE'
+  }
+}
+
+const signinError= () => {
+  return {
+    type: 'SIGNIN_ERROR'
+  }
+}
+
+export const signinFetch = credentials => {
+  return function(dispatch) {
+    fetch('/eval/signin', {
+      method: 'post',
+      mode: 'cors',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify(credentials)
+    })
+    .then(res => {
+      if (res.status === 400 || res.status === 404) {
+        dispatch(signinError());
+        throw new Error('signin failed');
+
+      }
+
+      return res.json();
+    })
+    .then(data => {
+      console.log(data);
+      dispatch(signinDispatch(data));
+      setTimeout(() => {
+        dispatch(makeSigninTrue());
+      }, 2000)
+    })
+    .catch(err => {
+      console.warn(err);
     })
   }
 }
