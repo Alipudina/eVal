@@ -32,7 +32,7 @@ class LoginPage extends Component {
 <>
       <NavLink to="/" className="btn btn-primary float-right">Home</NavLink>
       <div className="login">
-     
+
 
         <h1>login page</h1>
         <form className=" d-flex flex-column w-25 mx-auto mt-3" onSubmit={this.loginHandler}>
@@ -59,7 +59,7 @@ class LoginPage extends Component {
         </form>
 
         {this.props.signinSuccess && <Alert variant='success'>{this.props.signinMsg}</Alert>}
-        {this.props.signinFaild && <Alert variant='danger'>Signin faild</Alert>}
+        {this.props.signinFaild && <Alert variant='danger'>This userName is already exist!</Alert>}
 
         {this.props.signupRedirect && <Redirect to="/create" />}
       </div>
