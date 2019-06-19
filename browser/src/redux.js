@@ -183,7 +183,7 @@ const reducer = (state = initialState, action) => {
       copyOfState.allFullQuestions = state.allFullQuestions.filter((each, index) => parseInt(index) !== parseInt(action.event.target.value))
       return copyOfState;
 
-    case 'SAVE_FULL_QUESTIONNAIRE':
+    case 'SAVE_FULL_TEST':
       copyOfState.questionnaire = [...state.questionnaire, {
         testName: state.testName,
         allFullQuestions: [...state.allFullQuestions]
@@ -322,8 +322,8 @@ export const addFullQuestion = ev => {
 export const deleteFullQuestion = ev => {
   return { type: 'DELETE_FULL_QUESTION', event: ev }
 }
-export const saveFullQuestionnaire = ev => {
-  return { type: 'SAVE_FULL_QUESTIONNAIRE', event: ev }
+export const saveFullTest = ev => {
+  return { type: 'SAVE_FULL_TEST', event: ev }
 }
 export const deleteQuestionnaire = ev => {
   return { type: 'DELETE_QUESTIONNAIRE', event: ev }
@@ -375,6 +375,23 @@ export const loginFetch = credentials => {
         console.warn(err);
         // dispatch(hasFailedAction());
       })
+  }
+}
+export const saveFullQuestionnaire = testName => {
+  return function(dispatch) {
+    fetch('/eval/protected/create', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({testName: testName})
+    })
+    .then(res => {
+      return res.json()
+    })
+    .then(data => {
+      console.log(data);
+      dispatch(saveFullTest(data.testName));
+    })
+    .catch(err => console.warn(err))
   }
 }
 

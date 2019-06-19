@@ -25,6 +25,10 @@ class CreationPage extends Component {
   componentDidMount(){
     this.props.makeFetch();
   }
+  sendTest = ev=>{
+    ev.preventDefault();
+    this.props.saveFullQuestionnaire(this.props.testName);
+  }
   render() {
     return (
       <>
@@ -33,7 +37,7 @@ class CreationPage extends Component {
         <div className="body">
           <h1>Hello {this.props.signinUserName} {this.props.userNameInput}</h1>
           <h1>Create a test</h1>
-          <form className="creatorForm">
+          <form className="creatorForm" onSubmit={this.sendTest}>
           <label className="questionText">Name of the Test: </label>
           <input className="questionText" placeholder="How do you want to call it"
           value={this.props.testName}
@@ -54,7 +58,7 @@ class CreationPage extends Component {
           {this.props.questionType==='MultipleChoice'&&<MultipleChoiceContainer/>}
           {this.props.questionType==='Scrambled'&&<ScrambledContainer />}
           <br></br>
-          <button type="button" onClick={this.props.addFullQuestion} className="questionType">Add Another Question</button>
+          <button type="button" onClick={this.props.addFullQuestion} className="questionType">Add Question</button>
           {
             this.props.allFullQuestions&&this.props.allFullQuestions.map((each, index)=>{
               return(
@@ -77,15 +81,16 @@ class CreationPage extends Component {
               )
             })
           }
-          </form>
 
-          <div className="creationBtns questionType">
-              <button type="button" onClick={this.props.showTest}>
-                    <NavLink  className="removeLink" to="/showtest">Show Test</NavLink>
-              </button>
-              <button type="button" onClick={this.props.saveFullQuestionnaire}>Save</button>
-              <button type="button" onClick={this.props.deleteQuestionnaire}>Delete Everything!</button>
-          </div>
+
+              <div className="creationBtns questionType">
+                  <button type="button" onClick={this.props.showTest}>
+                        <NavLink  className="removeLink" to="/showtest">Show Test</NavLink>
+                  </button>
+                  <button type="submit">Save</button>
+                  <button type="button" onClick={this.props.deleteQuestionnaire}>Delete Everything!</button>
+              </div>
+          </form>
         </div>
       </>
     )
@@ -150,7 +155,7 @@ const mapDispatchToProps = dispatch => {
         questionTextChange: ev=> dispatch(questionTextChange(ev)),
         addFullQuestion: ev=> dispatch(addFullQuestion(ev)),
         deleteFullQuestion: ev=> dispatch(deleteFullQuestion(ev)),
-        saveFullQuestionnaire: ev=> dispatch(saveFullQuestionnaire(ev)),
+        saveFullQuestionnaire: testName=> dispatch(saveFullQuestionnaire(testName)),
         deleteQuestionnaire: ev=> dispatch(deleteQuestionnaire(ev)),
         showTest: ev => dispatch(showTest(ev)),
         makeFetch: ev=>dispatch(makeFetch(ev)),
