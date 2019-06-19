@@ -82,20 +82,23 @@ const reducer = (state = initialState, action) => {
     case 'REDIRECT_LOGIN':
       return { ...copyOfState, loginRedirecion: true };
 
-
-    case 'REDIRECT_LOGINs':
-      if (state.userNameInput === state.userName && state.passwordInput === state.password) {
-        copyOfState.loginRedirecion = true;
-        Auth.login();
-      } else {
-        copyOfState.hasFailed = true;
-        setTimeout(() => {
-          copyOfState.loginRedirecion = false;
-          copyOfState.hasFailed = false;
-        }, 50)
-
-      }
+    case 'LOGIN_ERROR':
+      copyOfState.hasFailed=true;
       return copyOfState;
+
+    // case 'REDIRECT_LOGINs':
+    //   if (state.userNameInput === state.userName && state.passwordInput === state.password) {
+    //     copyOfState.loginRedirecion = true;
+    //     Auth.login();
+    //   } else {
+    //     copyOfState.hasFailed = true;
+    //     setTimeout(() => {
+    //       copyOfState.loginRedirecion = false;
+    //       copyOfState.hasFailed = false;
+    //     }, 50)
+    //
+    //   }
+    //   return copyOfState;
 
     case 'SIGNUP_REDIRECT':
       copyOfState.signinMsg=action.payload.msg;
@@ -350,6 +353,13 @@ export const makeFetch = () => {
   }
 }
 
+// loginFetch #####################################################
+const loginError= () => {
+  return {
+    type: 'LOGIN_ERROR'
+  }
+}
+
 export const loginFetch = credentials => {
   return function (dispatch) {
     fetch('/eval/login', {
@@ -360,6 +370,7 @@ export const loginFetch = credentials => {
     })
       .then(res => {
         if (res.status === 400 || res.status === 404) {
+          dispatch(loginError());
           throw new Error('Authentication failed');
         }
 
@@ -373,12 +384,11 @@ export const loginFetch = credentials => {
       })
       .catch(err => {
         console.warn(err);
-        // dispatch(hasFailedAction());
       })
   }
 }
 
-
+// signin #########################################################
 const signinDispatch= data => {
   return {
     type: 'SIGNUP_REDIRECT',
