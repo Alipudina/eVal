@@ -1,26 +1,32 @@
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import './App.scss';
 import Footer from './components/footer';
 import Header from './components/header';
-import {LoginPageContainer} from './components/login';
-import Protected from './components/creationPage';
+import { LoginPageContainer } from './components/login';
+import { Protected } from './components/creationPage';
 import LandingPage from './components/landingPage';
+import { ContactContainer } from './components/contact';
+// import {CreationPageContainer} from './components/creationPage';
+import { TestsPageContainer } from './components/testsPage';
 
 class App extends Component {
-
   render() {
-      return (
-
+    return (
+      <React.Fragment>
         <BrowserRouter>
           <Header />
           <Route exact path="/" component={LandingPage} />
           <Route path="/login" component={LoginPageContainer} />
-          <Route path="/creationPage" component={Protected} />
+          <Route path="/create" component={Protected} />
+          <Route path="/contact" component={ContactContainer} />
+          <Route path="/testsPage" component={TestsPageContainer} />
           <Footer />
         </BrowserRouter>
+      </React.Fragment>
     );
   }
 }
+
 
 export default App;

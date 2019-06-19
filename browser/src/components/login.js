@@ -1,94 +1,72 @@
 import React, { Component } from 'react';
 import { Redirect, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { redirectToLogin, loginInputHandler, addAccountHandler, confirmHandler } from '../redux';
-import { Card, Button } from 'react-bootstrap';
+import { redirectToLogin, loginInputHandler, signinFetch, loginFetch, signinInputHandler } from '../redux';
+import { Alert } from 'react-bootstrap';
 
 
 // loginPage ######################
 class LoginPage extends Component {
 
-  state={
-    name: '',
-    email: '',
-    userName: '',
-    password: ''
-  }
-
   // signup part ++++++++++++++++++++++++
-  signupHandler= ev => {
+  signupHandler = ev => {
     ev.preventDefault();
-    // console.log(this.refs.email.value);
-    this.setState({
-      name: this.refs.name.value,
-      email: this.refs.email.value,
-      userName: this.refs.userName.value,
-      password: this.refs.password.value,
+
+    this.props.addAccountHandler({
+      userEmail: this.props.signinEmail,
+      userName: this.props.signinUserName,
+      password: this.props.signinPassword
     });
-
-    setTimeout(() => {
-      this.props.addAccount.push(this.state);
-      this.props.addAccountHandler();
-    }, 10)
-
-
   }
 
   // login part +++++++++++++++++++++++
-  loginHandler= ev => {
+  loginHandler = ev => {
     ev.preventDefault();
-    this.props.redirectToLogin();
+    // this.props.redirectToLogin();
+    this.props.makeRequest({ userName: this.props.userNameInput, password: this.props.passwordInput });
   }
 
 
   render() {
     return (
-        <div className="login">
-          <NavLink to="/" className="btn btn-primary login-out">Home</NavLink>
+<>
+      <NavLink to="/" className="btn btn-primary float-right">Home</NavLink>
+      <div className="login">
+     
 
-          <h1>login page</h1>
-          <form className="loginForm" onSubmit={this.loginHandler}>
-            <label>userName</label>
-            <input type="text" placeholder="userName" required onChange={this.props.loginInputHandler} />
-            <label>Password</label>
-            <input type="password" placeholder="password" required onChange={this.props.loginInputHandler} />
-            <button>Login</button>
-          </form>
-          {this.props.hasFailed && <div className="alert alert-danger my-4">Either username or password was incorrect. Try again!</div>}
-          {this.props.loginRedirecion && <Redirect to="/creationPage"/>}
+        <h1>login page</h1>
+        <form className=" d-flex flex-column w-25 mx-auto mt-3" onSubmit={this.loginHandler}>
+          <label>userName</label>
+          <input type="text" placeholder="userName" required onChange={this.props.loginInputHandler} value={
+            this.props.userNameInput} />
+          <label>Password</label>
+          <input type="password" placeholder="password" required onChange={this.props.loginInputHandler} value={
+            this.props.passwordInput} />
+          <button className="btn btn-primary">Login</button>
+        </form>
+        {this.props.hasFailed && <div className="alert alert-danger my-4">Either username or password was incorrect. Try again!</div>}
+        {this.props.loginRedirecion && <Redirect to="/create" />}
+        <h1>Not a user ? Create account</h1>
+        <form className=" d-flex flex-column w-25 mx-auto mt-3" onSubmit={this.signupHandler}>
 
-          <form className="createAccountForm" onSubmit={this.signupHandler}>
-            <h1>Not a user ? Create account</h1>
-            <label>Name</label>
-            <input required placeholder="Name" ref="name" />
-            <label>Email</label>
-            <input required placeholder="Email" ref="email" />
-            <label>userName</label>
-            <input required placeholder="userName" ref="userName" minLength={6} />
-            <label>Password</label>
-            <input required placeholder="password" type="password" ref="password" minLength={6} />
-            <button>Signup</button>
-          </form>
-          <div className="account-container">
-            {this.props.accountConfirm && this.props.addAccount.map(((elem, index) => {
-              return (
-                <Card style={{ width: '18rem' }} className="card-account" key={index}>
-                  <Card.Body>
-                    <Card.Title>Your Account</Card.Title>
-                    <Card.Text>Name: {elem.name}</Card.Text>
-                    <Card.Text>Email: {elem.email}</Card.Text>
-                    <Card.Text>UserName: {elem.userName}</Card.Text>
-                    <Card.Text>Password: {elem.password}</Card.Text>
-                    <Button variant="primary" size="lg" onClick={this.props.confirmHandler}>Confirm</Button>
-                  </Card.Body>
-                </Card>
-              )
-            }))}
-          </div>
+          <label>Email</label>
+          <input onChange={this.props.signinInputHandler} ident="email" type="email" placeholder="Email" required />
+          <label>userName</label>
+          <input onChange={this.props.signinInputHandler} ident="username" placeholder="userName" required minLength={6} />
+          <label>Password</label>
+          <input onChange={this.props.signinInputHandler} ident="password" type="password" required placeholder="password" minLength={6} />
+          <button className="btn btn-primary" >Signup</button>
+        </form>
 
-          {this.props.signupRedirect && <Redirect to="/creationPage"/>}
-        </div>
+        {this.props.signinSuccess && <Alert variant='success'>{this.props.signinMsg}</Alert>}
+        {this.props.signinFaild && <Alert variant='danger'>Signin faild</Alert>}
+
+        {this.props.signupRedirect && <Redirect to="/create" />}
+      </div>
+
+      </>
     )
+
   }
 }
 
@@ -96,19 +74,27 @@ const mapStateToProps = state => {
   return {
     loginRedirecion: state.loginRedirecion,
     hasFailed: state.hasFailed,
-    addAccount: state.addAccount,
     accountConfirm: state.accountConfirm,
-    signupRedirect: state.signupRedirect
+    signupRedirect: state.signupRedirect,
+    userNameInput: state.userNameInput,
+    passwordInput: state.passwordInput,
+    signinEmail: state.signinEmail,
+    signinUserName: state.signinUserName,
+    signinPassword: state.signinPassword,
+    signinMsg: state.signinMsg,
+    signinSuccess: state.signinSuccess,
+    signinFaild: state.signinFaild
   }
 }
 
-const mapDispatchToProps= dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     redirectToLogin: ev => dispatch(redirectToLogin(ev)),
     loginInputHandler: ev => dispatch(loginInputHandler(ev)),
-    addAccountHandler: ev => dispatch(addAccountHandler(ev)),
-    confirmHandler: ev => dispatch(confirmHandler(ev))
+    addAccountHandler: credentials => dispatch(signinFetch(credentials)),
+    makeRequest: credentials => dispatch(loginFetch(credentials)),
+    signinInputHandler: ev => dispatch(signinInputHandler(ev))
   }
 }
 
-export const LoginPageContainer=connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export const LoginPageContainer = connect(mapStateToProps, mapDispatchToProps)(LoginPage);
