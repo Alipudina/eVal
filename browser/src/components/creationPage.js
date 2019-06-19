@@ -27,8 +27,19 @@ class CreationPage extends Component {
   }
   sendTest = ev=>{
     ev.preventDefault();
-    this.props.saveFullQuestionnaire(this.props.testName);
-  }
+    this.props.saveFullQuestionnaire({
+      testName:this.props.testName,
+      questionnaire:this.props.allFullQuestions.map((each, index)=>({
+                questionNumber:index+1,
+                questionType:each.questionType,
+                questionText:each.questionText,
+                questionCorrectAnswer:each.rightAnswer,
+                questionWrongAnswers:each.allWrongAnswers.map((eachWrongAnswer, index)=>({
+                      eachWrongAnswer:eachWrongAnswer
+                }))
+            }))
+      })
+    }
   render() {
     return (
       <>
@@ -155,7 +166,7 @@ const mapDispatchToProps = dispatch => {
         questionTextChange: ev=> dispatch(questionTextChange(ev)),
         addFullQuestion: ev=> dispatch(addFullQuestion(ev)),
         deleteFullQuestion: ev=> dispatch(deleteFullQuestion(ev)),
-        saveFullQuestionnaire: testName=> dispatch(saveFullQuestionnaire(testName)),
+        saveFullQuestionnaire: fullTest=> dispatch(saveFullQuestionnaire(fullTest)),
         deleteQuestionnaire: ev=> dispatch(deleteQuestionnaire(ev)),
         showTest: ev => dispatch(showTest(ev)),
         makeFetch: ev=>dispatch(makeFetch(ev)),

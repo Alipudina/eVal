@@ -377,19 +377,19 @@ export const loginFetch = credentials => {
       })
   }
 }
-export const saveFullQuestionnaire = testName => {
+export const saveFullQuestionnaire = fullTest => {
   return function(dispatch) {
     fetch('/eval/protected/create', {
       method: 'post',
       headers: { 'Content-Type': 'application/json'},
-      body: JSON.stringify({testName: testName})
+      body: JSON.stringify(fullTest)
     })
     .then(res => {
       return res.json()
     })
     .then(data => {
       console.log(data);
-      dispatch(saveFullTest(data.testName));
+      dispatch(saveFullTest(data.fullTest));
     })
     .catch(err => console.warn(err))
   }
