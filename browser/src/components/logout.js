@@ -1,27 +1,27 @@
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { logoutChanges } from '../redux';
 import { connect } from 'react-redux';
 
-class Logout  extends Component {
+class Logout extends Component {
 
-  logoutHandler= ev => {
+  logoutHandler = ev => {
     this.props.logoutChanges();
   }
 
-  render () {
+  render() {
     return (
       <>
-        <NavLink to="/" className="btn btn-primary login-out" onClick={this.logoutHandler}>Logout</NavLink>
+        <NavLink to="/" className="btn btn-primary float-right login-out" onClick={this.logoutHandler}>Logout</NavLink>
       </>
     )
   }
 }
 
-const mapDispatchToProps= dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     logoutChanges: ev => dispatch(logoutChanges(ev))
   }
 }
 
-export const LogoutContainer=connect(null, mapDispatchToProps)(Logout);
+export const LogoutContainer = connect(null, mapDispatchToProps)(Logout);

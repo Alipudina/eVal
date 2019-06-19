@@ -14,7 +14,7 @@ const initialState = {
   questionnaire: [],
   showTest: false,
 
-  userName: '',
+  userName: ' ',
   password: '',
   loginRedirecion: false,
   hasFailed: false,
@@ -28,7 +28,7 @@ const initialState = {
   addEmailArray: [],
   testLink: 'http://test-link',
 
-  userInfo:null,
+  userInfo: null,
   signinName: '',
   signinEmail: 'alijkkdkjd',
   signinUserName: '',
@@ -44,20 +44,20 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
 
     case 'SIGNIN_INPUT':
-      switch(action.ev.target.getAttribute('ident')) {
+      switch (action.ev.target.getAttribute('ident')) {
         case 'email':
-          copyOfState.signinEmail= action.ev.target.value;
+          copyOfState.signinEmail = action.ev.target.value;
           return copyOfState;
 
         case 'username':
-          copyOfState.signinUserName= action.ev.target.value;
+          copyOfState.signinUserName = action.ev.target.value;
           return copyOfState;
 
         case 'password':
-          copyOfState.signinPassword=action.ev.target.value;
+          copyOfState.signinPassword = action.ev.target.value;
           return copyOfState;
         default:
-        return copyOfState;
+          return copyOfState;
       }
 
     case 'LOGIN_INPUT':
@@ -98,25 +98,25 @@ const reducer = (state = initialState, action) => {
       return copyOfState;
 
     case 'SIGNUP_REDIRECT':
-      copyOfState.signinMsg=action.payload.msg;
-      copyOfState.signinSuccess=true;
+      copyOfState.signinMsg = action.payload.msg;
+      copyOfState.signinSuccess = true;
 
       setTimeout(() => {
-        copyOfState.signupRedirect=false;
-        copyOfState.signinSuccess=false;
+        copyOfState.signupRedirect = false;
+        copyOfState.signinSuccess = false;
         Auth.login();
         return copyOfState;
       }, 3000)
       return copyOfState;
 
     case 'SIGNIN_TRUE':
-      copyOfState.signupRedirect=true;
+      copyOfState.signupRedirect = true;
       Auth.login();
       return copyOfState;
 
-      case 'SIGNIN_ERROR':
-        copyOfState.signinFaild=true;
-        return copyOfState;
+    case 'SIGNIN_ERROR':
+      copyOfState.signinFaild = true;
+      return copyOfState;
 
     case 'LOGOUT':
       copyOfState.signupRedirect = false;
@@ -231,7 +231,7 @@ export const loginInputHandler = ev => {
   }
 }
 
-export const signinInputHandler= ev => {
+export const signinInputHandler = ev => {
   return {
     type: 'SIGNIN_INPUT',
     ev: ev
@@ -245,8 +245,8 @@ export const signinInputHandler= ev => {
 //   }
 // }
 
-export const redirectToLogin= () => {
-  return {type: 'REDIRECT_LOGIN'}
+export const redirectToLogin = () => {
+  return { type: 'REDIRECT_LOGIN' }
 }
 
 // export const redirectToLogin= ev => {
@@ -379,52 +379,52 @@ export const loginFetch = credentials => {
 }
 
 
-const signinDispatch= data => {
+const signinDispatch = data => {
   return {
     type: 'SIGNUP_REDIRECT',
     payload: data
   }
 }
 
-const makeSigninTrue= () => {
+const makeSigninTrue = () => {
   return {
     type: 'SIGNIN_TRUE'
   }
 }
 
-const signinError= () => {
+const signinError = () => {
   return {
     type: 'SIGNIN_ERROR'
   }
 }
 
 export const signinFetch = credentials => {
-  return function(dispatch) {
+  return function (dispatch) {
     fetch('/eval/signin', {
       method: 'post',
       mode: 'cors',
-      headers: { 'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials)
     })
-    .then(res => {
-      if (res.status === 400 || res.status === 404) {
-        dispatch(signinError());
-        throw new Error('signin failed');
+      .then(res => {
+        if (res.status === 400 || res.status === 404) {
+          dispatch(signinError());
+          throw new Error('signin failed');
 
-      }
+        }
 
-      return res.json();
-    })
-    .then(data => {
-      console.log(data);
-      dispatch(signinDispatch(data));
-      setTimeout(() => {
-        dispatch(makeSigninTrue());
-      }, 2000)
-    })
-    .catch(err => {
-      console.warn(err);
-    })
+        return res.json();
+      })
+      .then(data => {
+        console.log(data);
+        dispatch(signinDispatch(data));
+        setTimeout(() => {
+          dispatch(makeSigninTrue());
+        }, 2000)
+      })
+      .catch(err => {
+        console.warn(err);
+      })
   }
 }
 
