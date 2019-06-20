@@ -92,8 +92,6 @@ class CreationPage extends Component {
               )
             })
           }
-
-
               <div className="creationBtns questionType">
                   <button type="button" onClick={this.props.showTest}>
                         <NavLink  className="removeLink" to="/showtest">Show Test</NavLink>
@@ -170,7 +168,7 @@ const mapDispatchToProps = dispatch => {
         deleteQuestionnaire: ev=> dispatch(deleteQuestionnaire(ev)),
         showTest: ev => dispatch(showTest(ev)),
         makeFetch: ev=>dispatch(makeFetch(ev)),
-          makeRequest: credentials => dispatch(loginFetch(credentials))
+        makeRequest: credentials => dispatch(loginFetch(credentials))
     }
 }
 

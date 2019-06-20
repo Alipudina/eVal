@@ -5,6 +5,7 @@ import ContactEmailChanged from './defaultEmail';
 
 const initialState = {
   testName: '',
+  allTestNames:[],
   questionText: '',
   questionType: '',
   wrongAnswer: '',
@@ -214,8 +215,8 @@ const reducer = (state = initialState, action) => {
     case 'FETCH_DATA':
       return { ...copyOfState, userInfo: action.userData };
 
-
-
+    case 'SHOW_TEST_NAMES':
+      return {...copyOfState, allTestNames:action.testNames}
 
 
     default:
@@ -331,12 +332,12 @@ export const deleteQuestionnaire = ev => {
 export const showTest = testName => {
   return { type: 'SHOW_TEST', testName: testName }
 }
-
-
 export const requestAction = userData => {
   return { type: 'FETCH_DATA', userData: userData }
 }
-
+export const showTestNames = testNames=>{
+  return {type:'SHOW_TEST_NAMES', testNames:testNames}
+}
 
 
 
@@ -442,6 +443,24 @@ export const signinFetch = credentials => {
     .catch(err => {
       console.warn(err);
     })
+  }
+}
+
+export const getTestNames = testData => {
+  return function(dispatch) {
+    fetch('/eval/protected/testsPage', {
+      method: 'get',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify(testData)
+    })
+    .then(res => {
+      return res.json()
+    })
+    .then(testData => {
+      console.log(testData);
+      dispatch(showTestNames(testData.testName));
+    })
+    .catch(err => console.warn(err))
   }
 }
 

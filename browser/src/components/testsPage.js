@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import {LogoutContainer} from './logout';
 import {connect} from 'react-redux';
+import {getTestNames} from '../redux';
 
 class TestsPage extends Component {
+
+    componentDidMount() {
+      this.props.getTestNames();
+    }
 
   state={
     addEmail: false,
@@ -36,7 +41,7 @@ class TestsPage extends Component {
               >
                 <div className="form-group w-75">
                   <select name="carlist" form="carform" className="form-control" ref="selectedTest">
-                  {this.props.testArray.map((elem, index) => {
+                  {this.props..map((elem, index) => {
                     return <option value={elem.toLowerCase()} key={index}>{elem}</option>
                   })}
                   </select>
@@ -80,9 +85,15 @@ class TestsPage extends Component {
 
 const mapStateToProps= state => {
   return {
-    testArray: state.testArray,
+    allTestNames: state.allTestNames,
     testLink: state.testLink
   }
 }
 
-export const TestsPageContainer=connect(mapStateToProps)(TestsPage);
+const mapDispatchToProps = dispatch => {
+  return {
+    getTestNames: () => dispatch(getTestNames())
+  }
+}
+
+export const TestsPageContainer=connect(mapStateToProps, mapDispatchToProps)(TestsPage);
