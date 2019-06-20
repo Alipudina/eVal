@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Button, ButtonToolbar} from 'react-bootstrap';
+import { Modal, Button, ButtonToolbar } from 'react-bootstrap';
 
 
 class MyVerticallyCenteredModal extends Component {
@@ -47,6 +47,7 @@ export default class Info extends Component {
     return (
       <ButtonToolbar>
         <Button
+
           variant="primary"
           onClick={() => this.setState({ modalShow: true })}
         >

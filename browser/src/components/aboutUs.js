@@ -51,6 +51,7 @@ export default class AboutUs extends Component {
     return (
       <ButtonToolbar>
         <Button
+       
           variant="primary"
           onClick={() => this.setState({ modalShow: true })}
         >

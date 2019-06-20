@@ -4,22 +4,95 @@
     }
 }
 
-// .login-out {
-//   position: relative;
-//   left: 88vw;
-//   top: 0;
-//   margin: 1vw;
-// }
+* {
+    font-family: sans-serif;
+}
 
-// .tests {
-//   top: 5vw;
-//   left: 78vw;
-// }
+.landingPage {
+    background-image: linear-gradient(white, rgb(115, 186, 230));
+    position: relative;
+
+    h1 {
+        text-align: center;
+    }
+
+    .pPitch {
+        margin: 0 auto;
+        width: 50vw;
+    }
+}
+
+.carouselContainer {
+    width: 60%;
+    margin: 1em auto;
+}
+
+.carouselImg {
+    height: 25em;
+    width: 50em;
+}
+
+.secondPitch {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-evenly;
+
+    .card {
+        margin-top: 1em;
+        margin-bottom: 1em;
+        width: 15em;
+        height: 20em;
+        background-color: transparent;
+
+        .clientImg {
+            margin: 2vh auto;
+            height: 10em;
+            width: 10em;
+        }
+    }
+}
+
+.clientQuate {
+    position: relative;
+    bottom: 1.25em;
+    right: 0.4em;
+    font-size: 1.25rem;
+    font-family: tahoma;
+
+    &::before {
+        position: relative;
+        top: 0.1em;
+        margin-bottom: 1em;
+        content: "\"";
+        font-family: 'Bitter', serif;
+        font-size: 3em;
+        color: #999;
+    }
+}
+
+.clientName {
+    position: relative;
+    bottom: 1.25em;
+    right: 0.5em;
+    font-size: 1.1em;
+    font-style: italic;
+    text-align: right;
+}
+
+.footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
 
 .removeLink {
     &:hover {
         color: white;
     }
+}
+
+.testerHeight {
+    height: 77.5vh;
 }
 
 .questionText {
@@ -43,21 +116,6 @@
     justify-content: space-between;
 }
 
-.landingPage {
-    background-image: linear-gradient(white, rgb(12, 123, 192));
-    height: 30em;
-
-    h1 {
-        text-align: center;
-    }
-}
-
-.footer {
-    margin-top: 2em;
-    display: flex;
-    justify-content: space-around;
-}
-
 .logo {
     width: 5em;
 }
@@ -75,16 +133,9 @@ div.info-container {
     }
 }
 
-// .creatorForm{
-//   display: flex;
-//   flex-direction: column;
-
-// }
-
-// .selectQuestionType,.testName, .questionText, .questionType{
-//   width: 12em;
-//   margin: .3vw auto;
-// }
+.CreationComp {
+    background-image: linear-gradient(white, rgb(115, 186, 230));
+}
 
 .multiDiv {
     margin: 0 auto;
@@ -110,10 +161,10 @@ div.info-container {
             }
         }
 
-        .deleteButton {
-            font-size: 1vw;
-            background: red;
-        }
+        // .deleteButton {
+        //     font-size: 1vw;
+        //     background: red;
+        // }
 
         .removeLink {
             text-decoration: none;
@@ -125,6 +176,34 @@ div.info-container {
         }
     }
 }
+
+// .login-out {
+//   position: relative;
+//   left: 88vw;
+//   top: 0;
+//   margin: 1vw;
+// }
+
+// .tests {
+//   top: 5vw;
+//   left: 78vw;
+// }
+// .yesCheck {
+//     &:checked {
+//         background-color: green;
+//     }
+// }
+
+// .creatorForm{
+//   display: flex;
+//   flex-direction: column;
+
+// }
+
+// .selectQuestionType,.testName, .questionText, .questionType{
+//   width: 12em;
+//   margin: .3vw auto;
+// }
 
 // .login{
 //     h1{

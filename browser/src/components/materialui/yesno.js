@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {rightAnswerTextChange} from '../../redux';
+import { rightAnswerTextChange } from '../../redux';
 
 
 // import { makeStyles } from '@material-ui/core/styles';
@@ -12,15 +12,14 @@ import {rightAnswerTextChange} from '../../redux';
 // import FormLabel from '@material-ui/core/FormLabel';
 
 
-
-class YesNoAnswer extends Component{
-  render(){
-    return(
+class YesNoAnswer extends Component {
+  render() {
+    return (
       <>
         <br></br>
-        <div className="questionType">
+        <div className=" mx-auto questionType ">
           <label>
-            <input
+            <input className="yesCheck"
               type="radio"
               name="yesno"
               value="yes"
@@ -29,7 +28,7 @@ class YesNoAnswer extends Component{
             Yes
           </label>
           <label>
-            <input
+            <input className=""
               type="radio"
               name="yesno"
               value="no"
@@ -86,15 +85,15 @@ class YesNoAnswer extends Component{
 // }
 //
 // export default YesNoAnswer;
-const mapStateToProps = state =>{
-  return{
-    rightAnswer:state.rightAnswer
+const mapStateToProps = state => {
+  return {
+    rightAnswer: state.rightAnswer
   }
 }
 
-const mapDispatchToProps = dispatch=>{
-  return{
-    rightAnswerTextChange: ev=>dispatch(rightAnswerTextChange(ev)),
+const mapDispatchToProps = dispatch => {
+  return {
+    rightAnswerTextChange: ev => dispatch(rightAnswerTextChange(ev)),
   }
 }
 export const YesNoAnswerContainer = connect(mapStateToProps, mapDispatchToProps)(YesNoAnswer);

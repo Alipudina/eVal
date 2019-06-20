@@ -13,17 +13,6 @@ import { LogoutContainer } from './logout';
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 export class Protected extends Component {
   render() {
     if (Auth.isAuthenticated()) {
@@ -42,70 +31,69 @@ class CreationPage extends Component {
   render() {
     return (
       <>
-
         <LogoutContainer />
-        <div className="d-flex justify-content-center">
-          <NavLink to="testsPage" className="btn btn-primary  login-out tests">My Tests</NavLink>
-        </div>
-
-        <div className="body">
-          <div className="d-flex flex-column">
-            <h1 className="text-center" >Hello {this.props.signinUserName} {this.props.userNameInput}</h1>
-            <h1 className="text-center" >Create a test</h1>
+        <div className=" mt-5 ">
+          <div className="d-flex justify-content-center">
+            <NavLink to="testsPage" className="btn btn-primary  login-out tests">My Tests</NavLink>
           </div>
+          <div className="body mt-2 CreationComp">
+            <div className="d-flex flex-column">
+              <h1 className="text-center" >Hello {this.props.signinUserName} {this.props.userNameInput}</h1>
+              <h1 className="text-center" >Create a test</h1>
+            </div>
 
-          <form className="d-flex flex-column creatorForm w-25 mx-auto">
-            <label className="questionText">Name of the Test: </label>
-            <input className="questionText" placeholder="How do you want to call it"
-              value={this.props.testName}
-              onChange={this.props.testNameChange} />
-            <br></br>
-            <label className="questionText">Question: </label>
-            <input className="questionText" placeholder="Here goes your question"
-              value={this.props.questionText}
-              onChange={this.props.questionTextChange} />
-            <br></br>
-            <select className="selectQuestionType" defaultValue="" name="questionType" id="questionType" onChange={this.props.questionTypeChange}>
-              <option className="innerOpt" value="" disabled>Select your option</option>
-              <option className="innerOpt" value='YesNo'>Yes/No</option>
-              <option className="innerOpt" value='MultipleChoice'>Multiple choice</option>
-              <option className="innerOpt" value='Scrambled'>Scrambled</option>
-            </select>
-            {this.props.questionType === 'YesNo' && <YesNoAnswerContainer />}
-            {this.props.questionType === 'MultipleChoice' && <MultipleChoiceContainer />}
-            {this.props.questionType === 'Scrambled' && <ScrambledContainer />}
-            <br></br>
-            <button type="button" onClick={this.props.addFullQuestion} className="questionType addAnotherQuestion">Add Another Question</button>
-            {
-              this.props.allFullQuestions && this.props.allFullQuestions.map((each, index) => {
-                return (
-                  <div key={index} className="fullQuestion questionType">
-                    <span><b>{index + 1})</b></span>
-                    <span><b>Type:</b>{each.questionType}</span>
-                    <span><b>Question:</b>{each.questionText}</span>
-                    <span><b>Right answer:</b>{each.rightAnswer}</span>
-                    {each.allWrongAnswers.length > 0 && <span><b>Wrong answer(s):</b></span>}
-                    {each.allWrongAnswers && each.allWrongAnswers.map((wrongAnswer, index) => {
-                      return (
-                        <span key={index}><b>{index + 1})</b> {wrongAnswer}</span>
-                      )
+            <form className="d-flex flex-column creatorForm mx-auto mt-3">
+              <label className="questionText w-25 mx-auto">Name of the Test: </label>
+              <input className="questionText w-25 mx-auto" placeholder="How do you want to call it"
+                value={this.props.testName}
+                onChange={this.props.testNameChange} />
+              <br></br>
+              <label className="questionText w-25 mx-auto">Question: </label>
+              <input className="questionText w-25 mx-auto" placeholder="Here goes your question"
+                value={this.props.questionText}
+                onChange={this.props.questionTextChange} />
+              <br></br>
+              <select className="selectQuestionType w-25 mx-auto" defaultValue="" name="questionType" id="questionType" onChange={this.props.questionTypeChange}>
+                <option className="innerOpt w-25 mx-auto" value="" disabled>Select your option</option>
+                <option className="innerOpt w-25 mx-auto" value='YesNo'>Yes/No</option>
+                <option className="innerOpt w-25 mx-auto" value='MultipleChoice'>Multiple choice</option>
+                <option className="innerOpt w-25 mx-auto" value='Scrambled'>Scrambled</option>
+              </select>
+              {this.props.questionType === 'YesNo' && <YesNoAnswerContainer />}
+              {this.props.questionType === 'MultipleChoice' && <MultipleChoiceContainer />}
+              {this.props.questionType === 'Scrambled' && <ScrambledContainer />}
+              <br></br>
+              <button type="button" onClick={this.props.addFullQuestion} className=" w-25 mx-auto questionType addAnotherQuestion">Add Another Question</button>
+              {
+                this.props.allFullQuestions && this.props.allFullQuestions.map((each, index) => {
+                  return (
+                    <div key={index} className="fullQuestion questionType">
+                      <span><b>.{index + 1}</b></span>
+                      <span><b>Type:</b>{each.questionType}</span>
+                      <span><b>Question:</b>{each.questionText}</span>
+                      <span><b>Right answer:</b>{each.rightAnswer}</span>
+                      {each.allWrongAnswers.length > 0 && <span><b>Wrong answer(s):</b></span>}
+                      {each.allWrongAnswers && each.allWrongAnswers.map((wrongAnswer, index) => {
+                        return (
+                          <span key={index}><b>{index + 1})</b> {wrongAnswer}</span>
+                        )
+                      })}
+                      <span>
+                        <button type="button" className="btn btn-danger btn-sm deleteButton" onClick={this.props.deleteFullQuestion} value={index}>Delete</button>
+                      </span>
+                    </div>
+                  )
+                })
+              }
+            </form>
 
-                    })}
-                    <span>
-                      <button type="button" className="btn btn-danger btn-sm deleteButton" onClick={this.props.deleteFullQuestion} value={index}>Delete</button>
-                    </span>
-                  </div>
-                )
-              })
-            }
-          </form>
-
-          <div className="d-flex justify-content-center mt-4 creationBtns questionType ">
-            <button className="mx-3 btn btn-outline-primary " type="button" onClick={this.props.showTest}>
-              <NavLink className="removeLink" style={{ textDecoration: 'none' }} to="/showtest">Show Test</NavLink>
-            </button>
-            <button className="mx-3 btn btn-outline-success " type="button" onClick={this.props.saveFullQuestionnaire}>Save</button>
-            <button className="mx-3 btn btn-outline-danger" type="button" onClick={this.props.deleteQuestionnaire}>Delete Everything!</button>
+            <div className="d-flex justify-content-center mt-3  creationBtns questionType ">
+              <button className="mx-3 btn btn-outline-primary size=sm" type="button" onClick={this.props.showTest}>
+                <NavLink className="removeLink" style={{ textDecoration: 'none' }} to="/showtest">Show Test</NavLink>
+              </button>
+              <button className="mx-3 btn btn-outline-success size=sm " type="button" onClick={this.props.saveFullQuestionnaire}>Save</button>
+              <button className="mx-3 btn btn-outline-danger size=sm " type="button" onClick={this.props.deleteQuestionnaire}>Delete Everything!</button>
+            </div>
           </div>
         </div>
       </>
