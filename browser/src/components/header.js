@@ -6,7 +6,7 @@ export default class Header extends Component {
     return (
       <>
 
-        <NavLink to="/" className="logobtn"> <img className="logo" src={logo} /></NavLink>
+        <NavLink to="/" className="logobtn"> <img className="logo" src={logo} alt="logo image" /></NavLink>
 
       </>
     )

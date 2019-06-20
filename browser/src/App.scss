@@ -1,5 +1,5 @@
-.login{
-    h1{
+.login {
+    h1 {
         text-align: center;
     }
 }
@@ -16,41 +16,64 @@
 //   left: 78vw;
 // }
 
-.header{
+.removeLink {
+    &:hover {
+        color: white;
+    }
+}
+
+.questionText {
+    border-radius: 5px;
+}
+
+.selectQuestionType, .addAnotherQuestion {
+    &:hover {
+        color: white;
+        background: #428bca;
+    }
+
+    .innerOpt {
+        background: white;
+        color: #428bca;
+    }
+}
+
+.header {
     display: flex;
     justify-content: space-between;
 }
-.landingPage{
-background-image: linear-gradient(white,rgb(12, 123, 192));
-height: 30em;
-h1{
-    text-align: center;
+
+.landingPage {
+    background-image: linear-gradient(white, rgb(12, 123, 192));
+    height: 30em;
+
+    h1 {
+        text-align: center;
+    }
 }
-}
-.footer{
+
+.footer {
     margin-top: 2em;
     display: flex;
     justify-content: space-around;
 }
 
-.logo{
-  width: 5em;
+.logo {
+    width: 5em;
 }
-
 
 div.info-container {
-  width: 60%;
-  margin: 2vw auto;
-  height: 28vw;
-
-  p {
     width: 60%;
-    margin: auto;
-    line-height: 1.6;
-    letter-spacing: .1vw;
-  }
-}
+    margin: 2vw auto;
+    height: 28vw;
 
+    p {
+        width: 60%;
+        margin: auto;
+        line-height: 1.6;
+        letter-spacing: .1vw;
+    }
+}
 
 // .creatorForm{
 //   display: flex;
@@ -63,87 +86,45 @@ div.info-container {
 //   margin: .3vw auto;
 // }
 
-.multiDiv{
-margin: 0 auto;
-display: flex;
-flex-direction: column;
-width: 20em;
+.multiDiv {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    width: 20em;
 }
 
-.fullQuestion{
-  width: 100%;
-  margin: 1vw auto;
-  font-size: 1vw;
-  text-align: center;
-  span{
-    margin-right: .6vw;
-// login component ###################
-div.account-container {
+.fullQuestion {
+    width: 100%;
+    margin: 1vw auto;
+    font-size: 1vw;
+    text-align: center;
 
-  .card-account {
-    margin: 10vw auto;
-    background: #E9E9E9;
-  }
+    span {
+        margin-right: .6vw;
+
+        // login component ###################
+        div.account-container {
+            .card-account {
+                margin: 10vw auto;
+                background: #E9E9E9;
+            }
+        }
+
+        .deleteButton {
+            font-size: 1vw;
+            background: red;
+        }
+
+        .removeLink {
+            text-decoration: none;
+            color: black;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
 }
-
-.deleteButton{
-  font-size: 1vw;
-  background: red;
-}
-
-.removeLink{
-  text-decoration: none;
-  color:black;
-  &:hover {
-  text-decoration: none;
-}
-}}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // .login{
 //     h1{
@@ -184,7 +165,6 @@ div.account-container {
 //   width: 5em;
 // }
 
-
 // div.info-container {
 //   width: 60%;
 //   margin: 2vw auto;
@@ -197,7 +177,6 @@ div.account-container {
 //     letter-spacing: .1vw;
 //   }
 // }
-
 
 // .creatorForm{
 //   display: flex;
@@ -245,4 +224,3 @@ div.account-container {
 //   text-decoration: none;
 // }
 // }}}
-

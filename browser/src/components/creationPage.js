@@ -12,6 +12,18 @@ import { LogoutContainer } from './logout';
 // protected class #########################
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 export class Protected extends Component {
   render() {
     if (Auth.isAuthenticated()) {
@@ -54,16 +66,16 @@ class CreationPage extends Component {
               onChange={this.props.questionTextChange} />
             <br></br>
             <select className="selectQuestionType" defaultValue="" name="questionType" id="questionType" onChange={this.props.questionTypeChange}>
-              <option value="" disabled>Select your option</option>
-              <option value='YesNo'>Yes/No</option>
-              <option value='MultipleChoice'>Multiple choice</option>
-              <option value='Scrambled'>Scrambled</option>
+              <option className="innerOpt" value="" disabled>Select your option</option>
+              <option className="innerOpt" value='YesNo'>Yes/No</option>
+              <option className="innerOpt" value='MultipleChoice'>Multiple choice</option>
+              <option className="innerOpt" value='Scrambled'>Scrambled</option>
             </select>
             {this.props.questionType === 'YesNo' && <YesNoAnswerContainer />}
             {this.props.questionType === 'MultipleChoice' && <MultipleChoiceContainer />}
             {this.props.questionType === 'Scrambled' && <ScrambledContainer />}
             <br></br>
-            <button type="button" onClick={this.props.addFullQuestion} className="questionType">Add Another Question</button>
+            <button type="button" onClick={this.props.addFullQuestion} className="questionType addAnotherQuestion">Add Another Question</button>
             {
               this.props.allFullQuestions && this.props.allFullQuestions.map((each, index) => {
                 return (
@@ -80,7 +92,7 @@ class CreationPage extends Component {
 
                     })}
                     <span>
-                      <button type="button" className="deleteButton" onClick={this.props.deleteFullQuestion} value={index}>Delete</button>
+                      <button type="button" className="btn btn-danger btn-sm deleteButton" onClick={this.props.deleteFullQuestion} value={index}>Delete</button>
                     </span>
                   </div>
                 )
@@ -88,12 +100,12 @@ class CreationPage extends Component {
             }
           </form>
 
-          <div className="creationBtns questionType">
-            <button type="button" onClick={this.props.showTest}>
-              <NavLink className="removeLink" to="/showtest">Show Test</NavLink>
+          <div className="d-flex justify-content-center mt-4 creationBtns questionType ">
+            <button className="mx-3 btn btn-outline-primary " type="button" onClick={this.props.showTest}>
+              <NavLink className="removeLink" style={{ textDecoration: 'none' }} to="/showtest">Show Test</NavLink>
             </button>
-            <button type="button" onClick={this.props.saveFullQuestionnaire}>Save</button>
-            <button type="button" onClick={this.props.deleteQuestionnaire}>Delete Everything!</button>
+            <button className="mx-3 btn btn-outline-success " type="button" onClick={this.props.saveFullQuestionnaire}>Save</button>
+            <button className="mx-3 btn btn-outline-danger" type="button" onClick={this.props.deleteQuestionnaire}>Delete Everything!</button>
           </div>
         </div>
       </>

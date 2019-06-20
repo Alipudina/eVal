@@ -14,7 +14,7 @@ const initialState = {
   questionnaire: [],
   showTest: false,
 
-  userName: ' ',
+  userName: '',
   password: '',
   loginRedirecion: false,
   hasFailed: false,
