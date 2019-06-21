@@ -41,7 +41,7 @@ class TestsPage extends Component {
               >
                 <div className="form-group w-75">
                   <select name="carlist" form="carform" className="form-control" ref="selectedTest">
-                  {this.props..map((elem, index) => {
+                  {this.props.allTestNames.map((elem, index) => {
                     return <option value={elem.toLowerCase()} key={index}>{elem}</option>
                   })}
                   </select>
@@ -86,13 +86,14 @@ class TestsPage extends Component {
 const mapStateToProps= state => {
   return {
     allTestNames: state.allTestNames,
-    testLink: state.testLink
+    testLink: state.testLink,
+    questionnaire:state.questionnaire
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTestNames: () => dispatch(getTestNames())
+    getTestNames: (ev) => dispatch(getTestNames(ev))
   }
 }
 

@@ -46,7 +46,21 @@ const evaluateTests = async (req, res, next)=>{
       return res.status(404).json({msg:'Unauthorized to enter'});
     }
 
-    res.status(200).json(nameTest);
+  }catch(error){
+    next(error);
+  }
+}
+const getTestNames = async (req, res, next)=>{
+  try{
+    const tokenCookie = req.cookies.authToken;
+    await jwt.verify(tokenCookie, SECRET);
+    req.token = tokenCookie;
+    if (req.token){
+      const allTestNames = await testsModel.find({}, {_id:0, testName:1});
+      res.status(200).json(allTestNames);
+    } else{
+      return res.status(404).json({msg:'Unauthorized to enter'});
+    }
 
   }catch(error){
     next(error);
@@ -91,4 +105,4 @@ const sendTests = async (req, res, next)=>{
     next(error);
   }
 }
-module.exports = {createTests, evaluateTests, sendTests};
+module.exports = {createTests, evaluateTests, sendTests, getTestNames};

@@ -216,7 +216,7 @@ const reducer = (state = initialState, action) => {
       return { ...copyOfState, userInfo: action.userData };
 
     case 'SHOW_TEST_NAMES':
-      return {...copyOfState, allTestNames:action.testNames}
+      return {...copyOfState, allTestNames:action.testName}
 
 
     default:
@@ -239,48 +239,9 @@ export const signinInputHandler= ev => {
   }
 }
 
-// const addAccountHandler= ev => {
-//   return {
-//     type: 'ADD_ACCOUNT',
-//     ev: ev
-//   }
-// }
-
 export const redirectToLogin= () => {
   return {type: 'REDIRECT_LOGIN'}
 }
-
-// export const redirectToLogin= ev => {
-//   return function(dispatch) {
-//     fetch('/eval/signin')
-//     .then(res => {
-//       if (res.status >= 400 && res.status < 500) {
-//         throw new Error('You sack already!');
-//       }else {
-//         return res.json();
-//       }
-//     })
-//     .then(messageObject => {
-//       console.log(messageObject);
-//       // dispatch(putTheMessageThere(messageObject));
-//     })
-//     .catch(err => {
-//       // dispatch(badRequest(err))
-//       console.log(err);
-//     })
-//   }
-// }
-
-
-
-// export const confirmHandler= ev => {
-//   return {
-//     type: 'SIGNUP_REDIRECT',
-//     ev: ev
-//   }
-// }
-
-
 
 export const logoutChanges = ev => {
   return {
@@ -335,9 +296,28 @@ export const showTest = testName => {
 export const requestAction = userData => {
   return { type: 'FETCH_DATA', userData: userData }
 }
-export const showTestNames = testNames=>{
-  return {type:'SHOW_TEST_NAMES', testNames:testNames}
+export const showTestNames = testName=>{
+  return {type:'SHOW_TEST_NAMES', testName:testName}
 }
+const signinDispatch= data => {
+  return {
+    type: 'SIGNUP_REDIRECT',
+    payload: data
+  }
+}
+
+const makeSigninTrue= () => {
+  return {
+    type: 'SIGNIN_TRUE'
+  }
+}
+
+const signinError= () => {
+  return {
+    type: 'SIGNIN_ERROR'
+  }
+}
+
 
 
 
@@ -397,24 +377,6 @@ export const saveFullQuestionnaire = fullTest => {
 }
 
 
-const signinDispatch= data => {
-  return {
-    type: 'SIGNUP_REDIRECT',
-    payload: data
-  }
-}
-
-const makeSigninTrue= () => {
-  return {
-    type: 'SIGNIN_TRUE'
-  }
-}
-
-const signinError= () => {
-  return {
-    type: 'SIGNIN_ERROR'
-  }
-}
 
 export const signinFetch = credentials => {
   return function(dispatch) {
@@ -448,17 +410,13 @@ export const signinFetch = credentials => {
 
 export const getTestNames = testData => {
   return function(dispatch) {
-    fetch('/eval/protected/testsPage', {
-      method: 'get',
-      headers: { 'Content-Type': 'application/json'},
-      body: JSON.stringify(testData)
-    })
+    fetch('/eval/tests', {mode:'no-cors'})
     .then(res => {
       return res.json()
     })
     .then(testData => {
       console.log(testData);
-      dispatch(showTestNames(testData.testName));
+      dispatch(showTestNames(testData));
     })
     .catch(err => console.warn(err))
   }

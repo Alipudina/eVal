@@ -29,9 +29,13 @@ const authorization = async (req, res, next) => {
 const createMakers = async (req, res, next)=>{
   try{
     const createMaker = await makersModel.findOne({userName: req.body.userName});
+    const createEmail = await makersModel.findOne({userEmail:req.body.userEmail});
+    console.log(createMaker);
     if (createMaker){
       return res.status(404).json({msg:'That name is already taken'});
-    }
+    } else if (createEmail) {
+        return res.status(404).json({msg:'That email is already taken'});
+          }
 
     req.body.password = await bcrypt.hash(req.body.password, saltRounds);
 
@@ -51,7 +55,7 @@ const loginMakers = async (req, res, next) => {
       return res.status(404).json({msg: 'Maker does not exist'});
     }
 
-    const checkPasswordsMatch = true;
+    const checkPasswordsMatch = await bcrypt.compare(req.body.password, findMaker.password);;
 
     if (!checkPasswordsMatch) {
       return res.status(400).json({msg: 'Password is incorrect'});
