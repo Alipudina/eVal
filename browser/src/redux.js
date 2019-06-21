@@ -430,6 +430,7 @@ export const getTestNames = () => {
       return res.json()
     })
     .then(testData => {
+      console.log(testData);
       dispatch(showTestNames(testData));
     })
     .catch(err => console.warn(err))
