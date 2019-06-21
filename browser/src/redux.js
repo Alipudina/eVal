@@ -5,6 +5,7 @@ import ContactEmailChanged from './defaultEmail';
 
 const initialState = {
   testName: '',
+  allTestNames:[],
   questionText: '',
   questionType: '',
   wrongAnswer: '',
@@ -186,7 +187,7 @@ const reducer = (state = initialState, action) => {
       copyOfState.allFullQuestions = state.allFullQuestions.filter((each, index) => parseInt(index) !== parseInt(action.event.target.value))
       return copyOfState;
 
-    case 'SAVE_FULL_QUESTIONNAIRE':
+    case 'SAVE_FULL_TEST':
       copyOfState.questionnaire = [...state.questionnaire, {
         testName: state.testName,
         allFullQuestions: [...state.allFullQuestions]
@@ -217,8 +218,9 @@ const reducer = (state = initialState, action) => {
     case 'FETCH_DATA':
       return { ...copyOfState, userInfo: action.userData };
 
-
-
+    case 'SHOW_TEST_NAMES':
+      copyOfState.allTestNames = action.payload
+      return copyOfState;
 
 
     default:
@@ -241,48 +243,9 @@ export const signinInputHandler= ev => {
   }
 }
 
-// const addAccountHandler= ev => {
-//   return {
-//     type: 'ADD_ACCOUNT',
-//     ev: ev
-//   }
-// }
-
 export const redirectToLogin= () => {
   return {type: 'REDIRECT_LOGIN'}
 }
-
-// export const redirectToLogin= ev => {
-//   return function(dispatch) {
-//     fetch('/eval/signin')
-//     .then(res => {
-//       if (res.status >= 400 && res.status < 500) {
-//         throw new Error('You sack already!');
-//       }else {
-//         return res.json();
-//       }
-//     })
-//     .then(messageObject => {
-//       console.log(messageObject);
-//       // dispatch(putTheMessageThere(messageObject));
-//     })
-//     .catch(err => {
-//       // dispatch(badRequest(err))
-//       console.log(err);
-//     })
-//   }
-// }
-
-
-
-// export const confirmHandler= ev => {
-//   return {
-//     type: 'SIGNUP_REDIRECT',
-//     ev: ev
-//   }
-// }
-
-
 
 export const logoutChanges = ev => {
   return {
@@ -325,8 +288,8 @@ export const addFullQuestion = ev => {
 export const deleteFullQuestion = ev => {
   return { type: 'DELETE_FULL_QUESTION', event: ev }
 }
-export const saveFullQuestionnaire = ev => {
-  return { type: 'SAVE_FULL_QUESTIONNAIRE', event: ev }
+export const saveFullTest = ev => {
+  return { type: 'SAVE_FULL_TEST', event: ev }
 }
 export const deleteQuestionnaire = ev => {
   return { type: 'DELETE_QUESTIONNAIRE', event: ev }
@@ -334,24 +297,43 @@ export const deleteQuestionnaire = ev => {
 export const showTest = testName => {
   return { type: 'SHOW_TEST', testName: testName }
 }
-
-
 export const requestAction = userData => {
   return { type: 'FETCH_DATA', userData: userData }
 }
-
-
-
-
-
-export const makeFetch = () => {
-  return function (dispatch) {
-    fetch('/eval/protected/test')
-      .then(res => res.json())
-      .then(tests => console.log(tests))
-      .catch(error => console.log(error))
+export const showTestNames = payload=>{
+  return {type:'SHOW_TEST_NAMES', payload:payload}
+}
+const signinDispatch= data => {
+  return {
+    type: 'SIGNUP_REDIRECT',
+    payload: data
   }
 }
+
+const makeSigninTrue= () => {
+  return {
+    type: 'SIGNIN_TRUE'
+  }
+}
+
+const signinError= () => {
+  return {
+    type: 'SIGNIN_ERROR'
+  }
+}
+
+
+
+
+
+// export const makeFetch = () => {
+//   return function (dispatch) {
+//     fetch('/eval/protected/test')
+//       .then(res => res.json())
+//       .then(tests => console.log(tests))
+//       .catch(error => console.log(error))
+//   }
+// }
 
 // loginFetch #####################################################
 const loginError= () => {
@@ -377,7 +359,6 @@ export const loginFetch = credentials => {
         return res.json();
       })
       .then(userData => {
-        console.log(userData);
         Auth.login();
         dispatch(requestAction(userData));
         dispatch(redirectToLogin());
@@ -388,25 +369,26 @@ export const loginFetch = credentials => {
   }
 }
 
-// signin #########################################################
-const signinDispatch= data => {
-  return {
-    type: 'SIGNUP_REDIRECT',
-    payload: data
+export const saveFullQuestionnaire = fullTest => {
+  return function(dispatch) {
+    fetch('/eval/protected/create', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify(fullTest)
+    })
+    .then(res => {
+      return res.json()
+    })
+    .then(data => {
+      console.log(data);
+      dispatch(saveFullTest(data.fullTest));
+    })
+    .catch(err => console.warn(err))
+
   }
 }
 
-const makeSigninTrue= () => {
-  return {
-    type: 'SIGNIN_TRUE'
-  }
-}
 
-const signinError= () => {
-  return {
-    type: 'SIGNIN_ERROR'
-  }
-}
 
 export const signinFetch = credentials => {
   return function(dispatch) {
@@ -435,6 +417,22 @@ export const signinFetch = credentials => {
     .catch(err => {
       console.warn(err);
     })
+  }
+}
+
+export const getTestNames = () => {
+  return function(dispatch) {
+    fetch('/eval/protected/emailsend', {
+      method: 'get',
+      headers: { 'Content-Type': 'application/json'},
+    })
+    .then(res => {
+      return res.json()
+    })
+    .then(testData => {
+      dispatch(showTestNames(testData));
+    })
+    .catch(err => console.warn(err))
   }
 }
 
