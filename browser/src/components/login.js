@@ -59,7 +59,7 @@ class LoginPage extends Component {
         </form>
 
         {this.props.signinSuccess && <Alert variant='success'>{this.props.signinMsg}</Alert>}
-        {this.props.signinFaild && <Alert variant='danger'>This userName is already exist!</Alert>}
+        {this.props.signinFaild && <Alert variant='danger'>Signin failed. User Name or Email already taken</Alert>}
 
         {this.props.signupRedirect && <Redirect to="/create" />}
       </div>

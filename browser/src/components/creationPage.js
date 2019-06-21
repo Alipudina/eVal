@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {NavLink, Route, Redirect} from 'react-router-dom';
-import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire, showTest, makeFetch, loginFetch} from '../redux';
+import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire, showTest, loginFetch} from '../redux';
 import {YesNoAnswerContainer} from './materialui/yesno';
 import {MultipleChoiceContainer} from './materialui/multiplechoice';
 import {ScrambledContainer} from './materialui/scrambled';
@@ -22,18 +22,32 @@ export class Protected  extends Component {
 
 
 class CreationPage extends Component {
-  componentDidMount(){
-    this.props.makeFetch();
-  }
+
+  sendTest = ev=>{
+    ev.preventDefault();
+    this.props.saveFullQuestionnaire({
+      testName:this.props.testName,
+      questionnaire:this.props.allFullQuestions.map((each, index)=>({
+                questionNumber:index+1,
+                questionType:each.questionType,
+                questionText:each.questionText,
+                questionCorrectAnswer:each.rightAnswer,
+                questionWrongAnswers:each.allWrongAnswers.map((eachWrongAnswer, index)=>({
+                      eachWrongAnswer:eachWrongAnswer
+                }))
+            }))
+      })
+    }
+
   render() {
     return (
       <>
         <LogoutContainer />
-        <NavLink to="testsPage" className="btn btn-primary login-out tests">My Tests</NavLink>
+        <NavLink to="emailsend" className="btn btn-primary login-out tests">My Tests</NavLink>
         <div className="body">
           <h1>Hello {this.props.signinUserName} {this.props.userNameInput}</h1>
           <h1>Create a test</h1>
-          <form className="creatorForm">
+          <form className="creatorForm" onSubmit={this.sendTest}>
           <label className="questionText">Name of the Test: </label>
           <input className="questionText" placeholder="How do you want to call it"
           value={this.props.testName}
@@ -54,7 +68,7 @@ class CreationPage extends Component {
           {this.props.questionType==='MultipleChoice'&&<MultipleChoiceContainer/>}
           {this.props.questionType==='Scrambled'&&<ScrambledContainer />}
           <br></br>
-          <button type="button" onClick={this.props.addFullQuestion} className="questionType">Add Another Question</button>
+          <button type="button" onClick={this.props.addFullQuestion} className="questionType">Add Question</button>
           {
             this.props.allFullQuestions&&this.props.allFullQuestions.map((each, index)=>{
               return(
@@ -77,15 +91,14 @@ class CreationPage extends Component {
               )
             })
           }
+              <div className="creationBtns questionType">
+                  <button type="button" onClick={this.props.showTest}>
+                        <NavLink  className="removeLink" to="/showtest">Show Test</NavLink>
+                  </button>
+                  <button type="submit">Save</button>
+                  <button type="button" onClick={this.props.deleteQuestionnaire}>Delete Everything!</button>
+              </div>
           </form>
-
-          <div className="creationBtns questionType">
-              <button type="button" onClick={this.props.showTest}>
-                    <NavLink  className="removeLink" to="/showtest">Show Test</NavLink>
-              </button>
-              <button type="button" onClick={this.props.saveFullQuestionnaire}>Save</button>
-              <button type="button" onClick={this.props.deleteQuestionnaire}>Delete Everything!</button>
-          </div>
         </div>
       </>
     )
@@ -140,7 +153,8 @@ const mapStateToProps = state => {
         allFullQuestions: state.allFullQuestions,
         showTest:state.showTest,
         signinUserName: state.signinUserName,
-        userNameInput: state.userNameInput
+        userNameInput: state.userNameInput,
+        allTestNames:state.allTestNames
     }
 }
 const mapDispatchToProps = dispatch => {
@@ -150,11 +164,11 @@ const mapDispatchToProps = dispatch => {
         questionTextChange: ev=> dispatch(questionTextChange(ev)),
         addFullQuestion: ev=> dispatch(addFullQuestion(ev)),
         deleteFullQuestion: ev=> dispatch(deleteFullQuestion(ev)),
-        saveFullQuestionnaire: ev=> dispatch(saveFullQuestionnaire(ev)),
+        saveFullQuestionnaire: fullTest=> dispatch(saveFullQuestionnaire(fullTest)),
         deleteQuestionnaire: ev=> dispatch(deleteQuestionnaire(ev)),
         showTest: ev => dispatch(showTest(ev)),
-        makeFetch: ev=>dispatch(makeFetch(ev)),
-          makeRequest: credentials => dispatch(loginFetch(credentials))
+        // makeFetch: ev=>dispatch(makeFetch(ev)),
+        makeRequest: credentials => dispatch(loginFetch(credentials)),
     }
 }
 
