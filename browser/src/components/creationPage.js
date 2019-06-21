@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {NavLink, Route, Redirect} from 'react-router-dom';
-import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire, showTest, makeFetch, loginFetch} from '../redux';
+import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire, showTest, loginFetch} from '../redux';
 import {YesNoAnswerContainer} from './materialui/yesno';
 import {MultipleChoiceContainer} from './materialui/multiplechoice';
 import {ScrambledContainer} from './materialui/scrambled';
@@ -22,9 +22,7 @@ export class Protected  extends Component {
 
 
 class CreationPage extends Component {
-  componentDidMount(){
-    this.props.makeFetch();
-  }
+
   sendTest = ev=>{
     ev.preventDefault();
     this.props.saveFullQuestionnaire({
@@ -40,6 +38,7 @@ class CreationPage extends Component {
             }))
       })
     }
+
   render() {
     return (
       <>
@@ -154,7 +153,8 @@ const mapStateToProps = state => {
         allFullQuestions: state.allFullQuestions,
         showTest:state.showTest,
         signinUserName: state.signinUserName,
-        userNameInput: state.userNameInput
+        userNameInput: state.userNameInput,
+        allTestNames:state.allTestNames
     }
 }
 const mapDispatchToProps = dispatch => {
@@ -167,8 +167,8 @@ const mapDispatchToProps = dispatch => {
         saveFullQuestionnaire: fullTest=> dispatch(saveFullQuestionnaire(fullTest)),
         deleteQuestionnaire: ev=> dispatch(deleteQuestionnaire(ev)),
         showTest: ev => dispatch(showTest(ev)),
-        makeFetch: ev=>dispatch(makeFetch(ev)),
-        makeRequest: credentials => dispatch(loginFetch(credentials))
+        // makeFetch: ev=>dispatch(makeFetch(ev)),
+        makeRequest: credentials => dispatch(loginFetch(credentials)),
     }
 }
 

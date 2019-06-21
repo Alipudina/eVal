@@ -4,10 +4,9 @@ import {connect} from 'react-redux';
 import {getTestNames} from '../redux';
 
 class TestsPage extends Component {
-
-    componentDidMount() {
-      this.props.getTestNames();
-    }
+  componentDidMount(){
+    this.props.getTestNames();
+  }
 
   state={
     addEmail: false,
@@ -42,7 +41,7 @@ class TestsPage extends Component {
                 <div className="form-group w-75">
                   <select name="carlist" form="carform" className="form-control" ref="selectedTest">
                   {this.props.allTestNames.map((elem, index) => {
-                    return <option value={elem.toLowerCase()} key={index}>{elem}</option>
+                    return <option value={elem} key={index}>{elem.testName}</option>
                   })}
                   </select>
 

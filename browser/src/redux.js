@@ -216,7 +216,9 @@ const reducer = (state = initialState, action) => {
       return { ...copyOfState, userInfo: action.userData };
 
     case 'SHOW_TEST_NAMES':
-      return {...copyOfState, allTestNames:action.testName}
+      copyOfState.allTestNames = action.payload
+      console.log(copyOfState.allTestNames[1].testName)
+      return copyOfState;
 
 
     default:
@@ -296,8 +298,8 @@ export const showTest = testName => {
 export const requestAction = userData => {
   return { type: 'FETCH_DATA', userData: userData }
 }
-export const showTestNames = testName=>{
-  return {type:'SHOW_TEST_NAMES', testName:testName}
+export const showTestNames = payload=>{
+  return {type:'SHOW_TEST_NAMES', payload:payload}
 }
 const signinDispatch= data => {
   return {
@@ -322,14 +324,14 @@ const signinError= () => {
 
 
 
-export const makeFetch = () => {
-  return function (dispatch) {
-    fetch('/eval/protected/test')
-      .then(res => res.json())
-      .then(tests => console.log(tests))
-      .catch(error => console.log(error))
-  }
-}
+// export const makeFetch = () => {
+//   return function (dispatch) {
+//     fetch('/eval/protected/test')
+//       .then(res => res.json())
+//       .then(tests => console.log(tests))
+//       .catch(error => console.log(error))
+//   }
+// }
 
 export const loginFetch = credentials => {
   return function (dispatch) {
@@ -347,7 +349,6 @@ export const loginFetch = credentials => {
         return res.json();
       })
       .then(userData => {
-        console.log(userData);
         Auth.login();
         dispatch(requestAction(userData));
         dispatch(redirectToLogin());
@@ -408,15 +409,21 @@ export const signinFetch = credentials => {
   }
 }
 
-export const getTestNames = testData => {
+export const getTestNames = () => {
   return function(dispatch) {
-    fetch('/eval/tests', {mode:'no-cors'})
+    fetch('/eval/protected/testpage', {
+      method: 'get',
+      headers: { 'Content-Type': 'application/json'},
+    })
     .then(res => {
       return res.json()
     })
     .then(testData => {
       console.log(testData);
-      dispatch(showTestNames(testData));
+      var stringData=testData;
+      // SON.stringify(testData);
+      console.log(stringData);
+      dispatch(showTestNames(stringData));
     })
     .catch(err => console.warn(err))
   }
