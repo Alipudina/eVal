@@ -41,7 +41,7 @@ class EmailSend extends Component {
                 <div className="form-group w-75">
                   <select name="carlist" form="carform" className="form-control" ref="selectedTest">
                   {this.props.allTestNames.map((elem, index) => {
-                    return <option value={elem} key={index}>{elem.testName}</option>
+                    return <option value={elem.testName} key={index}>{elem.testName}</option>
                   })}
                   </select>
 
