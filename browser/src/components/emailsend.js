@@ -3,7 +3,7 @@ import {LogoutContainer} from './logout';
 import {connect} from 'react-redux';
 import {getTestNames} from '../redux';
 
-class TestsPage extends Component {
+class EmailSend extends Component {
   componentDidMount(){
     this.props.getTestNames();
   }
@@ -96,4 +96,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export const TestsPageContainer=connect(mapStateToProps, mapDispatchToProps)(TestsPage);
+export const EmailSendContainer=connect(mapStateToProps, mapDispatchToProps)(EmailSend);

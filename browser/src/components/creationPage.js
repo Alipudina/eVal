@@ -43,7 +43,7 @@ class CreationPage extends Component {
     return (
       <>
         <LogoutContainer />
-        <NavLink to="testsPage" className="btn btn-primary login-out tests">My Tests</NavLink>
+        <NavLink to="emailsend" className="btn btn-primary login-out tests">My Tests</NavLink>
         <div className="body">
           <h1>Hello {this.props.signinUserName} {this.props.userNameInput}</h1>
           <h1>Create a test</h1>

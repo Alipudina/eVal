@@ -217,7 +217,6 @@ const reducer = (state = initialState, action) => {
 
     case 'SHOW_TEST_NAMES':
       copyOfState.allTestNames = action.payload
-      console.log(copyOfState.allTestNames[1].testName)
       return copyOfState;
 
 
@@ -411,7 +410,7 @@ export const signinFetch = credentials => {
 
 export const getTestNames = () => {
   return function(dispatch) {
-    fetch('/eval/protected/testpage', {
+    fetch('/eval/protected/emailsend', {
       method: 'get',
       headers: { 'Content-Type': 'application/json'},
     })
@@ -419,11 +418,7 @@ export const getTestNames = () => {
       return res.json()
     })
     .then(testData => {
-      console.log(testData);
-      var stringData=testData;
-      // SON.stringify(testData);
-      console.log(stringData);
-      dispatch(showTestNames(stringData));
+      dispatch(showTestNames(testData));
     })
     .catch(err => console.warn(err))
   }

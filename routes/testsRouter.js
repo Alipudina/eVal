@@ -4,9 +4,8 @@ const {createTests, evaluateTests, sendTests, getTestNames} = require('../middle
 const { userCreateValidator } = require('../helpers/userCreateValidator');
 
 testsRouter.post('/create', createTests);
-// testsRouter.get('/create', getTestNames);
 testsRouter.get('/test', evaluateTests);
-testsRouter.get('/send', sendTests);
-testsRouter.get('/testpage', getTestNames);
+testsRouter.get('/emailsend', getTestNames);
+// testsRouter.get('/showtest', getTestNames);
 
 module.exports = testsRouter;
