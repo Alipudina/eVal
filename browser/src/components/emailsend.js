@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {NavLink} from 'react-router-dom';
 import {LogoutContainer} from './logout';
 import {connect} from 'react-redux';
 import {getTestNames} from '../redux';
@@ -22,7 +23,7 @@ class EmailSend extends Component {
     return(
       <>
         <LogoutContainer />
-
+        <NavLink to="/create" className="btn btn-primary login-out">Back</NavLink>
         <section className="resume-section p-4 p-lg-5 text-center" id="contact">
             <div className="my-auto">
               <h2 className="mb-4">Select Test</h2>

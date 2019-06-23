@@ -67,6 +67,22 @@ const getTestNames = async (req, res, next)=>{
   }
 }
 
+const showTest = async (req, res, next)=>{
+  try{
+    const tokenCookie = req.cookies.authToken;
+    await jwt.verify(tokenCookie, SECRET);
+    req.token = tokenCookie;
+    if (req.token){
+      const allTestNames = await testsModel.find({}, {_id:0});
+      res.status(200).json(allTestNames);
+    } else{
+      return res.status(404).json({msg:'Unauthorized to enter'});
+    }
+
+  }catch(error){
+    next(error);
+  }
+}
 const emailTransporter = nodemailer.createTransport({
             service:'Hotmail',
             auth:{ user:process.env.EMAIL_USER,
@@ -105,4 +121,4 @@ const sendTests = async (req, res, next)=>{
     next(error);
   }
 }
-module.exports = {createTests, evaluateTests, sendTests, getTestNames};
+module.exports = {createTests, evaluateTests, sendTests, getTestNames, showTest};

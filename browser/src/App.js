@@ -9,6 +9,7 @@ import LandingPage from './components/landingPage';
 import { ContactContainer } from './components/contact';
 // import {CreationPageContainer} from './components/creationPage';
 import { EmailSendContainer } from './components/emailsend';
+import { ShowTestContainer } from './components/showtest';
 
 class App extends Component {
   render() {
@@ -21,6 +22,7 @@ class App extends Component {
           <Route path="/create" component={Protected} />
           <Route path="/contact" component={ContactContainer} />
           <Route path="/emailsend" component={EmailSendContainer} />
+          <Route path="/showtest" component={ShowTestContainer} />
           <Footer />
         </BrowserRouter>
       </React.Fragment>

@@ -14,6 +14,7 @@ const initialState = {
   allFullQuestions: [],
   questionnaire: [],
   showTest: false,
+  fullTestValue:'',
 
   userName: '',
   password: '',
@@ -222,6 +223,15 @@ const reducer = (state = initialState, action) => {
       copyOfState.allTestNames = action.payload
       return copyOfState;
 
+    case 'SHOW_FULL_TEST':
+      copyOfState.questionnaire = action.payload
+      console.log(copyOfState.questionnaire)
+      return copyOfState
+
+    case 'FULL_TEST_CHANGE':
+      copyOfState.fullTestValue = action.event.target.value
+      return copyOfState;
+
 
     default:
       return copyOfState;
@@ -302,6 +312,12 @@ export const requestAction = userData => {
 }
 export const showTestNames = payload=>{
   return {type:'SHOW_TEST_NAMES', payload:payload}
+}
+export const showFullTest = payload =>{
+  return {type:'SHOW_FULL_TEST', payload:payload}
+}
+export const fullTestChange = ev => {
+  return { type: 'FULL_TEST_CHANGE', event: ev }
 }
 const signinDispatch= data => {
   return {
@@ -419,7 +435,21 @@ export const signinFetch = credentials => {
     })
   }
 }
-
+export const getFullTest = () => {
+  return function(dispatch) {
+    fetch('/eval/protected/showtest', {
+      method: 'get',
+      headers: { 'Content-Type': 'application/json'},
+    })
+    .then(res => {
+      return res.json()
+    })
+    .then(testData => {
+      dispatch(showFullTest(testData));
+    })
+    .catch(err => console.warn(err))
+  }
+}
 export const getTestNames = () => {
   return function(dispatch) {
     fetch('/eval/protected/emailsend', {
@@ -430,7 +460,6 @@ export const getTestNames = () => {
       return res.json()
     })
     .then(testData => {
-      console.log(testData);
       dispatch(showTestNames(testData));
     })
     .catch(err => console.warn(err))

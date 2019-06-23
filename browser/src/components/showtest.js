@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {NavLink, Route, Redirect} from 'react-router-dom';
-import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire, showTest, loginFetch} from '../redux';
+import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire, showTest, loginFetch, getFullTest, fullTestChange} from '../redux';
 import {YesNoAnswerContainer} from './materialui/yesno';
 import {MultipleChoiceContainer} from './materialui/multiplechoice';
 import {ScrambledContainer} from './materialui/scrambled';
@@ -10,37 +10,68 @@ import {LogoutContainer} from './logout';
 
 
 class ShowTest extends Component {
+  componentDidMount(){
+    this.props.getFullTest();
+  }
+  handleShowTest= ev => {
+    ev.preventDefault();
+    console.log(ev.target.value)
+  }
+  renderSwitch = ev=> {
+    switch(ev) {
+      case 'YesNo':
+        return 'Yes/No';
+      case 'MultipleChoice':
+        return 'Multiple';
+      case 'Scrambled':
+       return 'Scrambled'
+      default:
+        return '';
+    }
+  }
   render() {
+    var testIndex=this.props.fullTestValue;
+    var test = this.props.questionnaire;
     return (
       <>
+      <div className="my-auto">
+        <h2 className="mb-4">Select Test</h2>
+        <form
+          className="contactForm d-flex flex-column align-items-center"
+          action=""
+          method="POST"
+        >
+          <div className="form-group w-75">
+            <select name="carlist" form="carform" defaultValue="" placeholder="Select a test" className="form-control" ref="selectedTest" onChange={this.props.fullTestChange}>
+            <option value="" key="empty" disabled>Select your option</option>
+            {test.map((elem, index) => {
+              return <option value={index} key={index}>{elem.testName}</option>
+            })}
+            </select>
+          </div>
+        </form>
+        <form>
+        {this.props.fullTestValue!=""&&
+
         <div className="body fullQuestion">
-          <h1>{this.props.testName}</h1>
-          <div>
-          {
-            this.props.allFullQuestions&&this.props.allFullQuestions.map((each, index)=>{
+          <h1>{test[testIndex].testName}</h1>
+          <div>{
+            test[testIndex].questionnaire.map((each, index)=>{
               return(
                 <div key={index} className="fullQuestion questionType">
                   <span><b>{index+1})</b></span>
-                  <span><b>Type:</b>{each.questionType}</span>
-                  <span><b>Question:</b>{each.questionText}</span>
-                  <span><b>Right answer:</b>{each.rightAnswer}</span>
-                  {each.allWrongAnswers.length>0&&<span><b>Wrong answer(s):</b></span>}
-                  {each.allWrongAnswers&&each.allWrongAnswers.map((wrongAnswer, index)=>{
-                    return(
-                        <span key={index}><b>{index+1})</b> {wrongAnswer}</span>
-                    )
-
-                  })}
-                  <span>
-                    <button type="button" className="deleteButton" onClick={this.props.deleteFullQuestion} value={index}>Delete</button>
-                  </span>
+                  <span><b> Question: </b>{each.questionText}</span>
+                    {this.renderSwitch(each.questionType)}
                 </div>
               )
             })
           }
           </div>
         </div>
+        }
         <button type="button"><NavLink  className="removeLink" to="/create">Go Back</NavLink></button>
+        </form>
+        </div>
       </>
     )
   }
@@ -55,7 +86,9 @@ const mapStateToProps = state => {
         showTest:state.showTest,
         signinUserName: state.signinUserName,
         userNameInput: state.userNameInput,
-        allTestNames:state.allTestNames
+        allTestNames:state.allTestNames,
+        questionnaire:state.questionnaire,
+        fullTestValue:state.fullTestValue
     }
 }
 const mapDispatchToProps = dispatch => {
@@ -69,6 +102,8 @@ const mapDispatchToProps = dispatch => {
         deleteQuestionnaire: ev=> dispatch(deleteQuestionnaire(ev)),
         showTest: ev => dispatch(showTest(ev)),
         makeRequest: credentials => dispatch(loginFetch(credentials)),
+        getFullTest: (ev) => dispatch(getFullTest(ev)),
+        fullTestChange: ev => dispatch(fullTestChange(ev)),
     }
 }
 
