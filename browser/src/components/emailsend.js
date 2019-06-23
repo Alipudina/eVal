@@ -9,7 +9,6 @@ class EmailSend extends Component {
   }
 
   state={
-    addEmail: false,
     emailToSend: "",
     testToSend: ""
   }
@@ -18,12 +17,6 @@ class EmailSend extends Component {
     this.setState({emailToSend: ev.target.value, testToSend: this.refs.selectedTest.value});
   }
 
-  addEmailHandler= () => {
-    this.setState({
-      addEmail: true,
-    });
-    console.log(this.refs.selectedTest.value);
-  }
 
   render() {
     return(
@@ -41,7 +34,7 @@ class EmailSend extends Component {
                 <div className="form-group w-75">
                   <select name="carlist" form="carform" className="form-control" ref="selectedTest">
                   {this.props.allTestNames.map((elem, index) => {
-                    return <option value={elem} key={index}>{elem.testName}</option>
+                    return <option value={elem.testName} key={index}>{elem.testName}</option>
                   })}
                   </select>
 
@@ -57,21 +50,6 @@ class EmailSend extends Component {
                   />
                 </div>
 
-                {this.state.addEmail &&
-                  <div className="form-group w-75">
-                    <input
-                      type="email"
-                      className="form-control"
-                      placeholder="Email"
-                      name="email"
-                      required
-                    />
-                  </div>
-                }
-
-                <div className="form-group w-75">
-                  <span className="btn btn-warning" onClick={this.addEmailHandler}>Add Email</span>
-                </div>
 
                 <a type="submit" href={"mailto:"+ this.state.emailToSend+ "?subject=" + this.state.testToSend + "&body=" + this.props.testLink} className="btn btn-submit btn-success w-25">SEND</a>
               </form>

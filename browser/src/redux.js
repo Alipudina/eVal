@@ -83,20 +83,23 @@ const reducer = (state = initialState, action) => {
     case 'REDIRECT_LOGIN':
       return { ...copyOfState, loginRedirecion: true };
 
-
-    case 'REDIRECT_LOGINs':
-      if (state.userNameInput === state.userName && state.passwordInput === state.password) {
-        copyOfState.loginRedirecion = true;
-        Auth.login();
-      } else {
-        copyOfState.hasFailed = true;
-        setTimeout(() => {
-          copyOfState.loginRedirecion = false;
-          copyOfState.hasFailed = false;
-        }, 50)
-
-      }
+    case 'LOGIN_ERROR':
+      copyOfState.hasFailed=true;
       return copyOfState;
+
+    // case 'REDIRECT_LOGINs':
+    //   if (state.userNameInput === state.userName && state.passwordInput === state.password) {
+    //     copyOfState.loginRedirecion = true;
+    //     Auth.login();
+    //   } else {
+    //     copyOfState.hasFailed = true;
+    //     setTimeout(() => {
+    //       copyOfState.loginRedirecion = false;
+    //       copyOfState.hasFailed = false;
+    //     }, 50)
+    //
+    //   }
+    //   return copyOfState;
 
     case 'SIGNUP_REDIRECT':
       copyOfState.signinMsg=action.payload.msg;
@@ -332,6 +335,13 @@ const signinError= () => {
 //   }
 // }
 
+// loginFetch #####################################################
+const loginError= () => {
+  return {
+    type: 'LOGIN_ERROR'
+  }
+}
+
 export const loginFetch = credentials => {
   return function (dispatch) {
     fetch('/eval/login', {
@@ -342,6 +352,7 @@ export const loginFetch = credentials => {
     })
       .then(res => {
         if (res.status === 400 || res.status === 404) {
+          dispatch(loginError());
           throw new Error('Authentication failed');
         }
 
@@ -354,10 +365,10 @@ export const loginFetch = credentials => {
       })
       .catch(err => {
         console.warn(err);
-        // dispatch(hasFailedAction());
       })
   }
 }
+
 export const saveFullQuestionnaire = fullTest => {
   return function(dispatch) {
     fetch('/eval/protected/create', {
@@ -373,6 +384,7 @@ export const saveFullQuestionnaire = fullTest => {
       dispatch(saveFullTest(data.fullTest));
     })
     .catch(err => console.warn(err))
+
   }
 }
 
@@ -418,6 +430,7 @@ export const getTestNames = () => {
       return res.json()
     })
     .then(testData => {
+      console.log(testData);
       dispatch(showTestNames(testData));
     })
     .catch(err => console.warn(err))
