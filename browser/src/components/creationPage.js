@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {NavLink, Route, Redirect} from 'react-router-dom';
-import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire, showTest, loginFetch} from '../redux';
+import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire, loginFetch} from '../redux';
 import {YesNoAnswerContainer} from './materialui/yesno';
 import {MultipleChoiceContainer} from './materialui/multiplechoice';
 import {ScrambledContainer} from './materialui/scrambled';
@@ -71,7 +71,7 @@ class CreationPage extends Component {
           <button type="button" onClick={this.props.addFullQuestion} className="questionType">Add Question</button>
           {
             this.props.allFullQuestions&&this.props.allFullQuestions.map((each, index)=>{
-              return( 
+              return(
                 <div key={index} className="fullQuestion questionType">
                   <span><b>{index+1})</b></span>
                   <span><b>Type:</b>{each.questionType}</span>

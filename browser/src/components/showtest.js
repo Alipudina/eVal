@@ -1,46 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {NavLink, Route, Redirect} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire, showTest, loginFetch, getFullTest, fullTestChange} from '../redux';
-import {YesNoAnswerContainer} from './materialui/yesno';
-import {MultipleChoiceContainer} from './materialui/multiplechoice';
-import {ScrambledContainer} from './materialui/scrambled';
-import Auth from '../auth';
 import {LogoutContainer} from './logout';
-
+let mixAns=[];
 
 class ShowTest extends Component {
   componentDidMount(){
     this.props.getFullTest();
-  }
-  handleShowTest= ev => {
-    ev.preventDefault();
-    console.log(ev.target.value)
-  }
-  renderSwitch = ev=> {
-    switch(ev) {
-      case 'YesNo':
-        return 'Yes/No';
-      case 'MultipleChoice':
-        return 'Multiple';
-      case 'Scrambled':
-       return 'Scrambled'
-      default:
-        return '';
-    }
+    console.log(this.props.questionnaire)
   }
   render() {
     var testIndex=this.props.fullTestValue;
     var test = this.props.questionnaire;
     return (
       <>
+      <LogoutContainer />
       <div className="my-auto">
         <h2 className="mb-4">Select Test</h2>
-        <form
-          className="contactForm d-flex flex-column align-items-center"
-          action=""
-          method="POST"
-        >
+        <form className="contactForm d-flex flex-column align-items-center">
           <div className="form-group w-75">
             <select name="carlist" form="carform" defaultValue="" placeholder="Select a test" className="form-control" ref="selectedTest" onChange={this.props.fullTestChange}>
             <option value="" key="empty" disabled>Select your option</option>
@@ -51,7 +29,7 @@ class ShowTest extends Component {
           </div>
         </form>
         <form>
-        {this.props.fullTestValue!=""&&
+        {this.props.fullTestValue!==""&&
 
         <div className="body fullQuestion">
           <h1>{test[testIndex].testName}</h1>
@@ -61,7 +39,14 @@ class ShowTest extends Component {
                 <div key={index} className="fullQuestion questionType">
                   <span><b>{index+1})</b></span>
                   <span><b> Question: </b>{each.questionText}</span>
-                    {this.renderSwitch(each.questionType)}
+                  {each.questionType==='YesNo'&&<YesNoAnswerContainer/>}
+                  {each.questionType==='MultipleChoice'&&<MultipleChoiceAnswerContainer/>}
+                  {each.questionType==='Scrambled'&&
+                  <div className="form-group w-75">
+                  {this.props.rightAnswer}
+                  </div>
+                }
+
                 </div>
               )
             })
@@ -77,6 +62,68 @@ class ShowTest extends Component {
   }
 }
 
+
+class YesNoAnswer extends Component {
+  render(){
+    return(
+      <>
+      <div className="form-group w-75">
+        <select defaultValue="" placeholder="Select an answer">
+        <option value="" disabled>Select your option</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+        </select>
+      </div>
+      </>
+    )
+  }
+}
+
+class MultipleChoiceAnswer extends Component {
+  render(){
+    var testIndex=this.props.fullTestValue;
+    var test = this.props.questionnaire;
+    var wrongAns = test[testIndex].questionnaire.map((eachWrong, index)=>{
+      return eachWrong.questionWrongAnswers
+    });
+    var correctAns = test[testIndex].questionnaire.map((eachRight, index)=>{
+      return eachRight.questionCorrectAnswer
+    });
+
+    for (let i=0; i<wrongAns.length; i++){
+
+        mixAns[i]=wrongAns[i].map((elem)=>{
+          return (elem.eachWrongAnswer)
+        })
+        mixAns[i].push(correctAns[i])
+    }
+
+    console.log(mixAns);
+    return(
+      <>
+
+      </>
+    )
+  }
+}
+
+class Scrambled extends Component {
+  render(){
+    var testIndex=this.props.fullTestValue;
+    var test = this.props.questionnaire;
+    return(
+      <>
+      <div className="form-group w-75">
+      {this.props.fullTestValue}
+      </div>
+      </>
+    )
+  }
+}
+
+
+
+
 const mapStateToProps = state => {
     return {
         testName: state.testName,
@@ -88,7 +135,9 @@ const mapStateToProps = state => {
         userNameInput: state.userNameInput,
         allTestNames:state.allTestNames,
         questionnaire:state.questionnaire,
-        fullTestValue:state.fullTestValue
+        fullTestValue:state.fullTestValue,
+        questionCorrectAnswer:state.questionCorrectAnswer,
+        eachWrongAnswer:state.questionnaire.eachWrongAnswer
     }
 }
 const mapDispatchToProps = dispatch => {
@@ -108,3 +157,5 @@ const mapDispatchToProps = dispatch => {
 }
 
 export const ShowTestContainer = connect(mapStateToProps, mapDispatchToProps)(ShowTest)
+export const YesNoAnswerContainer = connect(mapStateToProps, mapDispatchToProps)(YesNoAnswer)
+export const MultipleChoiceAnswerContainer = connect(mapStateToProps, mapDispatchToProps)(MultipleChoiceAnswer)
