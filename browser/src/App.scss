@@ -1,5 +1,60 @@
 
+body {
 
+  .btn:hover {
+    background: white !important;
+    color: black !important;
+    border-color: #0069D9 !important;
+    filter: brightness(110%);
+    font-weight: 700;
+  }
+
+  div.landingPageContainer {
+    color: white;
+    text-align: center;
+
+    div.landingPage {
+      width: 70%;
+      margin: auto;
+      padding: 3.5vw 0;
+      border: 3px solid #6A2C73;
+      background: #0069D9;
+      line-height: 1.6;
+      letter-spacing: .1vw;
+    }
+  }
+
+  div.header {
+    width: 90vw;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+
+    .logo{
+      width: 5em;
+    }
+  }
+
+  div.footer {
+    width: 70vw;
+    background: lime;
+    padding: 2vw;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .loginButton {
+    position: absolute;
+    left: 3.5vw;
+    top: 6vw;
+  }
+}
+
+
+
+
+// ########################################
 .login{
     h1{
         text-align: center;
@@ -18,26 +73,11 @@
   left: 78vw;
 }
 
-.header{
-    display: flex;
-    justify-content: space-between;
-}
-.landingPage{
-background-image: linear-gradient(white,rgb(12, 123, 192));
-height: 30em;
-h1{
-    text-align: center;
-}
-}
-.footer{
-    margin-top: 2em;
-    display: flex;
-    justify-content: space-around;
-}
 
-.logo{
-  width: 5em;
-}
+
+
+
+
 
 
 div.info-container {
@@ -247,4 +287,3 @@ div.account-container {
 //   text-decoration: none;
 // }
 // }}}
-
