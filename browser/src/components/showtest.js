@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {NavLink} from 'react-router-dom';
-import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire, showTest, loginFetch, getFullTest, fullTestChange} from '../redux';
+import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire, showTest, loginFetch, getFullTest, fullTestChange, selectAnswer} from '../redux';
 import {LogoutContainer} from './logout';
-
-let mixAns=[];
 
 
 function shuffleArray(array) {
@@ -22,6 +20,11 @@ class ShowTest extends Component {
   componentDidMount(){
     this.props.getFullTest();
   }
+
+handleSubmit = ev=>{
+  ev.preventDefault();
+}
+
   render() {
     var testIndex=this.props.fullTestValue;
     var test = this.props.questionnaire;
@@ -40,7 +43,7 @@ class ShowTest extends Component {
             </select>
           </div>
         </form>
-        <form>
+        <form onSubmit={this.handleSubmit}>
         {this.props.fullTestValue!==""&&
 
         <div className="body fullQuestion">
@@ -48,17 +51,12 @@ class ShowTest extends Component {
           <div>{
             test[testIndex].questionnaire.map((each, index)=>{
               return(
-                <div key={index} className="fullQuestion questionType">
+                <div key={index} value={index} className="fullQuestion questionType">
                   <span><b>{index+1})</b></span>
                   <span><b> Question: </b>{each.questionText}</span>
                   {each.questionType==='YesNo'&&<YesNoAnswerContainer/>}
                   {each.questionType==='MultipleChoice'&&<MultipleChoiceAnswerContainer questionIndex={each.questionNumber-1}/>}
-                  {each.questionType==='Scrambled'&&
-                  <div>
-                  {this.props.questionCorrectAnswer}
-                  </div>
-                }
-
+                  {each.questionType==='Scrambled'&&<ScrambledAnswerContainer />}
                 </div>
               )
             })
@@ -67,6 +65,7 @@ class ShowTest extends Component {
         </div>
         }
         <button type="button"><NavLink  className="removeLink" to="/create">Go Back</NavLink></button>
+        <button type="submit" >Evaluate</button>
         </form>
         </div>
       </>
@@ -76,11 +75,18 @@ class ShowTest extends Component {
 
 
 class YesNoAnswer extends Component {
+  handleChange = ev=>{
+    var tempQuestionNumber= parseInt(ev.target.parentElement.parentElement.getAttribute("value"));
+    var tempAnswerValue = ev.target.value;
+      this.props.userAnswersArray[tempQuestionNumber]=tempAnswerValue;
+
+      console.log(this.props.userAnswersArray)
+  }
   render(){
     return(
       <>
-      <div className="form-group w-75">
-        <select defaultValue="" placeholder="Select an answer">
+      <div>
+        <select questionnumber={this.props.questionNumber} defaultValue="" placeholder="Select an answer" onChange={this.handleChange}>
         <option value="" disabled>Select your option</option>
         <option value="yes">Yes</option>
         <option value="no">No</option>
@@ -92,7 +98,15 @@ class YesNoAnswer extends Component {
 }
 
 class MultipleChoiceAnswer extends Component {
+  handleChange = ev=>{
+    var tempQuestionNumber= parseInt(ev.target.parentElement.parentElement.getAttribute("value"));
+    var tempAnswerValue = ev.target.value;
+    this.props.userAnswersArray[tempQuestionNumber]=tempAnswerValue;
+
+    console.log(this.props.userAnswersArray)
+  }
   render(){
+    var mixAns=[];
     var i=this.props.questionIndex;
     var testIndex=this.props.fullTestValue;
     var test = this.props.questionnaire;
@@ -108,14 +122,13 @@ class MultipleChoiceAnswer extends Component {
         })
         mixAns[i].push(correctAns[i])
         shuffleArray(mixAns[i])
-        console.log(mixAns)
     return(
       <>
-      <div className="form-group w-75">
-        <select defaultValue="" placeholder="Select a test" onChange={this.props.fullTestChange}>
+      <div>
+        <select defaultValue="" placeholder="Select a test" onChange={this.handleChange}>
         <option value="" key="empty" disabled>Select your option</option>
         {mixAns[i].map((elem, index)=>{
-              return <option key={index}>{elem}</option>
+              return <option key={index} >{elem}</option>
             })}
         }
         </select>
@@ -123,27 +136,42 @@ class MultipleChoiceAnswer extends Component {
       </>
     )
   }
-}
+};
 
+class ScrambledAnswer extends Component {
+  handleChange = ev=>{
+    var tempQuestionNumber= parseInt(ev.target.parentElement.parentElement.getAttribute("value"));
+    var tempAnswerValue = ev.target.value;
+    this.props.userAnswersArray[tempQuestionNumber]=tempAnswerValue;
 
-
-
-
-
-class Scrambled extends Component {
+    console.log(this.props.userAnswersArray)
+  }
   render(){
-    var testIndex=this.props.fullTestValue;
-    var test = this.props.questionnaire;
+        var correctAns=[];
+        var testIndex=this.props.fullTestValue;
+        var test = this.props.questionnaire;
+
+        test[testIndex].questionnaire.map((each, index)=>{
+          if (each.questionType==="Scrambled"){
+            correctAns.push(each.questionCorrectAnswer)
+          }
+        })
+          correctAns=correctAns+'';
+          correctAns=correctAns.toUpperCase().split('');
+          shuffleArray(correctAns);
+
     return(
       <>
-      <div className="form-group w-75">
-      {this.props.fullTestValue}
+      <div>
+        <div>
+          <b>{correctAns}</b>
+        </div>
+        <textarea onChange={this.handleChange} placeholder="Remember capital letters"></textarea>
       </div>
       </>
     )
   }
 }
-
 
 
 
@@ -160,7 +188,8 @@ const mapStateToProps = state => {
         questionnaire:state.questionnaire,
         fullTestValue:state.fullTestValue,
         questionCorrectAnswer:state.questionnaire.questionCorrectAnswer,
-        eachWrongAnswer:state.questionnaire.eachWrongAnswer
+        eachWrongAnswer:state.questionnaire.eachWrongAnswer,
+        userAnswersArray:state.userAnswersArray
     }
 }
 const mapDispatchToProps = dispatch => {
@@ -176,9 +205,11 @@ const mapDispatchToProps = dispatch => {
         makeRequest: credentials => dispatch(loginFetch(credentials)),
         getFullTest: (ev) => dispatch(getFullTest(ev)),
         fullTestChange: ev => dispatch(fullTestChange(ev)),
+        selectAnswer: ev => dispatch(selectAnswer(ev))
     }
 }
 
 export const ShowTestContainer = connect(mapStateToProps, mapDispatchToProps)(ShowTest)
 export const YesNoAnswerContainer = connect(mapStateToProps, mapDispatchToProps)(YesNoAnswer)
 export const MultipleChoiceAnswerContainer = connect(mapStateToProps, mapDispatchToProps)(MultipleChoiceAnswer)
+export const ScrambledAnswerContainer = connect(mapStateToProps, mapDispatchToProps)(ScrambledAnswer)

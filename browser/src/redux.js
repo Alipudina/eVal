@@ -15,6 +15,7 @@ const initialState = {
   questionnaire: [],
   showTest: false,
   fullTestValue:'',
+  userAnswersArray:[],
 
   userName: '',
   password: '',
@@ -225,11 +226,14 @@ const reducer = (state = initialState, action) => {
 
     case 'SHOW_FULL_TEST':
       copyOfState.questionnaire = action.payload
-      console.log(copyOfState.questionnaire)
       return copyOfState
 
     case 'FULL_TEST_CHANGE':
       copyOfState.fullTestValue = action.event.target.value
+      copyOfState.userAnswersArray = []
+      return copyOfState;
+
+    case 'SELECT_ANSWER':
       return copyOfState;
 
 
@@ -318,6 +322,9 @@ export const showFullTest = payload =>{
 }
 export const fullTestChange = ev => {
   return { type: 'FULL_TEST_CHANGE', event: ev }
+}
+export const selectAnswer = ev=>{
+    return {type:'SELECT_ANSWER', event:ev}
 }
 const signinDispatch= data => {
   return {
