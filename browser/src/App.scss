@@ -49,98 +49,133 @@ body {
     left: 3.5vw;
     top: 6vw;
   }
+
+// login.js ##################################
+  div.log_signContainer {
+    border: 3px solid #6A2C73;
+    width: 70vw;
+    margin: auto;
+
+    .homeButton {
+      position: absolute;
+      left: 4.5vw;
+      top: 6vw;
+    }
+
+    form.main-form {
+    border: 3px solid #E9ECEF;
+    width: 99%;
+    margin: 2vw auto;
+    padding: 2vw;
+
+    &:first-of-type {
+      margin-top: .5vw;
+    }
+
+    &:last-of-type {
+      margin-bottom: .5vw;
+    }
+
+      .loginText {
+        text-align: center;
+        color: #6A2C73;
+      }
+    }
+  }
+
+
 }
 
 
 
 
 // ########################################
-.login{
-    h1{
-        text-align: center;
-    }
-}
-
-.login-out {
-  position: relative;
-  left: 88vw;
-  top: 0;
-  margin: 1vw;
-}
-
-.tests {
-  top: 5vw;
-  left: 78vw;
-}
-
-
-
-
-
-
-
-
-div.info-container {
-  width: 60%;
-  margin: 2vw auto;
-  height: 28vw;
-
-  p {
-    width: 60%;
-    margin: auto;
-    line-height: 1.6;
-    letter-spacing: .1vw;
-  }
-}
-
-
-.creatorForm{
-  display: flex;
-  flex-direction: column;
-
-}
-
-.selectQuestionType,.testName, .questionText, .questionType{
-  width: 12em;
-  margin: .3vw auto;
-}
-
-.multiDiv{
-margin: 0 auto;
-display: flex;
-flex-direction: column;
-width: 20em;
-}
-
-.fullQuestion{
-  width: 100%;
-  margin: 1vw auto;
-  font-size: 1vw;
-  text-align: center;
-  span{
-    margin-right: .6vw;
-// login component ###################
-div.account-container {
-
-  .card-account {
-    margin: 10vw auto;
-    background: #E9E9E9;
-  }
-}
-
-.deleteButton{
-  font-size: 1vw;
-  background: red;
-}
-
-.removeLink{
-  text-decoration: none;
-  color:black;
-  &:hover {
-  text-decoration: none;
-}
-}}}
-
+// .login{
+//     h1{
+//         text-align: center;
+//     }
+// }
+//
+// .login-out {
+//   position: relative;
+//   left: 88vw;
+//   top: 0;
+//   margin: 1vw;
+// }
+//
+// .tests {
+//   top: 5vw;
+//   left: 78vw;
+// }
+//
+//
+//
+//
+//
+//
+//
+//
+// div.info-container {
+//   width: 60%;
+//   margin: 2vw auto;
+//   height: 28vw;
+//
+//   p {
+//     width: 60%;
+//     margin: auto;
+//     line-height: 1.6;
+//     letter-spacing: .1vw;
+//   }
+// }
+//
+//
+// .creatorForm{
+//   display: flex;
+//   flex-direction: column;
+//
+// }
+//
+// .selectQuestionType,.testName, .questionText, .questionType{
+//   width: 12em;
+//   margin: .3vw auto;
+// }
+//
+// .multiDiv{
+// margin: 0 auto;
+// display: flex;
+// flex-direction: column;
+// width: 20em;
+// }
+//
+// .fullQuestion{
+//   width: 100%;
+//   margin: 1vw auto;
+//   font-size: 1vw;
+//   text-align: center;
+//   span{
+//     margin-right: .6vw;
+// // login component ###################
+// div.account-container {
+//
+//   .card-account {
+//     margin: 10vw auto;
+//     background: #E9E9E9;
+//   }
+// }
+//
+// .deleteButton{
+//   font-size: 1vw;
+//   background: red;
+// }
+//
+// .removeLink{
+//   text-decoration: none;
+//   color:black;
+//   &:hover {
+//   text-decoration: none;
+// }
+// }}}
+//
 
 
 
