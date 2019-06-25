@@ -63,18 +63,19 @@ body {
     }
 
     form.main-form {
-    border: 3px solid #E9ECEF;
-    width: 99%;
-    margin: 2vw auto;
-    padding: 2vw;
+      width: 100%;
+      margin: 2vw auto;
+      padding: 2vw;
 
-    &:first-of-type {
-      margin-top: .5vw;
-    }
+      &:first-of-type {
+        margin-top: 0;
+        background: #FFF3CD;
+      }
 
-    &:last-of-type {
-      margin-bottom: .5vw;
-    }
+      &:last-of-type {
+        margin-bottom: 0;
+        background: #D6D8D9;
+      }
 
       .loginText {
         text-align: center;
