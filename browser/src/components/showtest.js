@@ -3,12 +3,24 @@ import { connect } from 'react-redux';
 import {NavLink} from 'react-router-dom';
 import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire, showTest, loginFetch, getFullTest, fullTestChange} from '../redux';
 import {LogoutContainer} from './logout';
+
 let mixAns=[];
+
+
+function shuffleArray(array) {
+  let i = array.length - 1;
+  for (; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  return array;
+}
 
 class ShowTest extends Component {
   componentDidMount(){
     this.props.getFullTest();
-    console.log(this.props.questionnaire)
   }
   render() {
     var testIndex=this.props.fullTestValue;
@@ -40,10 +52,10 @@ class ShowTest extends Component {
                   <span><b>{index+1})</b></span>
                   <span><b> Question: </b>{each.questionText}</span>
                   {each.questionType==='YesNo'&&<YesNoAnswerContainer/>}
-                  {each.questionType==='MultipleChoice'&&<MultipleChoiceAnswerContainer/>}
+                  {each.questionType==='MultipleChoice'&&<MultipleChoiceAnswerContainer questionIndex={each.questionNumber-1}/>}
                   {each.questionType==='Scrambled'&&
-                  <div className="form-group w-75">
-                  {this.props.rightAnswer}
+                  <div>
+                  {this.props.questionCorrectAnswer}
                   </div>
                 }
 
@@ -81,6 +93,7 @@ class YesNoAnswer extends Component {
 
 class MultipleChoiceAnswer extends Component {
   render(){
+    var i=this.props.questionIndex;
     var testIndex=this.props.fullTestValue;
     var test = this.props.questionnaire;
     var wrongAns = test[testIndex].questionnaire.map((eachWrong, index)=>{
@@ -90,22 +103,32 @@ class MultipleChoiceAnswer extends Component {
       return eachRight.questionCorrectAnswer
     });
 
-    for (let i=0; i<wrongAns.length; i++){
-
-        mixAns[i]=wrongAns[i].map((elem)=>{
+      mixAns[i]=wrongAns[i].map((elem)=>{
           return (elem.eachWrongAnswer)
         })
         mixAns[i].push(correctAns[i])
-    }
-
-    console.log(mixAns);
+        shuffleArray(mixAns[i])
+        console.log(mixAns)
     return(
       <>
-
+      <div className="form-group w-75">
+        <select defaultValue="" placeholder="Select a test" onChange={this.props.fullTestChange}>
+        <option value="" key="empty" disabled>Select your option</option>
+        {mixAns[i].map((elem, index)=>{
+              return <option key={index}>{elem}</option>
+            })}
+        }
+        </select>
+      </div>
       </>
     )
   }
 }
+
+
+
+
+
 
 class Scrambled extends Component {
   render(){
@@ -136,7 +159,7 @@ const mapStateToProps = state => {
         allTestNames:state.allTestNames,
         questionnaire:state.questionnaire,
         fullTestValue:state.fullTestValue,
-        questionCorrectAnswer:state.questionCorrectAnswer,
+        questionCorrectAnswer:state.questionnaire.questionCorrectAnswer,
         eachWrongAnswer:state.questionnaire.eachWrongAnswer
     }
 }
