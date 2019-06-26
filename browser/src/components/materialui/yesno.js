@@ -16,29 +16,31 @@ import {rightAnswerTextChange} from '../../redux';
 class YesNoAnswer extends Component{
   render(){
     return(
-      <>
-        <br></br>
-        <div className="questionType">
-          <label>
+      <div className="yesNoContainer">
+        <div className="form-check">
             <input
+              class="form-check-input"
+              id="yes"
               type="radio"
               name="yesno"
               value="yes"
               onChange={this.props.rightAnswerTextChange}
             />
-            Yes
-          </label>
-          <label>
+          <label class="form-check-label" for="yes">Yes</label>
+          </div>
+
+          <div className="form-check">
             <input
+              class="form-check-input"
+              id="no"
               type="radio"
               name="yesno"
               value="no"
               onChange={this.props.rightAnswerTextChange}
             />
-            No
-          </label>
+          <label class="form-check-label" for="no">No</label>
         </div>
-      </>
+      </div>
     )
   }
 }

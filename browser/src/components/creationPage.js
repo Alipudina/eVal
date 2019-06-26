@@ -41,34 +41,41 @@ class CreationPage extends Component {
 
   render() {
     return (
-      <>
+      <div className="CreationPage-Container">
         <LogoutContainer />
-        <NavLink to="emailsend" className="btn btn-primary login-out tests">My Tests</NavLink>
+        <NavLink to="emailsend" className="btn btn-primary myTests">My Tests</NavLink>
         <div className="body">
-          <h1>Hello {this.props.signinUserName} {this.props.userNameInput}</h1>
-          <h1>Create a test</h1>
-          <form className="creatorForm" onSubmit={this.sendTest}>
-          <label className="questionText">Name of the Test: </label>
-          <input className="questionText" placeholder="How do you want to call it"
-          value={this.props.testName}
-          onChange={this.props.testNameChange} />
+          <h2>Hello <b>{this.props.signinUserName} {this.props.userNameInput}</b></h2>
+          <h3>Create a test</h3>
+          <form className="creatorForm creator-form" onSubmit={this.sendTest}>
+            <div className="form-group">
+              <label for="testname" className="questionText">Name of the Test: </label>
+              <input required id="testname" className="questionText form-control" placeholder="How do you want to call it"
+              value={this.props.testName}
+              onChange={this.props.testNameChange} />
+          </div>
+          <div className="form-group">
+            <label for="question" className="questionText">Question: </label>
+            <input required id="question" className="questionText form-control" placeholder="Here goes your question"
+            value={this.props.questionText}
+            onChange={this.props.questionTextChange} />
+          </div>
           <br></br>
-          <label className="questionText">Question: </label>
-          <input className="questionText" placeholder="Here goes your question"
-          value={this.props.questionText}
-          onChange={this.props.questionTextChange} />
-          <br></br>
-          <select className="selectQuestionType" defaultValue="" name="questionType" id="questionType" onChange={this.props.questionTypeChange}>
-              <option value="" disabled>Select your option</option>
-              <option value='YesNo'>Yes/No</option>
-              <option value='MultipleChoice'>Multiple choice</option>
-              <option value='Scrambled'>Scrambled</option>
-          </select>
-          {this.props.questionType==='YesNo'&&<YesNoAnswerContainer />}
-          {this.props.questionType==='MultipleChoice'&&<MultipleChoiceContainer/>}
-          {this.props.questionType==='Scrambled'&&<ScrambledContainer />}
-          <br></br>
-          <button type="button" onClick={this.props.addFullQuestion} className="questionType">Add Question</button>
+          <div className="form-group">
+            <select className="selectQuestionType form-control" defaultValue="" name="questionType" id="questionType" onChange={this.props.questionTypeChange}>
+                <option value="" disabled>Select your option</option>
+                <option value='YesNo'>Yes/No</option>
+                <option value='MultipleChoice'>Multiple choice</option>
+                <option value='Scrambled'>Scrambled</option>
+            </select>
+          </div>
+          <div className="questionTypeContainer">
+            {this.props.questionType==='YesNo'&&<YesNoAnswerContainer />}
+            {this.props.questionType==='MultipleChoice'&&<MultipleChoiceContainer/>}
+            {this.props.questionType==='Scrambled'&&<ScrambledContainer />}
+          </div>
+
+          <button type="button" onClick={this.props.addFullQuestion} className="questionType btn btn-warning addQuestion">Add Question</button>
           {
             this.props.allFullQuestions&&this.props.allFullQuestions.map((each, index)=>{
               return(
@@ -92,15 +99,15 @@ class CreationPage extends Component {
             })
           }
               <div className="creationBtns questionType">
-                  <button type="button" onClick={this.props.showTest}>
-                        <NavLink  className="removeLink" to="/showtest">Show Test</NavLink>
+                  <button className="borderBtn" type="button" onClick={this.props.showTest}>
+                        <NavLink  className="removeLink btn btn-secondary" to="/showtest">Show Test</NavLink>
                   </button>
-                  <button type="submit">Save</button>
-                  <button type="button" onClick={this.props.deleteQuestionnaire}>Delete Everything!</button>
+                  <button className="btn btn-success" type="submit">Save</button>
+                  <button className="btn btn-danger" type="button" onClick={this.props.deleteQuestionnaire}>Delete Everything!</button>
               </div>
           </form>
         </div>
-      </>
+      </div>
     )
   }
 }

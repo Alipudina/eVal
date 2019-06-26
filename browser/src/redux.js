@@ -45,6 +45,7 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
 
     case 'SIGNIN_INPUT':
+      copyOfState.signinFaild=false;
       switch(action.ev.target.getAttribute('ident')) {
         case 'email':
           copyOfState.signinEmail= action.ev.target.value;
@@ -62,6 +63,7 @@ const reducer = (state = initialState, action) => {
       }
 
     case 'LOGIN_INPUT':
+      copyOfState.hasFailed=false;
       switch (action.ev.target.type) {
         case 'text':
           copyOfState.userNameInput = action.ev.target.value;

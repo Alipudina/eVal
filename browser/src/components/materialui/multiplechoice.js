@@ -5,28 +5,34 @@ import {wrongAnswerTextChange, addWrongAnswer, deleteWrongAnswer, rightAnswerTex
 class MultipleChoice extends Component{
   render(){
     return(
-      <>
-        <br></br>
-        <label className="questionType">Right Answer:</label>
-        <input value={this.props.rightAnswer} onChange={this.props.rightAnswerTextChange} className="questionType"/>
-        <br></br>
-        <label className="questionType">Wrong Answer(s):</label>
-        <input className="questionType" onChange={this.props.wrongAnswerTextChange} value={this.props.wrongAnswer}/>
-        <button type="button" className="questionType" onClick={this.props.addWrongAnswer}>Add Wrong Answer</button>
-        {
-          this.props.allWrongAnswers&&this.props.allWrongAnswers.map((each, index)=>{
-            return(
-              <div key={index} className="allWrongAnswers questionType">
-                {each}
-                <span>
-                  <button type="button" onClick={this.props.deleteWrongAnswer}
-                  className="deleteButton" value={index}>Delete</button>
-                </span>
-              </div>
-            )
-          })
-        }
-      </>
+      <div className="multiplechoice-container">
+        <div className="form-group">
+          <label for="rightAnswer">Right Answer:</label>
+          <input id="rightAnswer" className="form-control" value={this.props.rightAnswer} onChange={this.props.rightAnswerTextChange} />
+        </div>
+
+        <div className="form-group">
+          <label for="wrongAnswer" className="questionType">Wrong Answer(s):</label>
+          <input className="questionType form-control" id="wrongAnswer" onChange={this.props.wrongAnswerTextChange} value={this.props.wrongAnswer}/>
+        </div>
+        <button type="button" className="questionType btn btn-secondary" onClick={this.props.addWrongAnswer}>Add Wrong Answer</button>
+
+        <div>
+          {
+            this.props.allWrongAnswers&&this.props.allWrongAnswers.map((each, index)=>{
+              return(
+                <div key={index} className="allWrongAnswers questionType multiWrongQuestionContainer">
+                  <div className="multiWrongQuestion">{each}</div>
+                  <span className="deleteWrongQ">
+                    <button type="button" onClick={this.props.deleteWrongAnswer}
+                    className="deleteButton btn btn-danger" value={index}>Delete</button>
+                  </span>
+                </div>
+              )
+            })
+          }
+        </div>
+      </div>
     );
   }
 }

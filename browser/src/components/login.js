@@ -37,13 +37,13 @@ class LoginPage extends Component {
           <form className="main-form" onSubmit={this.loginHandler}>
             <h3 className="loginText">Login</h3>
             <div className="form-group">
-            <label for="username">userName</label>
+            <label htmlFor="username">userName</label>
             <input type="text" className="form-control" id="username" required onChange={this.props.loginInputHandler} value={this.props.userNameInput} />
             </div>
 
             <div className="form-group">
-            <label for="pwd">Password</label>
-            <input type="password" class="form-control" id="pwd" placeholder="password" required onChange={this.props.loginInputHandler} value={
+            <label htmlFor="pwd">Password</label>
+            <input type="password" className="form-control" id="pwd" placeholder="password" required onChange={this.props.loginInputHandler} value={
               this.props.passwordInput} />
             </div>
 
@@ -56,18 +56,18 @@ class LoginPage extends Component {
           <form className="main-form" onSubmit={this.signupHandler}>
             <h3 className="loginText">New User</h3>
             <div className="form-group">
-              <label for="email">Email</label>
-              <input class="form-control" id="email" onChange={this.props.signinInputHandler} ident="email" type="email" placeholder="Email" required />
+              <label htmlFor="email">Email</label>
+              <input className="form-control" id="email" onChange={this.props.signinInputHandler} ident="email" type="email" placeholder="Email" required />
             </div>
 
             <div className="form-group">
-              <label for="username">userName</label>
-              <input class="form-control" id="username" onChange={this.props.signinInputHandler} ident="username" placeholder="userName" required minLength={6} />
+              <label htmlFor="username2">userName</label>
+              <input className="form-control" id="username2" onChange={this.props.signinInputHandler} ident="username" placeholder="userName" required minLength={6} />
             </div>
 
             <div className="form-group">
-              <label for="password">Password</label>
-              <input class="form-control" id="password" onChange={this.props.signinInputHandler} ident="password" type="password" required placeholder="password" minLength={6} />
+              <label htmlFor="password">Password</label>
+              <input className="form-control" id="password" onChange={this.props.signinInputHandler} ident="password" type="password" required placeholder="password" minLength={6} />
             </div>
 
 
