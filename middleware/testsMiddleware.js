@@ -108,7 +108,7 @@ const sendTests = async (req, res, next)=>{
                     subject:'Invitation to a Test in eVal',
                     html:`<a href="http://localhost:4000/eval/${fullTest.id}/${req.body.email}">Click to go to eVal Test</a>`
                   };
-          emailTransporter.sendMail(emailOptions, function(err,info){
+          await emailTransporter.sendMail(emailOptions, function(err,info){
             if (err){
               return res.status(404).json('Something went wrong with the email');
             }else{

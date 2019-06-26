@@ -19,7 +19,6 @@ const initialState = {
   correctAnswerArray:[],
   answerPoints:0,
   authName:'',
-  userEmail:'',
 
   userName: '',
   password: '',
@@ -241,14 +240,6 @@ const reducer = (state = initialState, action) => {
       }
       return copyOfState;
 
-    case 'SEND_EMAIL_TEST':
-      console.log("email sent");
-      return copyOfState;
-
-    case 'USER_EMAIL_CHANGE':
-      copyOfState.userEmail = action.event.target.value
-      return copyOfState;
-
     default:
       return copyOfState;
   }
@@ -342,12 +333,6 @@ export const compareAnswers = ev=>{
     return {type:'COMPARE_ANSWERS', event:ev}
 }
 
-export const sendEmailTest = ev=>{
-    return {type:'SEND_EMAIL_TEST', event:ev}
-}
-export const userEmailChange = ev => {
-  return { type: 'USER_EMAIL_CHANGE', event: ev }
-}
 const signinDispatch= data => {
   return {
     type: 'SIGNUP_REDIRECT',
@@ -480,29 +465,4 @@ export const getTestNames = () => {
     .catch(err => console.warn(err))
   }
 }
-export const sendTests = emailData => {
-  return function(dispatch) {
-    fetch('/eval/protected/emailsend', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json'},
-      body: JSON.stringify(emailData)
-    })
-    .then(res => {
-      if (res.status === 400 || res.status === 404) {
-        throw new Error('Error sending mail');
-
-      }
-
-      return res.json();
-    })
-    .then(emailData => {
-      console.log(emailData);
-    
-    })
-    .catch(err => {
-      console.warn(err);
-    })
-  }
-}
-
 export const store = createStore(reducer, applyMiddleware(thunk));
