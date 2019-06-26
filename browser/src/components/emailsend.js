@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {LogoutContainer} from './logout';
 import {connect} from 'react-redux';
-import {getTestNames} from '../redux';
+import {getTestNames, sendTests, userEmailChange} from '../redux';
 import { NavLink } from 'react-router-dom';
 
 import Auth from '../auth';
@@ -21,9 +21,20 @@ class EmailSend extends Component {
   }
 
   inputEmailHandler= ev => {
-    this.setState({emailToSend: ev.target.value, testToSend: this.refs.selectedTest.value});
+    // this.setState({emailToSend: ev.target.value, testToSend: this.refs.selectedTest.value});
+    console.log(this.props.testName)
   }
 
+  handleChange=ev=>{
+    console.log(ev.target.value)
+  }
+  handleSubmit = ev=>{
+    ev.preventDefault();
+    this.props.sendTests({
+      testName:this.props.testName,
+      email:this.props.userEmail
+    })
+  }
 
   render() {
     return(
@@ -37,11 +48,11 @@ class EmailSend extends Component {
               <h3 className="mb-4">Select Test</h3>
               <form
                 className="contactForm d-flex flex-column align-items-center"
-                action=""
-                method="POST"
-              >
+                onSubmit={this.handleSubmit}
+                >
                 <div className="form-group w-75">
-                  <select name="carlist" form="carform" className="form-control" ref="selectedTest">
+                  <select name="carlist" form="carform" className="form-control" ref="selectedTest"
+                  onChange={this.handleChange}>
                   {this.props.allTestNames.map((elem, index) => {
                     return <option value={elem.testName} key={index}>{elem.testName}</option>
                   })}
@@ -50,17 +61,19 @@ class EmailSend extends Component {
                 </div>
 
                 <div className="form-group w-75">
-                  <input onChange={this.inputEmailHandler}
+                  <input onChange={this.props.userEmailChange}
                     type="email"
                     className="form-control"
                     placeholder="Email"
                     name="email"
+                    value={this.props.userEmail}
                     required
                   />
+                  <div>{this.props.userEmail}</div>
                 </div>
 
 
-                <a type="submit" href={"mailto:"+ this.state.emailToSend+ "?subject=" + this.state.testToSend + "&body=" + this.props.testLink} className="btn btn-submit btn-success w-25">SEND</a>
+                <button type="submit" className="btn btn-submit btn-success w-25">SEND</button>
               </form>
             </div>
         </section>
@@ -73,13 +86,17 @@ const mapStateToProps= state => {
   return {
     allTestNames: state.allTestNames,
     testLink: state.testLink,
-    questionnaire:state.questionnaire
+    questionnaire:state.questionnaire,
+    testName:state.testName,
+    userEmail:state.userEmail
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTestNames: (ev) => dispatch(getTestNames(ev))
+    getTestNames: (ev) => dispatch(getTestNames(ev)),
+    sendTests:(ev)=>dispatch(sendTests(ev)),
+    userEmailChange: (ev)=>dispatch(userEmailChange(ev))
   }
 }
 

@@ -19,6 +19,7 @@ const initialState = {
   correctAnswerArray:[],
   answerPoints:0,
   authName:'',
+  userEmail:'',
 
   userName: '',
   password: '',
@@ -91,20 +92,6 @@ const reducer = (state = initialState, action) => {
     case 'LOGIN_ERROR':
       copyOfState.hasFailed=true;
       return copyOfState;
-
-    // case 'REDIRECT_LOGINs':
-    //   if (state.userNameInput === state.userName && state.passwordInput === state.password) {
-    //     copyOfState.loginRedirecion = true;
-    //     Auth.login();
-    //   } else {
-    //     copyOfState.hasFailed = true;
-    //     setTimeout(() => {
-    //       copyOfState.loginRedirecion = false;
-    //       copyOfState.hasFailed = false;
-    //     }, 50)
-    //
-    //   }
-    //   return copyOfState;
 
     case 'SIGNUP_REDIRECT':
       copyOfState.signinMsg=action.payload.msg;
@@ -252,7 +239,14 @@ const reducer = (state = initialState, action) => {
         copyOfState.answerPoints=copyOfState.answerPoints+1
         }
       }
-      console.log(copyOfState.answerPoints)
+      return copyOfState;
+
+    case 'SEND_EMAIL_TEST':
+      console.log("email sent");
+      return copyOfState;
+
+    case 'USER_EMAIL_CHANGE':
+      copyOfState.userEmail = action.event.target.value
       return copyOfState;
 
     default:
@@ -346,6 +340,13 @@ export const selectAnswer = ev=>{
 }
 export const compareAnswers = ev=>{
     return {type:'COMPARE_ANSWERS', event:ev}
+}
+
+export const sendEmailTest = ev=>{
+    return {type:'SEND_EMAIL_TEST', event:ev}
+}
+export const userEmailChange = ev => {
+  return { type: 'USER_EMAIL_CHANGE', event: ev }
 }
 const signinDispatch= data => {
   return {
@@ -477,6 +478,30 @@ export const getTestNames = () => {
       dispatch(showTestNames(testData));
     })
     .catch(err => console.warn(err))
+  }
+}
+export const sendTests = emailData => {
+  return function(dispatch) {
+    fetch('/eval/protected/emailsend', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify(emailData)
+    })
+    .then(res => {
+      if (res.status === 400 || res.status === 404) {
+        throw new Error('Error sending mail');
+
+      }
+
+      return res.json();
+    })
+    .then(emailData => {
+      console.log(emailData);
+    
+    })
+    .catch(err => {
+      console.warn(err);
+    })
   }
 }
 

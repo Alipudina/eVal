@@ -56,7 +56,6 @@ const getTestNames = async (req, res, next)=>{
     const tokenCookie = req.cookies.authToken;
     await jwt.verify(tokenCookie, process.env.SECRET);
     const decodedUser= await jwt.decode(tokenCookie, process.env.SECRET)
-    console.log(decodedUser);
     req.token = tokenCookie;
     if (req.token){
       const allTestNames = await testsModel.find({authName:decodedUser.userName}, {_id:0, testName:1});
@@ -64,6 +63,7 @@ const getTestNames = async (req, res, next)=>{
     } else{
       return res.status(404).json({msg:'Unauthorized to enter'});
     }
+    next();
 
   }catch(error){
     next(error);
@@ -97,6 +97,7 @@ const sendTests = async (req, res, next)=>{
   try{
     const tokenCookie = req.cookies.authToken;
     await jwt.verify(tokenCookie, process.env.SECRET);
+    const decodedUser= await jwt.decode(tokenCookie, process.env.SECRET)
     req.token = tokenCookie;
     if (req.token){
       const fullTest = await testsModel.findOne({testName: req.body.testName});
