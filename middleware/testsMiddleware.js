@@ -4,15 +4,15 @@ const dotenv = require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
-const SECRET= process.env.SECRET;
+
 
 
 const createTests = async (req, res, next)=>{
   try{
     const tokenCookie = req.cookies.authToken;
-    await jwt.verify(tokenCookie, SECRET);
+    await jwt.verify(tokenCookie, process.env.SECRET);
     req.token = tokenCookie;
-    const decodedUser= await jwt.decode(req.token, SECRET)
+    const decodedUser= await jwt.decode(req.token, process.env.SECRET)
     if (req.token){
       const nameTest = await testsModel.findOne({testName: req.body.testName});
       if (nameTest){
@@ -35,7 +35,7 @@ const createTests = async (req, res, next)=>{
 const evaluateTests = async (req, res, next)=>{
   try{
     const tokenCookie = req.cookies.authToken;
-    await jwt.verify(tokenCookie, SECRET);
+    await jwt.verify(tokenCookie, process.env.SECRET);
     req.token = tokenCookie;
     if (req.token){
       const nameTest = await testsModel.findOne({testName: req.body.testName}, {_id:0});
@@ -54,8 +54,9 @@ const evaluateTests = async (req, res, next)=>{
 const getTestNames = async (req, res, next)=>{
   try{
     const tokenCookie = req.cookies.authToken;
-    await jwt.verify(tokenCookie, SECRET);
-    const decodedUser= await jwt.decode(req.token, SECRET)
+    await jwt.verify(tokenCookie, process.env.SECRET);
+    const decodedUser= await jwt.decode(tokenCookie, process.env.SECRET)
+    console.log(decodedUser);
     req.token = tokenCookie;
     if (req.token){
       const allTestNames = await testsModel.find({authName:decodedUser.userName}, {_id:0, testName:1});
@@ -72,7 +73,7 @@ const getTestNames = async (req, res, next)=>{
 const showTest = async (req, res, next)=>{
   try{
     const tokenCookie = req.cookies.authToken;
-    await jwt.verify(tokenCookie, SECRET);
+    await jwt.verify(tokenCookie, process.env.SECRET);
     req.token = tokenCookie;
     if (req.token){
       const allTestNames = await testsModel.find({}, {_id:0});
@@ -95,7 +96,7 @@ const emailTransporter = nodemailer.createTransport({
 const sendTests = async (req, res, next)=>{
   try{
     const tokenCookie = req.cookies.authToken;
-    await jwt.verify(tokenCookie, SECRET);
+    await jwt.verify(tokenCookie, process.env.SECRET);
     req.token = tokenCookie;
     if (req.token){
       const fullTest = await testsModel.findOne({testName: req.body.testName});
