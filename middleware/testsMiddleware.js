@@ -12,12 +12,13 @@ const createTests = async (req, res, next)=>{
     const tokenCookie = req.cookies.authToken;
     await jwt.verify(tokenCookie, SECRET);
     req.token = tokenCookie;
+    const decodedUser= await jwt.decode(req.token, SECRET)
     if (req.token){
       const nameTest = await testsModel.findOne({testName: req.body.testName});
       if (nameTest){
         return res.status(404).json({msg:'That name is already taken'});
       }
-
+      req.body.authName=decodedUser.userName;
       await testsModel.create(req.body);
 
       res.status(200).json({msg:'Test created succesfully'});
@@ -54,9 +55,10 @@ const getTestNames = async (req, res, next)=>{
   try{
     const tokenCookie = req.cookies.authToken;
     await jwt.verify(tokenCookie, SECRET);
+    const decodedUser= await jwt.decode(req.token, SECRET)
     req.token = tokenCookie;
     if (req.token){
-      const allTestNames = await testsModel.find({}, {_id:0, testName:1});
+      const allTestNames = await testsModel.find({authName:decodedUser.userName}, {_id:0, testName:1});
       res.status(200).json(allTestNames);
     } else{
       return res.status(404).json({msg:'Unauthorized to enter'});

@@ -12,7 +12,7 @@ class Logout  extends Component {
   render () {
     return (
       <>
-        <NavLink to="/" className="btn btn-primary login-out" onClick={this.logoutHandler}>Logout</NavLink>
+        <NavLink to="/" className="btn btn-primary login-out logoutButton" onClick={this.logoutHandler}>Logout</NavLink>
       </>
     )
   }

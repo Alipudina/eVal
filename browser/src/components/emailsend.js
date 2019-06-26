@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import {NavLink} from 'react-router-dom';
 import {LogoutContainer} from './logout';
 import {connect} from 'react-redux';
 import {getTestNames} from '../redux';
+import { NavLink } from 'react-router-dom';
+
+import Auth from '../auth';
 
 class EmailSend extends Component {
   componentDidMount(){
@@ -14,6 +16,10 @@ class EmailSend extends Component {
     testToSend: ""
   }
 
+  backToCreate= () => {
+    Auth.login();
+  }
+
   inputEmailHandler= ev => {
     this.setState({emailToSend: ev.target.value, testToSend: this.refs.selectedTest.value});
   }
@@ -21,12 +27,14 @@ class EmailSend extends Component {
 
   render() {
     return(
-      <>
+      <div className="log_signContainer">
         <LogoutContainer />
-        <NavLink to="/create" className="btn btn-primary login-out">Back</NavLink>
-        <section className="resume-section p-4 p-lg-5 text-center" id="contact">
+        <NavLink to="/create" className="btn btn-primary backToCreate" onClick={this.backToCreate}>Back
+        </NavLink>
+
+        <section className="resume-section p-4 p-lg-5 text-center testFormBackground" id="contact">
             <div className="my-auto">
-              <h2 className="mb-4">Select Test</h2>
+              <h3 className="mb-4">Select Test</h3>
               <form
                 className="contactForm d-flex flex-column align-items-center"
                 action=""
@@ -56,7 +64,7 @@ class EmailSend extends Component {
               </form>
             </div>
         </section>
-      </>
+      </div>
     )
   }
 }

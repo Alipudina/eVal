@@ -5,9 +5,10 @@ import { NavLink } from 'react-router-dom';
 export default class LandingPage extends Component {
     render() {
         return (
-            <>
-                <NavLink to="/login" className="  btn btn-primary float-right">LogIn/SignUp</NavLink>
-                <div className="landingPage Container mt-5">
+            <div className="landingPageContainer">
+
+                <NavLink to="/login" className="btn btn-primary loginButton">LogIn/SignUp</NavLink>
+                <div className="landingPage">
                     <h1> LandingPage</h1>
                     <div className="">
                         <p className="Card w-50 mx-auto my-5">
@@ -20,7 +21,7 @@ export default class LandingPage extends Component {
                 </div>
 
 
-            </>
+            </div>
         )
     }
 }

@@ -16,6 +16,9 @@ const initialState = {
   showTest: false,
   fullTestValue:'',
   userAnswersArray:[],
+  correctAnswerArray:[],
+  answerPoints:0,
+  authName:'',
 
   userName: '',
   password: '',
@@ -230,12 +233,27 @@ const reducer = (state = initialState, action) => {
 
     case 'FULL_TEST_CHANGE':
       copyOfState.fullTestValue = action.event.target.value
+      var testIndex=copyOfState.fullTestValue
+      var test = copyOfState.questionnaire
+      copyOfState.correctAnswerArray = test[testIndex].questionnaire.map((eachRight, index)=>{
+        return eachRight.questionCorrectAnswer
+      })
       copyOfState.userAnswersArray = []
+      document.querySelectorAll('.reset').selectedIndex = '';
       return copyOfState;
 
     case 'SELECT_ANSWER':
       return copyOfState;
 
+    case 'COMPARE_ANSWERS':
+      copyOfState.answerPoints=0;
+      for(let i=0; i<copyOfState.correctAnswerArray.length; i++){
+      if (copyOfState.correctAnswerArray[i]==copyOfState.userAnswersArray[i]){
+        copyOfState.answerPoints=copyOfState.answerPoints+1
+        }
+      }
+      console.log(copyOfState.answerPoints)
+      return copyOfState;
 
     default:
       return copyOfState;
@@ -326,6 +344,9 @@ export const fullTestChange = ev => {
 export const selectAnswer = ev=>{
     return {type:'SELECT_ANSWER', event:ev}
 }
+export const compareAnswers = ev=>{
+    return {type:'COMPARE_ANSWERS', event:ev}
+}
 const signinDispatch= data => {
   return {
     type: 'SIGNUP_REDIRECT',
@@ -344,19 +365,6 @@ const signinError= () => {
     type: 'SIGNIN_ERROR'
   }
 }
-
-
-
-
-
-// export const makeFetch = () => {
-//   return function (dispatch) {
-//     fetch('/eval/protected/test')
-//       .then(res => res.json())
-//       .then(tests => console.log(tests))
-//       .catch(error => console.log(error))
-//   }
-// }
 
 // loginFetch #####################################################
 const loginError= () => {
@@ -410,7 +418,6 @@ export const saveFullQuestionnaire = fullTest => {
 
   }
 }
-
 
 
 export const signinFetch = credentials => {

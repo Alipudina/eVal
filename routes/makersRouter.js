@@ -10,7 +10,7 @@ makersRouter.get('/logout', logoutMakers);
 
 
 // makersRouter.post('/signin', userCreateValidator, handleValidationErrors, createMakers);
-// makersRouter.post('/login', handleValidationErrors, loginMakers);
+// makersRouter.post('/login', authorization, handleValidationErrors, loginMakers);
 // makersRouter.get('/logout', logoutMakers);
 
 module.exports = makersRouter;

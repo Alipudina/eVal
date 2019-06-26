@@ -23,48 +23,63 @@ class LoginPage extends Component {
   loginHandler = ev => {
     ev.preventDefault();
     // this.props.redirectToLogin();
-    this.props.makeRequest({ userName: this.props.userNameInput, password: this.props.passwordInput });
+    this.props.makeRequest({ userName: this.props.userNameInput, password: this.props.passwordInput});
   }
 
 
   render() {
     return (
-<>
-      <NavLink to="/" className="btn btn-primary float-right">Home</NavLink>
-      <div className="login">
+      <div className="log_signContainer">
+        <NavLink to="/" className="btn btn-primary homeButton">Home</NavLink>
 
 
-        <h1>login page</h1>
-        <form className=" d-flex flex-column w-25 mx-auto mt-3" onSubmit={this.loginHandler}>
-          <label>userName</label>
-          <input type="text" placeholder="userName" required onChange={this.props.loginInputHandler} value={
-            this.props.userNameInput} />
-          <label>Password</label>
-          <input type="password" placeholder="password" required onChange={this.props.loginInputHandler} value={
-            this.props.passwordInput} />
-          <button className="btn btn-primary">Login</button>
-        </form>
-        {this.props.hasFailed && <div className="alert alert-danger my-4">Either username or password was incorrect. Try again!</div>}
-        {this.props.loginRedirecion && <Redirect to="/create" />}
-        <h1>Not a user ? Create account</h1>
-        <form className=" d-flex flex-column w-25 mx-auto mt-3" onSubmit={this.signupHandler}>
 
-          <label>Email</label>
-          <input onChange={this.props.signinInputHandler} ident="email" type="email" placeholder="Email" required />
-          <label>userName</label>
-          <input onChange={this.props.signinInputHandler} ident="username" placeholder="userName" required minLength={6} />
-          <label>Password</label>
-          <input onChange={this.props.signinInputHandler} ident="password" type="password" required placeholder="password" minLength={6} />
-          <button className="btn btn-primary" >Signup</button>
-        </form>
+          <form className="main-form" onSubmit={this.loginHandler}>
+            <h3 className="loginText">Login</h3>
+            <div className="form-group">
+            <label>Username</label>
+            <input type="text" className="form-control" id="username" placeholder="Username" required onChange={this.props.loginInputHandler} value={this.props.userNameInput} />
+            </div>
 
-        {this.props.signinSuccess && <Alert variant='success'>{this.props.signinMsg}</Alert>}
-        {this.props.signinFaild && <Alert variant='danger'>Signin failed. User Name or Email already taken</Alert>}
+            <div className="form-group">
+            <label>Password</label>
+            <input type="password" className="form-control" id="pwd" placeholder="password" required onChange={this.props.loginInputHandler} value={
+              this.props.passwordInput} />
+            </div>
 
-        {this.props.signupRedirect && <Redirect to="/create" />}
-      </div>
+            <button className="btn btn-primary">Login</button>
+          </form>
+          {this.props.hasFailed && <div className="alert alert-danger my-4">Either username or password is incorrect. Try again!</div>}
+          {this.props.loginRedirecion && <Redirect to="/create" />}
 
-      </>
+
+          <form className="main-form" onSubmit={this.signupHandler}>
+            <h3 className="loginText">New User</h3>
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input className="form-control" id="email" onChange={this.props.signinInputHandler} ident="email" type="email" placeholder="Email" required />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="username">Username</label>
+              <input className="form-control" id="username" onChange={this.props.signinInputHandler} ident="username" placeholder="Username" required minLength={6} />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input className="form-control" id="password" onChange={this.props.signinInputHandler} ident="password" type="password" required placeholder="password" minLength={6} />
+            </div>
+
+
+            <button className="btn btn-primary" >Signup</button>
+          </form>
+
+          {this.props.signinSuccess && <Alert variant='success'>{this.props.signinMsg}</Alert>}
+          {this.props.signinFaild && <Alert variant='danger'>Signin failed. User Name or Email already taken</Alert>}
+
+          {this.props.signupRedirect && <Redirect to="/create" />}
+
+       </div>
     )
 
   }
@@ -83,7 +98,7 @@ const mapStateToProps = state => {
     signinPassword: state.signinPassword,
     signinMsg: state.signinMsg,
     signinSuccess: state.signinSuccess,
-    signinFaild: state.signinFaild
+    signinFaild: state.signinFaild,
   }
 }
 

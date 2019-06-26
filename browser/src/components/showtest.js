@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {NavLink} from 'react-router-dom';
-import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire, showTest, loginFetch, getFullTest, fullTestChange, selectAnswer} from '../redux';
+import {questionTypeChange, testNameChange, questionTextChange, addFullQuestion, deleteFullQuestion, saveFullQuestionnaire, deleteQuestionnaire, showTest, loginFetch, getFullTest, fullTestChange, selectAnswer, compareAnswers} from '../redux';
 import {LogoutContainer} from './logout';
 
 
@@ -23,11 +23,13 @@ class ShowTest extends Component {
 
 handleSubmit = ev=>{
   ev.preventDefault();
+  this.props.compareAnswers();
 }
 
   render() {
     var testIndex=this.props.fullTestValue;
     var test = this.props.questionnaire;
+
     return (
       <>
       <LogoutContainer />
@@ -66,6 +68,7 @@ handleSubmit = ev=>{
         }
         <button type="button"><NavLink  className="removeLink" to="/create">Go Back</NavLink></button>
         <button type="submit" >Evaluate</button>
+        <h3>Correct Answers: {this.props.answerPoints} of {this.props.correctAnswerArray.length}</h3>
         </form>
         </div>
       </>
@@ -86,10 +89,10 @@ class YesNoAnswer extends Component {
     return(
       <>
       <div>
-        <select questionnumber={this.props.questionNumber} defaultValue="" placeholder="Select an answer" onChange={this.handleChange}>
-        <option value="" disabled>Select your option</option>
-        <option value="yes">Yes</option>
-        <option value="no">No</option>
+        <select className="reset" questionnumber={this.props.questionNumber} defaultValue="" placeholder="Select an answer" onChange={this.handleChange}>
+          <option value="" disabled>Select your option</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
         </select>
       </div>
       </>
@@ -125,12 +128,11 @@ class MultipleChoiceAnswer extends Component {
     return(
       <>
       <div>
-        <select defaultValue="" placeholder="Select a test" onChange={this.handleChange}>
-        <option value="" key="empty" disabled>Select your option</option>
-        {mixAns[i].map((elem, index)=>{
-              return <option key={index} >{elem}</option>
-            })}
-        }
+        <select className="reset" defaultValue="" placeholder="Select a test" onChange={this.handleChange}>
+          <option value="" key="empty" disabled>Select your option</option>
+          {mixAns[i].map((elem, index)=>{
+                return <option key={index} >{elem}</option>
+              })}
         </select>
       </div>
       </>
@@ -189,7 +191,9 @@ const mapStateToProps = state => {
         fullTestValue:state.fullTestValue,
         questionCorrectAnswer:state.questionnaire.questionCorrectAnswer,
         eachWrongAnswer:state.questionnaire.eachWrongAnswer,
-        userAnswersArray:state.userAnswersArray
+        userAnswersArray:state.userAnswersArray,
+        correctAnswerArray: state.correctAnswerArray,
+        answerPoints:state.answerPoints
     }
 }
 const mapDispatchToProps = dispatch => {
@@ -205,7 +209,8 @@ const mapDispatchToProps = dispatch => {
         makeRequest: credentials => dispatch(loginFetch(credentials)),
         getFullTest: (ev) => dispatch(getFullTest(ev)),
         fullTestChange: ev => dispatch(fullTestChange(ev)),
-        selectAnswer: ev => dispatch(selectAnswer(ev))
+        selectAnswer: ev => dispatch(selectAnswer(ev)),
+        compareAnswers: ev =>dispatch(compareAnswers(ev))
     }
 }
 

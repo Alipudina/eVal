@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const dotenv = require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
-const SECRET= process.env.SECRET;
+
 
 const handleValidationErrors = (req, res, next) => {
   const validationErrors = validationResult(req);
@@ -17,7 +17,7 @@ const handleValidationErrors = (req, res, next) => {
 const authorization = async (req, res, next) => {
   try {
     const tokenCookie = req.cookies.authToken.split(' ')[1];
-    await jwt.verify(tokenCookie, SECRET);
+    await jwt.verify(tokenCookie, process.env.SECRET);
     req.token = tokenCookie;
 
     next();
@@ -30,7 +30,6 @@ const createMakers = async (req, res, next)=>{
   try{
     const createMaker = await makersModel.findOne({userName: req.body.userName});
     const createEmail = await makersModel.findOne({userEmail:req.body.userEmail});
-    console.log(createMaker);
     if (createMaker){
       return res.status(404).json({msg:'That name is already taken'});
     } else if (createEmail) {
