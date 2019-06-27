@@ -5,6 +5,12 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
 
+const emailtransporter = nodemailer.createTransport({
+  service:"Hotmail",
+  auth:{
+    user:process.env.USER_EMAIL,
+    pass:process.env.PASSWORD_EMAIL}
+  })
 
 
 const createTests = async (req, res, next)=>{
@@ -86,12 +92,7 @@ const showTest = async (req, res, next)=>{
     next(error);
   }
 }
-const emailTransporter = nodemailer.createTransport({
-            service:'Hotmail',
-            auth:{ user:process.env.EMAIL_USER,
-                   pass:process.env.EMAIL_PASS
-                 }
-            });
+
 
 const sendTests = async (req, res, next)=>{
   try{
@@ -108,7 +109,7 @@ const sendTests = async (req, res, next)=>{
                     subject:'Invitation to a Test in eVal',
                     html:`<a href="http://localhost:4000/eval/${fullTest.id}/${req.body.email}">Click to go to eVal Test</a>`
                   };
-          await emailTransporter.sendMail(emailOptions, function(err,info){
+          emailTransporter.sendMail(emailOptions, function(err,info){
             if (err){
               return res.status(404).json('Something went wrong with the email');
             }else{
