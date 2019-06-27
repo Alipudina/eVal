@@ -110,47 +110,6 @@ class CreationPage extends Component {
   }
 }
 
-// <button type="button" onClick={this.props.showTest}>
-
-// </button>
-// class ShowTest extends Component {
-//   render() {
-//     return (
-//       <>
-//         <div className="body fullQuestion">
-//           <h1>{this.props.testName}</h1>
-//           <div>
-//           {
-//             this.props.allFullQuestions&&this.props.allFullQuestions.map((each, index)=>{
-//               return(
-//                 <div key={index} className="fullQuestion questionType">
-//                   <span><b>{index+1})</b></span>
-//                   <span><b>Type:</b>{each.questionType}</span>
-//                   <span><b>Question:</b>{each.questionText}</span>
-//                   <span><b>Right answer:</b>{each.rightAnswer}</span>
-//                   {each.allWrongAnswers.length>0&&<span><b>Wrong answer(s):</b></span>}
-//                   {each.allWrongAnswers&&each.allWrongAnswers.map((wrongAnswer, index)=>{
-//                     return(
-//                         <span key={index}><b>{index+1})</b> {wrongAnswer}</span>
-//                     )
-//
-//                   })}
-//                   <span>
-//                     <button type="button" className="deleteButton" onClick={this.props.deleteFullQuestion} value={index}>Delete</button>
-//                   </span>
-//                 </div>
-//               )
-//             })
-//           }
-//           </div>
-//         </div>
-//         <button type="button"><NavLink  className="removeLink" to="/create">Go Back</NavLink></button>
-//       </>
-//     )
-//   }
-// }
-
-
 
 const mapStateToProps = state => {
     return {
