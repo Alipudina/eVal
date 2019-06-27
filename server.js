@@ -8,7 +8,7 @@ const path = require('path');
 const errorHandler = require('./middleware/errorHandler');
 const makersRouter = require('./routes/makersRouter');
 const testsRouter = require('./routes/testsRouter');
-const path= require('path');
+
 
 
 const app = express();

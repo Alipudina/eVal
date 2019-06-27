@@ -20,6 +20,7 @@ class EmailSend extends Component {
   }
 
   inputEmailHandler= ev => {
+    ev.preventDefault();
     this.setState({email: ev.target.value, testName: this.refs.selectedTest.value});
     this.props.sendEmail({email:this.state.email, testName:this.state.testName})
     console.log(this.state.email, this.state.testName)
