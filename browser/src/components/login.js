@@ -37,12 +37,12 @@ class LoginPage extends Component {
           <form className="main-form" onSubmit={this.loginHandler}>
             <h3 className="loginText">Login</h3>
             <div className="form-group">
-            <label>Username</label>
-            <input type="text" className="form-control" id="username" placeholder="Username" required onChange={this.props.loginInputHandler} value={this.props.userNameInput} />
+            <label htmlFor="username">userName</label>
+            <input type="text" className="form-control" id="username" required onChange={this.props.loginInputHandler} value={this.props.userNameInput} />
             </div>
 
             <div className="form-group">
-            <label>Password</label>
+            <label htmlFor="pwd">Password</label>
             <input type="password" className="form-control" id="pwd" placeholder="password" required onChange={this.props.loginInputHandler} value={
               this.props.passwordInput} />
             </div>
@@ -61,8 +61,8 @@ class LoginPage extends Component {
             </div>
 
             <div className="form-group">
-              <label htmlFor="username">Username</label>
-              <input className="form-control" id="username" onChange={this.props.signinInputHandler} ident="username" placeholder="Username" required minLength={6} />
+              <label htmlFor="username2">userName</label>
+              <input className="form-control" id="username2" onChange={this.props.signinInputHandler} ident="username" placeholder="userName" required minLength={6} />
             </div>
 
             <div className="form-group">

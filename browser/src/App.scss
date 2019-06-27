@@ -101,6 +101,90 @@ body {
     top: 6vw;
   }
 
+// creationPage.js #########################
+  div.CreationPage-Container {
+    border: 3px solid #6A2C73;
+    width: 70vw;
+    margin: auto;
+
+    .myTests {
+      position: absolute;
+      left: 5vw;
+      top: 9.5vw;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 1vw;
+      color: #6A2C73;
+    }
+
+    h3 {
+      padding-left: 3vw;
+    }
+
+    form.creator-form {
+      width: 90%;
+      margin: auto;
+    }
+
+    div.creationBtns {
+      display: flex;
+      justify-content: space-around;
+      padding: 1vw;
+      // border: 1px solid red;
+      background: cyan;
+      margin: 1vw auto;
+    }
+
+    div.questionTypeContainer {
+      background: #D4EDDA;
+      margin: 1vw auto;
+    }
+
+    button.addQuestion {
+      width: 20vw;
+      text-align: center;
+      margin-left: 25vw;
+      font-weight: 500;
+    }
+
+    button.borderBtn {
+      padding: 0;
+      border: none;
+      background: none;
+    }
+  }
+
+ // yesno.js ############################
+ div.yesNoContainer {
+   padding: 2vw;
+ }
+
+// multiplechoice.js ####################
+  div.multiplechoice-container {
+    padding: 2vw;
+
+    div.multiWrongQuestionContainer {
+      display: flex;
+      padding: 1vw 0;
+
+      div.multiWrongQuestion {
+        width: 90%;
+        border: 1px solid grey;
+        display: flex;
+        align-items: center;
+        border-radius: .3vw;
+        padding: 0 1vw;
+      }
+
+      span.deleteWrongQ {
+        padding: 0 1vw;
+      }
+    }
+
+  }
+
 
 }
 
