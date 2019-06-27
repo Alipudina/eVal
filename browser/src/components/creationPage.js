@@ -51,13 +51,13 @@ class CreationPage extends Component {
           <form className="creatorForm creator-form" onSubmit={this.sendTest}>
             <div className="form-group">
               <label htmlFor="testname" className="questionText">Name of the Test: </label>
-              <input required id="testname" className="questionText form-control" placeholder="How do you want to call it"
+              <input id="testname" className="questionText form-control" placeholder="How do you want to call it"
               value={this.props.testName}
               onChange={this.props.testNameChange} />
           </div>
           <div className="form-group">
             <label htmlFor="question" className="questionText">Question: </label>
-            <input required id="question" className="questionText form-control" placeholder="Here goes your question"
+            <input id="question" className="questionText form-control" placeholder="Here goes your question"
             value={this.props.questionText}
             onChange={this.props.questionTextChange} />
           </div>

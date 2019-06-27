@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import ContactEmailChanged from '../defaultEmail';
 import {connect} from 'react-redux';
 import {emailHandler} from '../redux';
+import {NavLink, Route, Redirect} from 'react-router-dom';
+
 
 class Contact extends Component {
-
+  goBack =() =>{
+    window.history.back();
+  }
   render() {
     return(
       <>
-
+      <button onClick={this.goBack} className="btn btn-primary goBack">Go Back</button>
       <section className="resume-section p-4 p-lg-5 text-center" id="contact">
               <div className="my-auto">
                 <h2 className="mb-4">Contact us</h2>

@@ -252,6 +252,9 @@ const reducer = (state = initialState, action) => {
       }
       return copyOfState;
 
+    case 'SEND_EMAIL':
+      return copyOfState;
+
     default:
       return copyOfState;
   }
@@ -344,6 +347,12 @@ export const selectAnswer = ev=>{
 export const compareAnswers = ev=>{
     return {type:'COMPARE_ANSWERS', event:ev}
 }
+
+export const sendToEmail = testData=>{
+  return {type:'SEND_EMAIL', testData:testData}
+}
+
+
 
 const signinDispatch= data => {
   return {
@@ -479,7 +488,7 @@ export const getTestNames = () => {
 }
 
 
-export const sendEmail = (testName, email, message)=> {
+export const sendEmail = (testData)=> {
   return function(dispatch){
     fetch('/eval/protected/emailsend', {
       method: 'POST',
@@ -487,15 +496,11 @@ export const sendEmail = (testName, email, message)=> {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        testName: testName,
-        email: email,
-        message: message
-      })
+      body: JSON.stringify(testData)
     })
     .then((res) => res.json())
-    .then((res) => {
-      console.log('here is the response: ', res);
+    .then(testData => {
+      dispatch(sendToEmail(testData));
     })
     .catch((err) => {
       console.error('here is the error: ', err);

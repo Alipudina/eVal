@@ -220,11 +220,12 @@ div.scrambledContainer {
 
 
 .fullQuestion{
-  width: 100%;
-  margin: 1vw auto;
+  width: 400%;
+  margin: 1vw 10vw;
   font-size: 1vw;
   text-align: center;
   span{
+    width: 100%;
     margin-right: .6vw;
   }
 
@@ -238,7 +239,14 @@ div.scrambledContainer {
 
   }
 
-
+button.goBack{
+  position: absolute;
+  left: 5vw;
+  top: 6vw;
+}
+div.showTest{
+  background: #d6d8d9;
+}
 
 
 // ########################################

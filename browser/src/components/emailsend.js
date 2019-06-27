@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {LogoutContainer} from './logout';
 import {connect} from 'react-redux';
-import {getTestNames} from '../redux';
+import {getTestNames, sendEmail} from '../redux';
 import { NavLink } from 'react-router-dom';
 import Auth from '../auth';
 
@@ -11,8 +11,8 @@ class EmailSend extends Component {
   }
 
   state={
-    emailToSend: "",
-    testToSend: ""
+    email: "",
+    testName: ""
   }
 
   backToCreate= () => {
@@ -20,8 +20,11 @@ class EmailSend extends Component {
   }
 
   inputEmailHandler= ev => {
-    this.setState({emailToSend: ev.target.value, testToSend: this.refs.selectedTest.value});
+    this.setState({email: ev.target.value, testName: this.refs.selectedTest.value});
+    this.props.sendEmail({email:this.state.email, testName:this.state.testName})
+    console.log(this.state.email, this.state.testName)
   }
+
 
 
   render() {
@@ -36,8 +39,7 @@ class EmailSend extends Component {
               <h3 className="mb-4">Select Test</h3>
               <form
                 className="contactForm d-flex flex-column align-items-center"
-                action=""
-                method="POST"
+                onSubmit={this.inputEmailHandler}
               >
                 <div className="form-group w-75">
                   <select name="carlist" form="carform" className="form-control" ref="selectedTest">
@@ -59,7 +61,7 @@ class EmailSend extends Component {
                 </div>
 
 
-                <a type="submit" href={"mailto:"+ this.state.emailToSend+ "?subject=" + this.state.testToSend + "&body=" + this.props.testLink} className="btn btn-submit btn-primary w-25">SEND</a>
+                <button type="submit" className="btn btn-submit btn-primary w-25">SEND</button>
               </form>
             </div>
         </section>
@@ -67,7 +69,7 @@ class EmailSend extends Component {
     )
   }
 }
-
+// <a type="submit" href={"mailto:"+ this.state.emailToSend+ "?subject=" + this.state.testToSend + "&body=" + this.props.testLink} className="btn btn-submit btn-primary w-25">SEND</a>
 const mapStateToProps= state => {
   return {
     allTestNames: state.allTestNames,
@@ -78,7 +80,8 @@ const mapStateToProps= state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTestNames: (ev) => dispatch(getTestNames(ev))
+    getTestNames: (ev) => dispatch(getTestNames(ev)),
+    sendEmail: (emailData)=>dispatch(sendEmail(emailData))
   }
 }
 

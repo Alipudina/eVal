@@ -18,6 +18,8 @@ function shuffleArray(array) {
 
 class ShowTest extends Component {
   componentDidMount(){
+    document.cookie='testId=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    console.log(document.cookie);
     this.props.getFullTest();
   }
 
@@ -32,45 +34,51 @@ handleSubmit = ev=>{
 
     return (
       <>
-      <LogoutContainer />
-      <div className="my-auto">
-        <h2 className="mb-4">Select Test</h2>
-        <form className="contactForm d-flex flex-column align-items-center">
-          <div className="form-group w-75">
-            <select name="carlist" form="carform" defaultValue="" placeholder="Select a test" className="form-control" ref="selectedTest" onChange={this.props.fullTestChange}>
-            <option value="" key="empty" disabled>Select your option</option>
-            {test.map((elem, index) => {
-              return <option value={index} key={index}>{elem.testName}</option>
-            })}
-            </select>
-          </div>
-        </form>
-        <form onSubmit={this.handleSubmit}>
-        {this.props.fullTestValue!==""&&
+      <div className="CreationPage-Container">
+        <LogoutContainer />
+        <NavLink to="/emailsend" className="btn btn-primary sendTests">Send Tests</NavLink>
+        <NavLink to="/create" className="btn btn-primary showTests">Create Test</NavLink>
+        <div className="body">
+          <h3>Select Test</h3>
+            <form className="contactForm d-flex flex-column align-items-center">
+              <div className="form-group w-75">
+                <select name="carlist" form="carform" defaultValue="" placeholder="Select a test" className="selectQuestionType form-control" ref="selectedTest" onChange={this.props.fullTestChange}>
+                <option value="" key="empty" disabled>Select your option</option>
+                {test.map((elem, index) => {
+                  return <option value={index} key={index}>{elem.testName}</option>
+                })}
+                </select>
+              </div>
+            </form>
 
-        <div className="body fullQuestion">
-          <h1>{test[testIndex].testName}</h1>
-          <div>{
-            test[testIndex].questionnaire.map((each, index)=>{
-              return(
-                <div key={index} value={index} className="fullQuestion questionType">
-                  <span><b>{index+1})</b></span>
-                  <span><b> Question: </b>{each.questionText}</span>
-                  {each.questionType==='YesNo'&&<YesNoAnswerContainer/>}
-                  {each.questionType==='MultipleChoice'&&<MultipleChoiceAnswerContainer questionIndex={each.questionNumber-1}/>}
-                  {each.questionType==='Scrambled'&&<ScrambledAnswerContainer />}
-                </div>
-              )
-            })
-          }
-          </div>
+            <form onSubmit={this.handleSubmit}>
+            {this.props.fullTestValue!==""&&
+
+            <div className="body fullQuestion form-group w-75 showTest">
+              <h1>{test[testIndex].testName}</h1>
+              <div>{
+                test[testIndex].questionnaire.map((each, index)=>{
+                  return(
+                    <div key={index} value={index} className="fullQuestion questionType">
+                      <span><b>{index+1})</b></span>
+                      <span><b> Question: </b>{each.questionText}</span>
+                      {each.questionType==='YesNo'&&<YesNoAnswerContainer/>}
+                      {each.questionType==='MultipleChoice'&&<MultipleChoiceAnswerContainer questionIndex={each.questionNumber-1}/>}
+                      {each.questionType==='Scrambled'&&<ScrambledAnswerContainer />}
+                    </div>
+                  )
+                })
+              }
+              </div>
+            </div>
+            }
+            <div className="creationBtns questionType w-75">
+                <button className="btn btn-info" type="submit">Evaluate</button>
+            </div>
+            <h3>Correct Answers: {this.props.answerPoints} of {this.props.correctAnswerArray.length}</h3>
+            </form>
         </div>
-        }
-        <button type="button"><NavLink  className="removeLink" to="/create">Go Back</NavLink></button>
-        <button type="submit" >Evaluate</button>
-        <h3>Correct Answers: {this.props.answerPoints} of {this.props.correctAnswerArray.length}</h3>
-        </form>
-        </div>
+      </div>
       </>
     )
   }

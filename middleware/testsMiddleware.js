@@ -4,12 +4,13 @@ const dotenv = require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
+const path = require ('path');
 
 const emailtransporter = nodemailer.createTransport({
   service:"Hotmail",
   auth:{
-    user:process.env.USER_EMAIL,
-    pass:process.env.PASSWORD_EMAIL}
+    user:process.env.EMAIL_USER,
+    pass:process.env.EMAIL_PASS}
   })
 
 
@@ -96,34 +97,37 @@ const showTest = async (req, res, next)=>{
 
 const sendTests = async (req, res, next)=>{
   try{
+    console.log(req.body);
     const tokenCookie = req.cookies.authToken;
+
     await jwt.verify(tokenCookie, process.env.SECRET);
     const decodedUser= await jwt.decode(tokenCookie, process.env.SECRET)
-    req.token = tokenCookie;
-    if (req.token){
-      const fullTest = await testsModel.findOne({testName: req.body.testName});
+    const fullTest = await testsModel.findOne({testName: req.body.testName});
       if (fullTest){
         const emailOptions ={
                     from:process.env.EMAIL_USER,
                     to:req.body.email,
                     subject:'Invitation to a Test in eVal',
-                    html:`<a href="http://localhost:4000/eval/${fullTest.id}/${req.body.email}">Click to go to eVal Test</a>`
+                    html:`<a href="http://localhost:4000/eval/protected/testThroughEmail/${fullTest._id}">Click to go to eVal Test with Id ${fullTest._id}</a>`
                   };
-          emailTransporter.sendMail(emailOptions, function(err,info){
-            if (err){
-              return res.status(404).json('Something went wrong with the email');
-            }else{
-              return res.status(200).json('Email(s) sent succesfully');
-            }
-          })
+        const info=  await emailtransporter.sendMail(emailOptions);
+           return info?res.status(200).json({msg:"email sent succesfully"}):res.status(400).json({msg:"Error occured"})
         }else{
           return res.status(404).json({msg:'That test name does not exist'})
-        }} else{
-      return res.status(404).json({msg:'Unauthorized to enter'});
-    }
+        }
 
   }catch(error){
     next(error);
   }
 }
-module.exports = {createTests, evaluateTests, sendTests, getTestNames, showTest};
+const leadToLandingPage = async (req, res, next)=>{
+  try{
+    res.cookie("testId", req.params.testName)
+    return  res.sendFile(path.join(__dirname,'..', 'browser','build', 'index.html'))
+
+
+  }catch(error){
+    next(error);
+  }
+}
+module.exports = {createTests, evaluateTests, sendTests, getTestNames, showTest, leadToLandingPage};
