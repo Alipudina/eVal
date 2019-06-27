@@ -2,8 +2,51 @@ import React, { Component } from 'react';
 import { Redirect, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { redirectToLogin, loginInputHandler, signinFetch, loginFetch, signinInputHandler } from '../redux';
-import { Alert } from 'react-bootstrap';
+import { Alert} from 'react-bootstrap';
 
+//Alert dissmissable ##############
+class AlertDismissible extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      show: true,
+    };
+  }
+
+  render() {
+    const handleDismiss = () => this.setState({ show: false });
+
+    if (this.state.show) {
+      return (
+        <Alert variant="danger" onClose={handleDismiss} dismissible>
+          Signin failed. Username or Email already taken
+        </Alert>
+      );
+    }
+    return null;
+  }
+}
+class AlertDismissible2 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      show: true,
+    };
+  }
+
+  render() {
+    const handleDismiss = () => this.setState({ show: false });
+    
+    if (this.state.show) {
+      return (
+        <Alert variant="danger" onClose={handleDismiss} dismissible>
+          Either username or password is incorrect. Try again!
+        </Alert>
+      );
+    }
+    return null;
+  }
+}
 
 // loginPage ######################
 class LoginPage extends Component {
@@ -37,8 +80,8 @@ class LoginPage extends Component {
           <form className="main-form" onSubmit={this.loginHandler}>
             <h3 className="loginText">Login</h3>
             <div className="form-group">
-            <label htmlFor="username">userName</label>
-            <input type="text" className="form-control" id="username" required onChange={this.props.loginInputHandler} value={this.props.userNameInput} />
+            <label htmlFor="username">Username</label>
+            <input type="text" className="form-control" id="username" placeholder="Username" required onChange={this.props.loginInputHandler} value={this.props.userNameInput} />
             </div>
 
             <div className="form-group">
@@ -49,7 +92,7 @@ class LoginPage extends Component {
 
             <button className="btn btn-primary">Login</button>
           </form>
-          {this.props.hasFailed && <div className="alert alert-danger my-4">Either username or password is incorrect. Try again!</div>}
+          {this.props.hasFailed && <AlertDismissible2 variant='danger'>Signin failed. Username or Email already taken</AlertDismissible2>}
           {this.props.loginRedirecion && <Redirect to="/create" />}
 
 
@@ -61,8 +104,8 @@ class LoginPage extends Component {
             </div>
 
             <div className="form-group">
-              <label htmlFor="username2">userName</label>
-              <input className="form-control" id="username2" onChange={this.props.signinInputHandler} ident="username" placeholder="userName" required minLength={6} />
+              <label htmlFor="username2">Username</label>
+              <input className="form-control" id="username2" onChange={this.props.signinInputHandler} ident="username" placeholder="Username" required minLength={6} />
             </div>
 
             <div className="form-group">
@@ -75,7 +118,7 @@ class LoginPage extends Component {
           </form>
 
           {this.props.signinSuccess && <Alert variant='success'>{this.props.signinMsg}</Alert>}
-          {this.props.signinFaild && <Alert variant='danger'>Signin failed. User Name or Email already taken</Alert>}
+          {this.props.signinFaild && <AlertDismissible variant='danger'>Signin failed. Username or Email already taken</AlertDismissible>}
 
           {this.props.signupRedirect && <Redirect to="/create" />}
 

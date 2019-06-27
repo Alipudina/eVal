@@ -7,12 +7,12 @@ class MultipleChoice extends Component{
     return(
       <div className="multiplechoice-container">
         <div className="form-group">
-          <label for="rightAnswer">Right Answer:</label>
+          <label htmlFor="rightAnswer">Right Answer:</label>
           <input id="rightAnswer" className="form-control" value={this.props.rightAnswer} onChange={this.props.rightAnswerTextChange} />
         </div>
 
         <div className="form-group">
-          <label for="wrongAnswer" className="questionType">Wrong Answer(s):</label>
+          <label htmlFor="wrongAnswer" className="questionType">Wrong Answer(s):</label>
           <input className="questionType form-control" id="wrongAnswer" onChange={this.props.wrongAnswerTextChange} value={this.props.wrongAnswer}/>
         </div>
         <button type="button" className="questionType btn btn-secondary" onClick={this.props.addWrongAnswer}>Add Wrong Answer</button>

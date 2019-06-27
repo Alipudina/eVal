@@ -29,6 +29,7 @@ class EmailSend extends Component {
       <div className="log_signContainer">
         <LogoutContainer />
         <NavLink to="/create" className="btn btn-primary backToCreate" onClick={this.backToCreate}>Back</NavLink>
+        <NavLink to="/showtest" className="btn btn-primary showTests">Show Test</NavLink>
 
         <section className="resume-section p-4 p-lg-5 text-center testFormBackground" id="contact">
             <div className="my-auto">
@@ -58,7 +59,7 @@ class EmailSend extends Component {
                 </div>
 
 
-                <a type="submit" href={"mailto:"+ this.state.emailToSend+ "?subject=" + this.state.testToSend + "&body=" + this.props.testLink} className="btn btn-submit btn-success w-25">SEND</a>
+                <a type="submit" href={"mailto:"+ this.state.emailToSend+ "?subject=" + this.state.testToSend + "&body=" + this.props.testLink} className="btn btn-submit btn-primary w-25">SEND</a>
               </form>
             </div>
         </section>

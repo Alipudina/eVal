@@ -43,19 +43,20 @@ class CreationPage extends Component {
     return (
       <div className="CreationPage-Container">
         <LogoutContainer />
-        <NavLink to="emailsend" className="btn btn-primary myTests">My Tests</NavLink>
+        <NavLink to="/emailsend" className="btn btn-primary sendTests">Send Tests</NavLink>
+        <NavLink to="/showtest" className="btn btn-primary showTests">Show Test</NavLink>
         <div className="body">
           <h2>Hello <b>{this.props.signinUserName} {this.props.userNameInput}</b></h2>
           <h3>Create a test</h3>
           <form className="creatorForm creator-form" onSubmit={this.sendTest}>
             <div className="form-group">
-              <label for="testname" className="questionText">Name of the Test: </label>
+              <label htmlFor="testname" className="questionText">Name of the Test: </label>
               <input required id="testname" className="questionText form-control" placeholder="How do you want to call it"
               value={this.props.testName}
               onChange={this.props.testNameChange} />
           </div>
           <div className="form-group">
-            <label for="question" className="questionText">Question: </label>
+            <label htmlFor="question" className="questionText">Question: </label>
             <input required id="question" className="questionText form-control" placeholder="Here goes your question"
             value={this.props.questionText}
             onChange={this.props.questionTextChange} />
@@ -75,34 +76,31 @@ class CreationPage extends Component {
             {this.props.questionType==='Scrambled'&&<ScrambledContainer />}
           </div>
 
-          <button type="button" onClick={this.props.addFullQuestion} className="questionType btn btn-warning addQuestion">Add Question</button>
+          <button type="button" onClick={this.props.addFullQuestion} className="questionType btn btn-primary addQuestion">Add Question</button>
           {
             this.props.allFullQuestions&&this.props.allFullQuestions.map((each, index)=>{
               return(
                 <div key={index} className="fullQuestion questionType">
-                  <span><b>{index+1})</b></span>
-                  <span><b>Type:</b>{each.questionType}</span>
-                  <span><b>Question:</b>{each.questionText}</span>
-                  <span><b>Right answer:</b>{each.rightAnswer}</span>
+                  <span><b>{index+1}) </b></span>
+                  <span><b>Type:  </b>{each.questionType}</span>
+                  <span><b>Question:  </b>{each.questionText}</span>
+                  <span><b>Right answer:  </b>{each.rightAnswer}</span>
                   {each.allWrongAnswers.length>0&&<span><b>Wrong answer(s):</b></span>}
                   {each.allWrongAnswers&&each.allWrongAnswers.map((wrongAnswer, index)=>{
                     return(
-                        <span key={index}><b>{index+1})</b> {wrongAnswer}</span>
+                        <span key={index}><b>{index+1}) </b> {wrongAnswer}</span>
                     )
 
                   })}
                   <span>
-                    <button type="button" className="deleteButton" onClick={this.props.deleteFullQuestion} value={index}>Delete</button>
+                    <button type="button" className="btn btn-warning btn-sm deleteQuestionBtn" onClick={this.props.deleteFullQuestion} value={index}>Delete</button>
                   </span>
                 </div>
               )
             })
           }
               <div className="creationBtns questionType">
-                  <button className="borderBtn" type="button" onClick={this.props.showTest}>
-                        <NavLink  className="removeLink btn btn-secondary" to="/showtest">Show Test</NavLink>
-                  </button>
-                  <button className="btn btn-success" type="submit">Save</button>
+                  <button className="btn btn-info" type="submit">Save Full Test</button>
                   <button className="btn btn-danger" type="button" onClick={this.props.deleteQuestionnaire}>Delete Everything!</button>
               </div>
           </form>

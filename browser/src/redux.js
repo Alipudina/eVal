@@ -58,10 +58,14 @@ const reducer = (state = initialState, action) => {
 
         case 'username':
           copyOfState.signinUserName= action.ev.target.value;
+          copyOfState.userNameInput='';
+          copyOfState.passwordInput='';
           return copyOfState;
 
         case 'password':
           copyOfState.signinPassword=action.ev.target.value;
+          copyOfState.userNameInput='';
+          copyOfState.passwordInput='';
           return copyOfState;
         default:
         return copyOfState;
@@ -72,10 +76,14 @@ const reducer = (state = initialState, action) => {
       switch (action.ev.target.type) {
         case 'text':
           copyOfState.userNameInput = action.ev.target.value;
+          copyOfState.signinUserName='';
+          copyOfState.signinPassword='';
           return copyOfState;
 
         case 'password':
           copyOfState.passwordInput = action.ev.target.value;
+          copyOfState.signinUserName='';
+          copyOfState.signinPassword='';
           return copyOfState;
         default:
           return copyOfState;
@@ -161,6 +169,7 @@ const reducer = (state = initialState, action) => {
       return copyOfState;
 
     case 'ADD_FULL_QUESTION':
+    if(copyOfState.testName && copyOfState.questionText && copyOfState.rightAnswer){
       copyOfState.allFullQuestions = [...state.allFullQuestions,
       {
         questionText: state.questionText,
@@ -174,6 +183,7 @@ const reducer = (state = initialState, action) => {
       copyOfState.questionType = ''
       copyOfState.rightAnswer = ''
       copyOfState.allWrongAnswers = []
+    }
       return copyOfState;
 
     case 'DELETE_FULL_QUESTION':

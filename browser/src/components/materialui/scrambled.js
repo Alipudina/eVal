@@ -6,10 +6,12 @@ class Scrambled extends Component{
   render(){
     return(
       <>
-        <br></br>
-        <label className="questionType">Text to scramble:</label>
-        <textarea rows="4" cols="4" className="questionType" value={this.props.rightAnswer} onChange={this.props.rightAnswerTextChange}></textarea>
-        <br></br>
+        <div className="scrambledcontainer">
+          <label >Text to scramble:</label>
+          <br></br>
+          <textarea className="questionType" value={this.props.rightAnswer} onChange={this.props.rightAnswerTextChange}
+          placeholder="Don't forget capital letters and punctuation"></textarea>
+        </div>
       </>
     )
   }

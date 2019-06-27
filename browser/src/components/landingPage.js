@@ -3,11 +3,17 @@ import { NavLink } from 'react-router-dom';
 // import { Container } from 'react-bootstrap';
 
 export default class LandingPage extends Component {
+  clickHandler = ev=>{
+    this.props.signinUserName= '';
+    this.props.signinPassword='';
+    this.props.userNameInput='';
+    this.props.passwordInput='';
+  }
     render() {
         return (
             <div className="landingPageContainer">
 
-                <NavLink to="/login" className="btn btn-primary loginButton">LogIn/SignUp</NavLink>
+                <NavLink to="/login" className="btn btn-primary loginButton" onClick={this.clickHandler}>LogIn/SignUp</NavLink>
                 <div className="landingPage">
                     <h1> LandingPage</h1>
                     <div className="">

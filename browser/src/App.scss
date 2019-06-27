@@ -37,7 +37,7 @@ body {
 
   div.footer {
     width: 70vw;
-    background: lime;
+    // background: lime;
     padding: 2vw;
     margin: auto;
     display: flex;
@@ -49,6 +49,10 @@ body {
     left: 3.5vw;
     top: 6vw;
   }
+
+//footer.js ##################################
+.footerButton{
+}
 
 // login.js ##################################
   div.log_signContainer {
@@ -90,6 +94,11 @@ body {
     left: 5vw;
     top: 9.5vw;
   }
+  .showTests {
+    position: absolute;
+    left: 5vw;
+    top: 12.5vw;
+  }
 
   section.testFormBackground {
     background: #D6D8D9;
@@ -107,10 +116,15 @@ body {
     width: 70vw;
     margin: auto;
 
-    .myTests {
+    .sendTests {
       position: absolute;
       left: 5vw;
       top: 9.5vw;
+    }
+    .showTests {
+      position: absolute;
+      left: 5vw;
+      top: 12.5vw;
     }
 
     h2 {
@@ -140,12 +154,13 @@ body {
     div.questionTypeContainer {
       background: #D4EDDA;
       margin: 1vw auto;
+      padding-left: 2vw;
     }
 
     button.addQuestion {
       width: 20vw;
       text-align: center;
-      margin-left: 25vw;
+      margin: 0 auto;
       font-weight: 500;
     }
 
@@ -158,7 +173,13 @@ body {
 
  // yesno.js ############################
  div.yesNoContainer {
-   padding: 2vw;
+   display: flex;
+   flex-direction: row;
+   padding: 0.5vw;
+ }
+ div.form-check {
+   margin-left: 2vw;
+
  }
 
 // multiplechoice.js ####################
@@ -187,6 +208,35 @@ body {
 
 
 }
+//scrambled ###################
+div.scrambledContainer {
+  display: flex;
+  flex-direction: row;
+  padding: 0.5vw;
+}
+  textarea.questionType{
+  width:15vw;
+  }
+
+
+.fullQuestion{
+  width: 100%;
+  margin: 1vw auto;
+  font-size: 1vw;
+  text-align: center;
+  span{
+    margin-right: .6vw;
+  }
+
+  .questionType{
+    width: 8vw;
+  }}
+
+
+  .deleteQuestionBtn{
+    font-size: 0.7vw;
+
+  }
 
 
 
@@ -249,13 +299,7 @@ body {
 // width: 20em;
 // }
 //
-// .fullQuestion{
-//   width: 100%;
-//   margin: 1vw auto;
-//   font-size: 1vw;
-//   text-align: center;
-//   span{
-//     margin-right: .6vw;
+
 // // login component ###################
 // div.account-container {
 //
